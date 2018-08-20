@@ -53,6 +53,15 @@ function p10k_build_prompt_from_spec () {
   # $1: Name of a p10k prompt segment array.
   # $2: Name of a p10k segment options array.
 
+  # sets up each segment we might need autoloaded
+  for cur_segment in ${(P)${1}}; do
+    (( ${+functions[$cur_segment]} )) || function {
+      # _P10K_DBG_OUT "loading segment $cur_segment"
+      autoload -U +X $cur_segment
+      _P10K_AUTOLOADED_FUNCTIONS+=($cur_segment)
+    }
+  done
+
   local prev_bg="NOCONNECT"
   local -A _p10k_opts
   _p10k_opts=(${(kvP)${2}})
@@ -61,14 +70,9 @@ function p10k_build_prompt_from_spec () {
   local segment_optstr
 
   for cur_segment in ${(P)${1}}; do
-    (( ${+functions[$cur_segment]} )) || function {
-      _P10K_DBG_OUT "loading segment $cur_segment"
-      autoload -U +X $cur_segment
-      _P10K_AUTOLOADED_FUNCTIONS+=($cur_segment)
-    }
     segment_optstr="${_p10k_opts[$cur_segment]}"
     segment_opts=("${(@s.;.)segment_optstr}")
-    _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
+    # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
     if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
       # skip drawing the arrow
       printf '%b' '%K{'${segment_opts[2]}'} '

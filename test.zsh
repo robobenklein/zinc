@@ -13,6 +13,8 @@ p10k_left_opts+=(
 echo ${p10k_left}
 echo ${(kv)p10k_left_opts}
 
+zmodload zsh/zprof
+
 source p10k.zsh-theme
 
 p10k_reload
@@ -24,6 +26,15 @@ p10k_build_prompt_from_spec p10k_left p10k_left_opts
 echo -e '\n===== SECOND BUILD ====='
 
 p10k_build_prompt_from_spec p10k_left p10k_left_opts
+
+echo -e '\n===== TIMING ====='
+
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
+N=6000
+echo N=$N
+time repeat $N { p10k_build_prompt_from_spec p10k_left p10k_left_opts > /dev/null 2>&1 }
+
+zprof | head -20
 
 echo -e '\n===== SETTING SHELL PROMPT ====='
 
