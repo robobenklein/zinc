@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_user ()
+{
+  printf '%b' 'username_here'
+  printf '%b' ",args:(${(j.,.)@})"
+}
+
+echo 'P10K user Segment has been autoloaded.'

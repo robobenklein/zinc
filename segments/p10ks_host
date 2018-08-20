@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_host ()
+{
+  printf '%b' 'hostname_here'
+  printf '%b' ",args:(${(j.,.)@})"
+}
+
+echo 'P10K host Segment has been autoloaded.'
