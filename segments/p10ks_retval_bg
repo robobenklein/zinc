@@ -1,0 +1,12 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_retval_bg ()
+{
+  if [[ "$_P10K_RETVAL_STORE" == '0' ]]; then
+    builtin print 'black'
+  else
+    builtin print 'red'
+  fi
+
+  # _P10K_DBG_OUT retval_bg says: "$_P10K_RETVAL_STORE"
+}

@@ -1,7 +1,7 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_user ()
+p10ks_retval ()
 {
-  printf '%b' '%n'
+  builtin printf '%b' $_P10K_RETVAL_STORE
   # printf '%b' ",args:(${(j.,.)@})"
 }

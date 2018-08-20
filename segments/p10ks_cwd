@@ -5,5 +5,3 @@ p10ks_cwd ()
   printf '%b' 'cwd_here'
   printf '%b' ",args:(${(j.,.)@})"
 }
-
-echo 'P10K cwd Segment has been autoloaded.'

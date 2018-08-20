@@ -2,8 +2,10 @@
 
 p10ks_host ()
 {
-  printf '%b' 'hostname_here'
-  printf '%b' ",args:(${(j.,.)@})"
+  printf '%b' '%m'
+  # printf '%b' ",args:(${(j.,.)@})"
 }
 
-echo 'P10K host Segment has been autoloaded.'
+_P10K_DBG_OUT P10K host autoloaded
+
+p10ks_host "$@"

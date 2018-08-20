@@ -1,7 +1,7 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_user ()
+p10ks_time ()
 {
-  printf '%b' '%n'
+  printf '%b' '%*'
   # printf '%b' ",args:(${(j.,.)@})"
 }
