@@ -32,12 +32,6 @@ function p10k_build_prompt_from_spec () {
   [[ $3 == "right" ]] && P10K_SEP_CHAR=${4:-''} \
   || P10K_SEP_CHAR=${4:-''}
 
-  # sets up each segment we might need autoloaded
-  for cur_segment in ${(P)${1}}; do
-    # _P10K_DBG_OUT "loading segment $cur_segment"
-
-  done
-
   local prev_bg="NOCONNECT"
   local -A _p10k_opts
   _p10k_opts=(${(kvP)${2}})
@@ -103,9 +97,6 @@ function p10k_build_prompt_from_spec () {
 }
 
 prompt_p10k_setup () {
-  for cur_segment in ${p10k_left} ${p10k_right}; do
-    builtin autoload -Uz +X $cur_segment
-  done
   PS1="%f%b%k\$(p10k_build_prompt_from_spec p10k_left p10k_left_opts)"
   RPROMPT="${RPROMPT_PREFIX}"'%f%b%k$(p10k_build_prompt_from_spec p10k_right p10k_right_opts right)%f%b%k'"${RPROMPT_SUFFIX}"
 
