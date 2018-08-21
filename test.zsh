@@ -1,22 +1,23 @@
 #!/bin/zsh
 
-typeset -A p10k_left_opts
+echo "" > /tmp/_P10K_DBG_OUT.log
+
+typeset -A p10k_opts
 
 p10k_left=(p10ks_user p10ks_host p10ks_cwd)
-p10k_left_opts=(
+p10k_right=(p10ks_retval p10ks_time)
+
+p10k_opts=(
   p10ks_user 'white;black;normal;;'
   p10ks_host 'white;black;CONNECT_PREV;;'
   p10ks_cwd 'black;blue;normal;;fishy'
-)
-
-p10k_right=(p10ks_retval p10ks_time)
-p10k_right_opts=(
-  # p10ks_retval 'CONDITIONAL;black;normal;;'
+  p10ks_retval 'CONDITIONAL;CONDITIONAL;;;'
   p10ks_time 'black;white;normal;;'
 )
 
 echo ${p10k_left}
-echo ${(kv)p10k_left_opts}
+echo ${p10k_right}
+echo ${(kv)p10k_opts}
 
 zmodload zsh/zprof
 
@@ -26,11 +27,13 @@ p10k_reload
 
 echo "===== START ====="
 
-p10k_build_prompt_from_spec p10k_left p10k_left_opts
+p10k_build_prompt_from_spec p10k_left p10k_opts
+p10k_build_prompt_from_spec p10k_right p10k_opts
 
 echo -e '\n===== SECOND BUILD ====='
 
-p10k_build_prompt_from_spec p10k_left p10k_left_opts
+p10k_build_prompt_from_spec p10k_left p10k_opts
+p10k_build_prompt_from_spec p10k_right p10k_opts
 
 # echo -e '\n===== TIMING ====='
 #
@@ -43,9 +46,11 @@ p10k_build_prompt_from_spec p10k_left p10k_left_opts
 
 echo -e '\n===== TEST PRINT ====='
 
-print -P "$(p10k_build_prompt_from_spec p10k_left p10k_left_opts)"
-print -P "$(p10k_build_prompt_from_spec p10k_right p10k_right_opts right)"
+print -P "$(p10k_build_prompt_from_spec p10k_left p10k_opts)"
+print -P "$(p10k_build_prompt_from_spec p10k_right p10k_opts right)"
 
 # prompt -p p10k
 
 echo
+
+# which p10k_build_prompt_from_spec | cat -n

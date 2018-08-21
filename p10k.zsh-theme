@@ -22,16 +22,16 @@ fi
 
 ### install location detection
 local _P10K_SCRIPTPATH="${(%):-%N}"
-echo $_P10K_SCRIPTPATH
+# echo $_P10K_SCRIPTPATH
 local _P10K_INSTALL_LOC="$(_p10k_zrllink $_P10K_SCRIPTPATH)"
-echo $_P10K_INSTALL_LOC
+# echo $_P10K_INSTALL_LOC
 local P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
 
 # TODO check if exist then add, instead of type unique
 typeset -U fpath
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
-echo $fpath
+# echo $fpath
 
 autoload -Uz promptinit; promptinit
 
