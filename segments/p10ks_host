@@ -5,7 +5,3 @@ p10ks_host ()
   printf '%b' '%m'
   # printf '%b' ",args:(${(j.,.)@})"
 }
-
-_P10K_DBG_OUT P10K host autoloaded
-
-p10ks_host "$@"
