@@ -94,16 +94,21 @@ function p10k_build_prompt_from_spec () {
       # skip drawing the arrow
       printf '%b' '%K{'${segment_opts[2]}'} '
     else
-      printf '%b' ' %K{'${segment_opts[2]}'}%F{'${prev_bg}'}'${P10K_SEP_CHAR}' '
+      [[ $3 != "right" ]] && printf '%b' ' %K{'${segment_opts[2]}'}%F{'${prev_bg}'}'${P10K_SEP_CHAR}' ' \
+      || printf '%b' ' %F{'${segment_opts[2]}'}'${P10K_SEP_CHAR}'%K{'${segment_opts[2]}'} '
     fi
+
+    # print actual segment content
     printf '%b' '%F{'${segment_opts[1]}'}'
     ${cur_segment} "${(@)segment_opts}"
+
+    # store for next loop
     prev_bg="${segment_opts[2]}"
   done
 
   # finish the prompt line:
   [[ $3 != "right" ]] && printf '%b' ' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
-  || printf '%b' ' %k%f'
+  || printf '%b' '%{ %}%k%f' # the `%{ %}` is an invis wrapper
 
 }
 
