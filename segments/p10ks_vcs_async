@@ -24,6 +24,9 @@ zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
 zstyle ':vcs_info:*' stagedstr ' ✚'
 zstyle ':vcs_info:*' unstagedstr ' ●'
 
+# TODO Stole all this from P9K:
+# need to redo most of it for performance and options
+
 +vi-git-untracked () {
 	local FLAGS
 	FLAGS=('--porcelain')
@@ -33,7 +36,7 @@ zstyle ':vcs_info:*' unstagedstr ' ●'
 	fi
 	if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' && -n $(command git status ${FLAGS} | \grep -E '^\?\?' 2> /dev/null | tail -n1) ]]
 	then
-		hook_com[unstaged]+=" $(print_icon 'VCS_UNTRACKED_ICON')"
+		hook_com[unstaged]+=" ?"
 		VCS_WORKDIR_HALF_DIRTY=true
 	else
 		VCS_WORKDIR_HALF_DIRTY=false
