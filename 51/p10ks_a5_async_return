@@ -1,0 +1,17 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_a5_async_return ()
+{
+  # $1 return code
+  # $2 resulting (stdout) output from job execution
+  # $3 execution time, floating point e.g. 0.0076138973 seconds
+  # $4 resulting (stderr) error output from job execution
+
+  builtin printf '%b' "new out: $2"
+  _p10ks_a5_value="$2"
+  _P10K_DBG_OUT "a5: p10ks_a5_async_return called with stdout: $2"
+}
+
+typeset -g _p10ks_a5_value="..."
+
+p10ks_a5_async_return "$@"

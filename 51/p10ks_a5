@@ -1,0 +1,10 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_a5 ()
+{
+  builtin printf '%b' "${_p10ks_a5_value}"
+}
+
+typeset -g _p10ks_a5_value="unknown"
+
+p10ks_a5 "$@"

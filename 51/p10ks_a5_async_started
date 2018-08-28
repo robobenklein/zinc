@@ -1,0 +1,10 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_a5_async_started ()
+{
+  _p10ks_a5_value="working..."
+}
+
+typeset -g _p10ks_a5_value=""
+
+p10ks_a5_async_started "$@"
