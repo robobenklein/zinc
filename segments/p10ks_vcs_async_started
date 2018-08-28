@@ -1,0 +1,8 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_vcs_async_started ()
+{
+  vcs_info_msg_0_="loading..."
+}
+
+p10ks_vcs_async_started "$@"

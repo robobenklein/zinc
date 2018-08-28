@@ -12,7 +12,7 @@ function p10k_render_prompt_from_spec () {
   local _P10K_SBUF=""
 
   # HACK
-  # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+  _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
   # TODO OPTI
   [[ "${(P)#1}" == "0" ]] && echo 'ERR: no segments' && return
@@ -86,7 +86,19 @@ function p10k_render_prompt_from_spec () {
     }
 
     # HACK
-    # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+    _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+
+    # Detect segments with conditional display
+    if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
+      (( ${+functions[${cur_segment}_display_hidden]} )) || {
+        builtin autoload -U +X ${cur_segment}_display_hidden
+        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_display_hidden")
+      }
+      ${cur_segment}_display_hidden && {
+        _P10K_DBG_OUT "not displaying ${cur_segment}"
+        continue
+      }
+    fi
 
     # Detect segments with conditional colors
     if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then

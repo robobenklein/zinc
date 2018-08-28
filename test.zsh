@@ -2,7 +2,7 @@
 
 echo "" > /tmp/_P10K_DBG_OUT.log
 
-p10k_left=(p10ks_user p10ks_host p10ks_cwd)
+p10k_left=(p10ks_user p10ks_host p10ks_cwd p10ks_vcs)
 p10k_right=(p10ks_retval p10ks_time p10ks_a5)
 
 typeset -A p10k_opts

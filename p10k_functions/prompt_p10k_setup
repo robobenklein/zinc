@@ -33,7 +33,7 @@ function p10k_segment_async_callback () {
   "$1_return" "$2" "$3" "$4" "$5"
   [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII[$1]="returned"
-  # _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
+  _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
 
   # TODO if $6 == 0 then redraw prompt with new information
   [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt

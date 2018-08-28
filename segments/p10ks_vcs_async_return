@@ -1,0 +1,13 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_vcs_async_return ()
+{
+  # $1 return code
+  # $2 resulting (stdout) output from job execution
+  # $3 execution time, floating point e.g. 0.0076138973 seconds
+  # $4 resulting (stderr) error output from job execution
+
+  vcs_info_msg_0_="$2"
+}
+
+p10ks_vcs_async_return "$@"
