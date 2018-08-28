@@ -1,0 +1,6 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_time_default_opts ()
+{
+  builtin print 'black;blue;normal;normal;'
+}

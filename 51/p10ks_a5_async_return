@@ -7,7 +7,7 @@ p10ks_a5_async_return ()
   # $3 execution time, floating point e.g. 0.0076138973 seconds
   # $4 resulting (stderr) error output from job execution
 
-  builtin printf '%b' "new out: $2"
+  # builtin printf '%b' "new out: $2"
   _p10ks_a5_value="$2"
   _P10K_DBG_OUT "a5: p10ks_a5_async_return called with stdout: $2"
 }

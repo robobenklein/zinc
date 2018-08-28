@@ -9,7 +9,7 @@ typeset -A p10k_opts
 p10k_opts=(
   p10ks_user 'white;black;normal;;'
   p10ks_host 'white;black;CONNECT_PREV;;'
-  p10ks_cwd 'black;blue;normal;;fishy'
+  p10ks_cwd 'black;blue;normal;;rtab;-t;-l'
   p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;;'
   p10ks_time 'black;white;normal;;'
   p10ks_a5 'white;black;;async;'

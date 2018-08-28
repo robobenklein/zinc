@@ -7,3 +7,7 @@ function prompt_p10k_precmd () {
   (( ${+functions[prompt_p10k_render_to_vars]} )) || autoload -U +X prompt_p10k_render_to_vars
   prompt_p10k_render_to_vars
 }
+
+_P10K_AUTOLOADED_FUNCTIONS+=("prompt_p10k_precmd")
+
+prompt_p10k_precmd "$@"

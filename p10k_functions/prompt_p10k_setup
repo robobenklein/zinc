@@ -24,7 +24,7 @@ function p10k_segment_async_callback () {
   # $5 resulting (stderr) error output from job execution
   # $6 has next result in buffer (0 = buffer empty, 1 = yes)
 
-  _P10K_DBG_OUT "p10k_segment_async_callback \"$1\" RET:$2"
+  # _P10K_DBG_OUT "p10k_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
   [[ "${1}" == "[async/eval]" ]] && return
@@ -33,7 +33,7 @@ function p10k_segment_async_callback () {
   "$1_return" "$2" "$3" "$4" "$5"
   [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII[$1]="returned"
-  _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
+  # _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
 
   # TODO if $6 == 0 then redraw prompt with new information
   [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
@@ -48,7 +48,7 @@ function p10k_reload () {
   async_flush_jobs p10k_segment_worker
   for segment_function in $_P10K_AUTOLOADED_FUNCTIONS; do
     unfunction $segment_function
-    echo 'Reloading '$segment_function
+    echo "Reloading ${segment_function}"
     autoload -U $segment_function
   done
   unfunction prompt_p10k_setup
@@ -62,11 +62,12 @@ prompt_p10k_setup () {
   builtin autoload -Uz add-zsh-hook
   builtin autoload -U +X p10k_render_prompt_from_spec
 
-  typeset -A p10k_opts
-  typeset -a p10k_left p10k_right
+  # association
+  typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
+  # array
+  typeset -ga p10k_left p10k_right
 
   # Setup precmd / preexec
-  typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII["test"]="confirm"
   add-zsh-hook precmd prompt_p10k_precmd
   add-zsh-hook preexec prompt_p10k_preexec

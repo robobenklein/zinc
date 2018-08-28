@@ -12,7 +12,7 @@ function p10k_render_prompt_from_spec () {
   local _P10K_SBUF=""
 
   # HACK
-  _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+  # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
   # TODO OPTI
   [[ "${(P)#1}" == "0" ]] && echo 'ERR: no segments' && return
@@ -34,40 +34,59 @@ function p10k_render_prompt_from_spec () {
     # Autoload function
     # TODO OPTI
     (( ${+functions[${cur_segment}]} )) || {
-      _P10K_DBG_OUT "need to load $cur_segment X"
+      # _P10K_DBG_OUT "need to load $cur_segment X"
       builtin autoload -U +X $cur_segment
       _P10K_AUTOLOADED_FUNCTIONS+=("$cur_segment")
     }
 
-    # Get segment options
+    # Get segment options, fill needed defaults
     segment_optstr="${_p10k_opts[$cur_segment]}"
-    # _P10K_DBG_OUT "$cur_segment : $segment_optstr"
-    if [[ "${segment_optstr}" == "" ]]; then
-      _P10K_DBG_OUT 'getting default opts for '$cur_segment
-      if ! (( ${+functions[${cur_segment}_default_opts]} )); then
-        builtin autoload -Uz +X "${cur_segment}_default_opts"
-      fi
-      segment_optstr="$(${cur_segment}_default_opts)"
-      _P10K_DBG_OUT "now: $segment_optstr"
-    fi
     segment_opts=("${(@s.;.)segment_optstr}")
+    _P10K_DBG_OUT "$cur_segment opts before default application: ${segment_opts}"
+    for segment_opt_number in {1..4}; do
+      [[ "${segment_opts[$segment_opt_number]}" == "" ]] && {
+        # then we need to get the default opt here
+        (( ${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]} )) || {
+          _P10K_DBG_OUT "getting default opts for $cur_segment ${segment_opt_number}"
+          (( ${+functions[${cur_segment}_default_opts]} )) || {
+            builtin autoload -Uz +X "${cur_segment}_default_opts"
+            _P10K_AUTOLOADED_FUNCTIONS+="${cur_segment}_default_opts"
+          }
+          local new_segment_optstr="$(${cur_segment}_default_opts)"
+          local -a new_segment_opts=("${(@s.;.)new_segment_optstr}")
+          _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
+          for v in {1..4}; do
+            _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${new_segment_opts[${v}]}
+          done
+        }
+        # set the value from _P10K_SEGMENT_DEFAULTS cache
+        segment_opts[${segment_opt_number}]="${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]}"
+      }
+    done
+    _P10K_DBG_OUT "$cur_segment opts after default application: ${segment_opts}"
     # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
 
     # Detect segments with asynchronous output enabled
     # async status "" means not yet started
     [[ ${segment_opts[4]} == "async" ]] && \
     [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
-      autoload -U +X ${cur_segment}_async
+      (( ${+functions[${cur_segment}_async]} )) || {
+        builtin autoload -U +X ${cur_segment}_async
+        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async")
+      }
       async_worker_eval p10k_segment_worker "autoload" "-U" "+X" "${cur_segment}_async"
       [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
-      autoload -U +X ${cur_segment}_async_started
+      (( ${+functions[${cur_segment}_async_started]} )) || {
+        builtin autoload -U +X ${cur_segment}_async_started
+        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async_started")
+      }
       ${cur_segment}_async_started "${(@)segment_opts}"
       _P10K_ASYNC_STATII[${cur_segment}_async]="started"
       async_job p10k_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
     }
 
     # HACK
-    _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+    # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
     # Detect segments with conditional colors
     if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then
@@ -109,3 +128,7 @@ function p10k_render_prompt_from_spec () {
   || builtin printf '%b' '%{ %}%k%f'
 
 }
+
+_P10K_AUTOLOADED_FUNCTIONS+=("p10k_render_prompt_from_spec")
+
+p10k_render_prompt_from_spec "$@"
