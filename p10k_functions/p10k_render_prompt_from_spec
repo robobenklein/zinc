@@ -1,0 +1,111 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10k_render_prompt_from_spec () {
+  _P10K_DBG_OUT "\n>>> build_prompt: $1 $2"
+  # Builds the prompt with the given name.
+  #
+  # $1: Name of a p10k prompt segment array. Required.
+  # $2: Name of a p10k segment options array.
+  # $3: Render direction
+  # $4: Chars to use as segment separator.
+
+  local _P10K_SBUF=""
+
+  # HACK
+  _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+
+  # TODO OPTI
+  [[ "${(P)#1}" == "0" ]] && echo 'ERR: no segments' && return
+  _P10K_DBG_OUT "${(P)#1} segments to render"
+
+  # Character separator
+  [[ $3 == "right" ]] && P10K_SEP_CHAR=${4:-''} \
+  || P10K_SEP_CHAR=${4:-''}
+
+  local prev_bg
+  [[ $3 != "right" ]] && prev_bg="NOCONNECT"
+  local -A _p10k_opts
+  _p10k_opts=(${(kvP)${2}})
+  local -a segment_opts
+  local segment_optstr
+
+  for cur_segment in ${(P)${1}}; do
+
+    # Autoload function
+    # TODO OPTI
+    (( ${+functions[${cur_segment}]} )) || {
+      _P10K_DBG_OUT "need to load $cur_segment X"
+      builtin autoload -U +X $cur_segment
+      _P10K_AUTOLOADED_FUNCTIONS+=("$cur_segment")
+    }
+
+    # Get segment options
+    segment_optstr="${_p10k_opts[$cur_segment]}"
+    # _P10K_DBG_OUT "$cur_segment : $segment_optstr"
+    if [[ "${segment_optstr}" == "" ]]; then
+      _P10K_DBG_OUT 'getting default opts for '$cur_segment
+      if ! (( ${+functions[${cur_segment}_default_opts]} )); then
+        builtin autoload -Uz +X "${cur_segment}_default_opts"
+      fi
+      segment_optstr="$(${cur_segment}_default_opts)"
+      _P10K_DBG_OUT "now: $segment_optstr"
+    fi
+    segment_opts=("${(@s.;.)segment_optstr}")
+    # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
+
+    # Detect segments with asynchronous output enabled
+    # async status "" means not yet started
+    [[ ${segment_opts[4]} == "async" ]] && \
+    [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
+      autoload -U +X ${cur_segment}_async
+      async_worker_eval p10k_segment_worker "autoload" "-U" "+X" "${cur_segment}_async"
+      [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
+      autoload -U +X ${cur_segment}_async_started
+      ${cur_segment}_async_started "${(@)segment_opts}"
+      _P10K_ASYNC_STATII[${cur_segment}_async]="started"
+      async_job p10k_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
+    }
+
+    # HACK
+    _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+
+    # Detect segments with conditional colors
+    if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then
+      (( ${+functions[${cur_segment}_fg]} )) || \
+        builtin autoload -U +X ${cur_segment}_fg
+      segment_opts[1]="$(${cur_segment}_fg)"
+    fi
+    if [[ ${segment_opts[2]} == "CONDITIONAL" ]]; then
+      (( ${+functions[${cur_segment}_bg]} )) || \
+        builtin autoload -U +X ${cur_segment}_bg
+      segment_opts[2]="$(${cur_segment}_bg)"
+    fi
+
+    # Detect segment connection
+    if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
+      # skip drawing the arrow
+      builtin printf '%b' '%K{'${segment_opts[2]}'} '
+    else
+      [[ "$3" != "right" ]] && builtin printf '%b' ' %K{'${segment_opts[2]}'}%F{'${prev_bg}'}'${P10K_SEP_CHAR}' ' \
+      || printf '%b' ' %F{'${segment_opts[2]}'}'${P10K_SEP_CHAR}'%K{'${segment_opts[2]}'} '
+    fi
+
+    # print actual segment content
+    builtin printf '%b' '%F{'${segment_opts[1]}'}'
+    # [[ ${segment_opts[4]} == "async" ]] && {
+    #   [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "returned" ]] \
+    #   && ${cur_segment}_async
+    # } || {
+      ${cur_segment} "${(@)segment_opts}"
+    # }
+
+    # store for next loop
+    prev_bg="${segment_opts[2]}"
+  done
+
+  # finish the prompt line:
+  # the `%{ %}` is an invis wrapper
+  [[ "$3" != "right" ]] && builtin printf '%b' ' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
+  || builtin printf '%b' '%{ %}%k%f'
+
+}

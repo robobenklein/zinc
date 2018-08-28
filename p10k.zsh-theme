@@ -17,7 +17,7 @@ elif (( ${+commands[perl]} )); then
     perl -MCwd -le 'print Cwd::abs_path(shift)' $1
   }
 else
-  printf '%b\n' "\033[0;31mP10K: Couldn't find a valid symlink resolver! P10K may not load correctly!\033[0m"
+  printf '%b\n' "\033[0;31mP10K: Couldn't find a valid symlink resolver! Please modify your fpath manually!\033[0m"
 fi
 
 ### install location detection
@@ -31,6 +31,8 @@ local P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
 typeset -U fpath
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
+fpath+=("$P10K_INSTALL_DIR/51")
+
 # echo $fpath
 
 autoload -Uz promptinit; promptinit

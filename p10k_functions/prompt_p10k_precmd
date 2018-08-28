@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function prompt_p10k_precmd () {
+  _P10K_RETVAL_STORE=$?
+  _P10K_RETVAL_STOREs=( "$pipestatus[@]" )
+
+  (( ${+functions[prompt_p10k_render_to_vars]} )) || autoload -U +X prompt_p10k_render_to_vars
+  prompt_p10k_render_to_vars
+}

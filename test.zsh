@@ -2,17 +2,17 @@
 
 echo "" > /tmp/_P10K_DBG_OUT.log
 
-typeset -A p10k_opts
-
 p10k_left=(p10ks_user p10ks_host p10ks_cwd)
-p10k_right=(p10ks_retval p10ks_time)
+p10k_right=(p10ks_retval p10ks_time p10ks_a5)
 
+typeset -A p10k_opts
 p10k_opts=(
   p10ks_user 'white;black;normal;;'
   p10ks_host 'white;black;CONNECT_PREV;;'
   p10ks_cwd 'black;blue;normal;;fishy'
-  p10ks_retval 'CONDITIONAL;CONDITIONAL;;;'
+  p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;;'
   p10ks_time 'black;white;normal;;'
+  p10ks_a5 'white;black;;async;'
 )
 
 echo ${p10k_left}
@@ -27,13 +27,21 @@ p10k_reload
 
 echo "===== START ====="
 
-p10k_build_prompt_from_spec p10k_left p10k_opts
-p10k_build_prompt_from_spec p10k_right p10k_opts
+p10k_build_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
+print '$_P10K_RENDER_TEST'
+print -P '$_P10K_RENDER_TEST'
+p10k_build_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
+print '$_P10K_RENDER_TEST'
+print -P '$_P10K_RENDER_TEST'
 
 echo -e '\n===== SECOND BUILD ====='
 
-p10k_build_prompt_from_spec p10k_left p10k_opts
-p10k_build_prompt_from_spec p10k_right p10k_opts
+p10k_build_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
+print '$_P10K_RENDER_TEST'
+print -P '$_P10K_RENDER_TEST'
+p10k_build_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
+print '$_P10K_RENDER_TEST'
+print -P '$_P10K_RENDER_TEST'
 
 # echo -e '\n===== TIMING ====='
 #
@@ -43,11 +51,6 @@ p10k_build_prompt_from_spec p10k_right p10k_opts
 # time repeat $N { p10k_build_prompt_from_spec p10k_left p10k_left_opts > /dev/null 2>&1 }
 
 # zprof | head -20
-
-echo -e '\n===== TEST PRINT ====='
-
-print -P "$(p10k_build_prompt_from_spec p10k_left p10k_opts)"
-print -P "$(p10k_build_prompt_from_spec p10k_right p10k_opts right)"
 
 # prompt -p p10k
 

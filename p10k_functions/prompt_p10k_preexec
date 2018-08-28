@@ -1,0 +1,16 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function prompt_p10k_preexec () {
+  # Before a ZLE line is about to be interpreted.
+
+  # Stop running prompt async jobs:
+  async_flush_jobs p10k_segment_worker
+
+  # Reset the async job states back to "" (not-yet-started)
+  for async_segment in ${(k)_P10K_ASYNC_STATII}; do
+    _P10K_ASYNC_STATII[$async_segment]=""
+  done
+
+  _P10K_DBG_OUT "Reset async statii of ${(k)_P10K_ASYNC_STATII}"
+
+}

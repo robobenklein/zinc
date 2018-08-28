@@ -4,128 +4,75 @@
 #
 # A powerline ZSH theme, inspired by Powerlevel9k and friends.
 
+autoload -Uz async && async
+
 _P10K_DBG_OUT () {
   # ' >/tmp/_P10K_DBG_OUT.log 2>&1'
   echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
 }
 
+async_start_worker p10k_segment_worker -n
+
+typeset -gA _P10K_ASYNC_STATII
+
+function p10k_segment_async_callback () {
+  # Async args:
+  # $1 job name, e.g. the function passed to async_job
+  # $2 return code
+  # $3 resulting (stdout) output from job execution
+  # $4 execution time, floating point e.g. 0.0076138973 seconds
+  # $5 resulting (stderr) error output from job execution
+  # $6 has next result in buffer (0 = buffer empty, 1 = yes)
+
+  _P10K_DBG_OUT "p10k_segment_async_callback \"$1\" RET:$2"
+
+  # ignore the async evals used to alter worker environment
+  [[ "${1}" == "[async/eval]" ]] && return
+
+  autoload -U "$1_return"
+  "$1_return" "$2" "$3" "$4" "$5"
+  [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
+  _P10K_ASYNC_STATII[$1]="returned"
+  _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
+
+  # TODO if $6 == 0 then redraw prompt with new information
+  [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
+
+  _P10K_ASYNC_STATII[$1]="finished"
+}
+
+async_register_callback p10k_segment_worker p10k_segment_async_callback
+
 typeset -aU _P10K_AUTOLOADED_FUNCTIONS
 function p10k_reload () {
+  async_flush_jobs p10k_segment_worker
   for segment_function in $_P10K_AUTOLOADED_FUNCTIONS; do
     unfunction $segment_function
+    echo 'Reloading '$segment_function
     autoload -U $segment_function
   done
   unfunction prompt_p10k_setup
   autoload -U prompt_p10k_setup
 }
 
-function p10k_build_prompt_from_spec () {
-  _P10K_RETVAL_STORE=$?
-  _P10K_RETVAL_STOREs=( "$pipestatus[@]" )
-
-  _P10K_DBG_OUT "\n>>> build_prompt: $1 $2"
-  # Builds the prompt with the given name.
-  #
-  # $1: Name of a p10k prompt segment array. Required.
-  # $2: Name of a p10k segment options array.
-  # $3: Render direction
-  # $4: Chars to use as segment separator.
-
-  # TODO OPTI
-  [[ "${(P)#1}" == "0" ]] && printf '%b' 'ERR: no segments' && return
-  _P10K_DBG_OUT "${(P)#1} segments to render"
-
-  [[ $3 == "right" ]] && P10K_SEP_CHAR=${4:-''} \
-  || P10K_SEP_CHAR=${4:-''}
-
-  local prev_bg
-  [[ $3 != "right" ]] && prev_bg="NOCONNECT"
-  local -A _p10k_opts
-  _p10k_opts=(${(kvP)${2}})
-
-  local -a segment_opts
-  local segment_optstr
-
-  for cur_segment in ${(P)${1}}; do
-
-    # Autoload function
-    # TODO OPTI
-    if (( ${+functions[${cur_segment}]} )); then
-      # function is already loaded
-      _P10K_DBG_OUT "function $cur_segment already exists ✔"
-    else
-      # function needs to be loaded
-      _P10K_DBG_OUT "need to load $cur_segment X"
-      builtin autoload -U +X $cur_segment
-    fi
-
-    # Get segment options
-    segment_optstr="${_p10k_opts[$cur_segment]}"
-    # _P10K_DBG_OUT "$cur_segment : $segment_optstr"
-    if [[ "${segment_optstr}" == "" ]]; then
-      _P10K_DBG_OUT 'getting default opts for '$cur_segment
-      if ! (( ${+functions[${cur_segment}_default_opts]} )); then
-        builtin autoload -Uz +X "${cur_segment}_default_opts"
-      fi
-      segment_optstr="$(${cur_segment}_default_opts)"
-      _P10K_DBG_OUT "now: $segment_optstr"
-    fi
-    segment_opts=("${(@s.;.)segment_optstr}")
-    # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
-
-    # Get segment text
-    # local segment_text="$(${cur_segment} "${(@)segment_opts}")"
-    # _P10K_DBG_OUT $segment_text
-
-    # Detect segments with conditional colors
-    if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then
-      (( ${+functions[${cur_segment}_fg]} )) || \
-        builtin autoload -U +X ${cur_segment}_fg
-      segment_opts[1]="$(${cur_segment}_fg)"
-    fi
-    if [[ ${segment_opts[2]} == "CONDITIONAL" ]]; then
-      (( ${+functions[${cur_segment}_bg]} )) || \
-        builtin autoload -U +X ${cur_segment}_bg
-      segment_opts[2]="$(${cur_segment}_bg)"
-    fi
-
-    # Detect segment connection
-    if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
-      # skip drawing the arrow
-      printf '%b' '%K{'${segment_opts[2]}'} '
-    else
-      [[ $3 != "right" ]] && printf '%b' ' %K{'${segment_opts[2]}'}%F{'${prev_bg}'}'${P10K_SEP_CHAR}' ' \
-      || printf '%b' ' %F{'${segment_opts[2]}'}'${P10K_SEP_CHAR}'%K{'${segment_opts[2]}'} '
-    fi
-
-    # print actual segment content
-    printf '%b' '%F{'${segment_opts[1]}'}'
-    ${cur_segment} "${(@)segment_opts}"
-
-    # store for next loop
-    prev_bg="${segment_opts[2]}"
-  done
-
-  # finish the prompt line:
-  [[ $3 != "right" ]] && printf '%b' ' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
-  || printf '%b' '%{ %}%k%f' # the `%{ %}` is an invis wrapper
-
-}
-
 prompt_p10k_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
+  builtin autoload -Uz add-zsh-hook
+  builtin autoload -U +X p10k_render_prompt_from_spec
+
   typeset -A p10k_opts
   typeset -a p10k_left p10k_right
 
-  # for cur_segment in ${p10k_right} ${p10k_left}; do
-  #   _P10K_DBG_OUT "preloading $cur_segment"
-  #   builtin autoload -U +X $cur_segment
-  # done
+  # Setup precmd / preexec
+  typeset -A _P10K_ASYNC_STATII
+  _P10K_ASYNC_STATII["test"]="confirm"
+  add-zsh-hook precmd prompt_p10k_precmd
+  add-zsh-hook preexec prompt_p10k_preexec
 
-  PROMPT="%f%b%k\$(p10k_build_prompt_from_spec p10k_left p10k_opts)"
-  RPROMPT="%f%b%k\$(p10k_build_prompt_from_spec p10k_right p10k_opts right)%f%b%k"
+  PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT} "
+  RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
 }
 
 prompt_p10k_setup "$@"
