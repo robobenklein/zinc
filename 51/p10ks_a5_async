@@ -2,10 +2,10 @@
 
 p10ks_a5_async ()
 {
-  _P10K_DBG_OUT "a5: starting some real work...."
+  # _P10K_DBG_OUT "a5: starting some real work...."
   sleep 5 # do some real work
   printf '%b' 'real work done.'
-  _P10K_DBG_OUT 'a5: did real work'
+  # _P10K_DBG_OUT 'a5: did real work'
 }
 
 p10ks_a5_async "$@"

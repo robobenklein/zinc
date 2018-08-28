@@ -2,7 +2,7 @@
 
 p10ks_a5_async_started ()
 {
-  _p10ks_a5_value="working..."
+  _p10ks_a5_value="working for 5 secs..."
 }
 
 typeset -g _p10ks_a5_value=""
