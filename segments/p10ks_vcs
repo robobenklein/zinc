@@ -1,9 +1,9 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function p10ks_vcs () {
-  printf '%b' "${vcs_info_msg_0_}"
+  printf '%b' "${_p10ks_vcs_info_msg_0_}"
 }
 
-typeset -g vcs_info_msg_0_
+typeset -g _p10ks_vcs_info_msg_0_="loading..."
 
 p10ks_vcs "$@"

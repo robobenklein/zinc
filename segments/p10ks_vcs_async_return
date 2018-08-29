@@ -7,7 +7,9 @@ p10ks_vcs_async_return ()
   # $3 execution time, floating point e.g. 0.0076138973 seconds
   # $4 resulting (stderr) error output from job execution
 
-  vcs_info_msg_0_="$2"
+  typeset -g _p10ks_vcs_info_msg_0_="$2"
 }
+
+typeset -g _p10ks_vcs_info_msg_0_
 
 p10ks_vcs_async_return "$@"

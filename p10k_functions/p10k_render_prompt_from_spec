@@ -86,7 +86,7 @@ function p10k_render_prompt_from_spec () {
     }
 
     # HACK
-    _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+    # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
     # Detect segments with conditional display
     if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
