@@ -20,7 +20,7 @@ zstyle ':vcs_info:*' formats %b%c%u%m
 zstyle ':vcs_info:hg*:*' get-bookmarks true
 zstyle ':vcs_info:hg*:*' get-revision true
 zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-zstyle ':vcs_info:*' stagedstr '+'
+zstyle ':vcs_info:*' stagedstr ' ✚'
 zstyle ':vcs_info:*' unstagedstr ' ●'
 
 # VCS_INFO HOOKS
