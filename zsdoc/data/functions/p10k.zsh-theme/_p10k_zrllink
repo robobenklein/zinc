@@ -1,0 +1,3 @@
+readlink -f $1
+  readlink $1
+perl -MCwd -le 'print Cwd::abs_path(shift)' $1

@@ -1,0 +1,13 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+#
+# P10K
+
+# Set zrllink utility.
+
+### install location detection
+# echo $_P10K_SCRIPTPATH
+# echo $_P10K_INSTALL_LOC
+
+# TODO check if exist then add, instead of type unique
+
+# echo $fpath
