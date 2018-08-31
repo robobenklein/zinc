@@ -11,8 +11,6 @@ _P10K_DBG_OUT () {
   echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
 }
 
-async_start_worker p10k_segment_worker -n
-
 typeset -gA _P10K_ASYNC_STATII
 
 function p10k_segment_async_callback () {
@@ -43,8 +41,6 @@ function p10k_segment_async_callback () {
 
   _P10K_ASYNC_STATII[${1}]="finished"
 }
-
-async_register_callback p10k_segment_worker p10k_segment_async_callback
 
 typeset -aU _P10K_AUTOLOADED_FUNCTIONS
 function p10k_reload () {
@@ -78,5 +74,9 @@ prompt_p10k_setup () {
   PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT} "
   RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
 }
+
+async_start_worker p10k_segment_worker -n
+
+async_register_callback p10k_segment_worker p10k_segment_async_callback
 
 prompt_p10k_setup "$@"

@@ -11,7 +11,9 @@ p10ks_vcs_async ()
 # HACK/TODO ex. from my personal shell
 zstyle ':vcs_info:svn*:*' actionformats '%c%u %F{red}| %a%f'
 zstyle ':vcs_info:*' actionformats '%b %F{red}| %a%f'
+# TODO unicode
 zstyle ':vcs_info:hg*:*' branchformat ' %b'
+# TODO unicode
 zstyle ':vcs_info:git*:*' branchformat ' %b'
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' enable git hg svn
@@ -20,7 +22,9 @@ zstyle ':vcs_info:*' formats %b%c%u%m
 zstyle ':vcs_info:hg*:*' get-bookmarks true
 zstyle ':vcs_info:hg*:*' get-revision true
 zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
+# TODO unicode
 zstyle ':vcs_info:*' stagedstr ' ✚'
+# TODO unicode
 zstyle ':vcs_info:*' unstagedstr ' ●'
 
 # VCS_INFO HOOKS
@@ -34,107 +38,79 @@ zstyle ':vcs_info:svn*+set-message:*' hooks \
 ### GIT hook functions
 
 function +vi-git-untracked(){
-    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-        git status --porcelain | grep '??' &> /dev/null ; then
-        # This will show the marker if there are any untracked files in repo.
-        # If instead you want to show the marker only if there are untracked
-        # files in $PWD, use:
-        #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-        hook_com[unstaged]+='◌'
-    fi
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+    git status --porcelain | grep '??' &> /dev/null ; then
+    # This will show the marker if there are any untracked files in repo.
+    # If instead you want to show the marker only if there are untracked
+    # files in $PWD, use:
+    #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
+    # TODO unicode
+    hook_com[unstaged]+='◌'
+  fi
 }
 
 function +vi-git-aheadbehind() {
-    local ahead behind
-    local -a gitstatus
+  local ahead behind
+  local -a gitstatus
 
-    # for git prior to 1.7
-    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-    (( $ahead )) && gitstatus+=( " +${ahead}" )
+  # for git prior to 1.7
+  # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+  ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+  # TODO unicode
+  (( $ahead )) && gitstatus+=( " +${ahead}" )
 
-    # for git prior to 1.7
-    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-    (( $behind )) && gitstatus+=( " -${behind}" )
+  # for git prior to 1.7
+  # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+  behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+  # TODO unicode
+  (( $behind )) && gitstatus+=( " -${behind}" )
 
-    hook_com[misc]+=${(j:/:)gitstatus}
+  hook_com[misc]+=${(j:/:)gitstatus}
 }
 
 function +vi-git-remotebranch() {
-    local remote
+  local remote
 
-    # Are we on a remote-tracking branch?
-    remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
-        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+  # Are we on a remote-tracking branch?
+  remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
+    --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
-    # The first test will show a tracking branch whenever there is one. The
-    # second test, however, will only show the remote branch's name if it
-    # differs from the local one.
-    if [[ -n ${remote} ]] ; then
-    #if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
-        hook_com[branch]="${hook_com[branch]} [${remote}]"
-    fi
+  # The first test will show a tracking branch whenever there is one. The
+  # second test, however, will only show the remote branch's name if it
+  # differs from the local one.
+  if [[ -n ${remote} ]] ; then
+  #if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
+    # TODO unicode
+    hook_com[branch]=" ${hook_com[branch]} [${remote}]"
+  fi
 }
 
 ### HG hook functions
 
 function +vi-hg-storerev() {
-    user_data[hash]=${hook_com[hash]}
+  user_data[hash]=${hook_com[hash]}
 }
 
 function +vi-hg-branchhead() {
-    local branchheadsfile i_tiphash i_branchname
-    local -a branchheads
+  local branchheadsfile i_tiphash i_branchname
+  local -a branchheads
 
-    local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
+  local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
 
-    # Bail out if any mq patches are applied
-    [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
+  # Bail out if any mq patches are applied
+  [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
 
-    if [[ -r ${branchheadsfile} ]] ; then
-        while read -r i_tiphash i_branchname ; do
-            branchheads+=( $i_tiphash )
-        done < ${branchheadsfile}
+  if [[ -r ${branchheadsfile} ]] ; then
+    while read -r i_tiphash i_branchname ; do
+      branchheads+=( $i_tiphash )
+    done < ${branchheadsfile}
 
-        if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
-            hook_com[revision]="^ ${hook_com[revision]}"
-        fi
+    if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
+      hook_com[revision]="^ ${hook_com[revision]}"
     fi
+  fi
 }
 
-# +vi-vcs-detect-changes () {
-# 	if [[ "${hook_com[vcs]}" == "git" ]]
-# 	then
-# 		local remote=$(command git ls-remote --get-url 2> /dev/null)
-# 		if [[ "$remote" =~ "github" ]]
-# 		then
-# 			vcs_visual_identifier='VCS_GIT_GITHUB_ICON'
-# 		elif [[ "$remote" =~ "bitbucket" ]]
-# 		then
-# 			vcs_visual_identifier='VCS_GIT_BITBUCKET_ICON'
-# 		elif [[ "$remote" =~ "stash" ]]
-# 		then
-# 			vcs_visual_identifier='VCS_GIT_BITBUCKET_ICON'
-# 		elif [[ "$remote" =~ "gitlab" ]]
-# 		then
-# 			vcs_visual_identifier='VCS_GIT_GITLAB_ICON'
-# 		else
-# 			vcs_visual_identifier='VCS_GIT_ICON'
-# 		fi
-# 	elif [[ "${hook_com[vcs]}" == "hg" ]]
-# 	then
-# 		vcs_visual_identifier='VCS_HG_ICON'
-# 	elif [[ "${hook_com[vcs]}" == "svn" ]]
-# 	then
-# 		vcs_visual_identifier='VCS_SVN_ICON'
-# 	fi
-# 	if [[ -n "${hook_com[staged]}" ]] || [[ -n "${hook_com[unstaged]}" ]]
-# 	then
-# 		VCS_WORKDIR_DIRTY=true
-# 	else
-# 		VCS_WORKDIR_DIRTY=false
-# 	fi
-# }
+### Definitions done
 
 p10ks_vcs_async "$@"

@@ -27,20 +27,20 @@ p10k_reload
 
 echo "===== START ====="
 
-p10k_build_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
-print '$_P10K_RENDER_TEST'
+p10k_render_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
+print "$_P10K_RENDER_TEST"
 print -P '$_P10K_RENDER_TEST'
-p10k_build_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
-print '$_P10K_RENDER_TEST'
+p10k_render_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
+print "$_P10K_RENDER_TEST"
 print -P '$_P10K_RENDER_TEST'
 
 echo -e '\n===== SECOND BUILD ====='
 
-p10k_build_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
-print '$_P10K_RENDER_TEST'
+p10k_render_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
+print "$_P10K_RENDER_TEST"
 print -P '$_P10K_RENDER_TEST'
-p10k_build_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
-print '$_P10K_RENDER_TEST'
+p10k_render_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
+print "$_P10K_RENDER_TEST"
 print -P '$_P10K_RENDER_TEST'
 
 # echo -e '\n===== TIMING ====='
