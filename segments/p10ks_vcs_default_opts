@@ -1,5 +1,5 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function p10ks_vcs_default_opts () {
-  printf '%b' 'black;white;CONDITIONAL;async'
+  reply=(black white CONDITIONAL async)
 }

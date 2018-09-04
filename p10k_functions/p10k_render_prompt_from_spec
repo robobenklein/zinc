@@ -12,7 +12,7 @@ function p10k_render_prompt_from_spec () {
   local _P10K_SBUF=""
 
   # HACK
-  _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+  # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
   # TODO OPTI
   [[ "${(P)#1}" == "0" ]] && echo 'ERR: no segments' && return
@@ -52,8 +52,8 @@ function p10k_render_prompt_from_spec () {
             builtin autoload -Uz +X "${cur_segment}_default_opts"
             _P10K_AUTOLOADED_FUNCTIONS+="${cur_segment}_default_opts"
           }
-          local new_segment_optstr="$(${cur_segment}_default_opts)"
-          local -a new_segment_opts=("${(@s.;.)new_segment_optstr}")
+          ${cur_segment}_default_opts
+          local -a new_segment_opts=("${(@s.;.)reply}")
           _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
           for v in {1..4}; do
             _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${new_segment_opts[${v}]}

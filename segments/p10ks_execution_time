@@ -1,0 +1,31 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function _p10ks_execution_time_preexec () {
+  # set the start time point using epoch
+  _p10ks_execution_time_process_start=$EPOCHREALTIME
+  _p10ks_execution_time_process_started="1"
+}
+
+function _p10ks_execution_time_precmd () {
+  (( _p10ks_execution_time_process_started )) && {
+    _p10ks_execution_time_last_execution_time="$(( EPOCHREALTIME - _p10ks_execution_time_process_start ))"
+    _p10ks_execution_time_process_started="0"
+  }
+}
+
+function p10ks_execution_time () {
+  # TODO conditionally shown
+  REPLY="${_p10ks_execution_time_last_execution_time}"
+}
+
+# float (H)ideval:
+typeset -gHF 4 _p10ks_execution_time_process_start
+_p10ks_execution_time_process_start=$EPOCHREALTIME
+typeset -gH _p10ks_execution_time_last_execution_time
+integer -gH _p10ks_execution_time_process_started
+_p10ks_execution_time_process_started=0
+
+add-zsh-hook preexec _p10ks_execution_time_preexec
+add-zsh-hook precmd _p10ks_execution_time_precmd
+
+p10ks_execution_time "$@"

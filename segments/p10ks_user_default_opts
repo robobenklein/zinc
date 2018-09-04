@@ -2,5 +2,5 @@
 
 p10ks_user_default_opts ()
 {
-  builtin print 'white;black;normal;normal;'
+  reply=(white black normal normal)
 }

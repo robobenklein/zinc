@@ -2,5 +2,5 @@
 
 p10ks_time_default_opts ()
 {
-  builtin print 'black;blue;normal;normal;'
+  reply=(black blue normal normal)
 }

@@ -1,0 +1,5 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_execution_time_default_opts () {
+  reply=(grey black normal notify_complete)
+}

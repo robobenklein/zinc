@@ -36,7 +36,20 @@ function p10k_segment_async_callback () {
   _P10K_ASYNC_STATII[${1}]="returned"
   _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
 
-  # TODO if $6 == 0 then redraw prompt with new information
+  # check to see if there any more async segments yet to return
+  local -i async_complete=1 # default done
+  for async_segment in ${(k)_P10K_ASYNC_STATII}; do
+    [[ ${_P10K_ASYNC_STATII[${async_segment}]} != "returned" ]] && {
+      async_complete=0
+      break
+    }
+  done
+
+  # TODO
+  (( async_complete )) && {
+    # call segments that requested to be notified on prompt draw async finish
+  }
+
   [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
 
   _P10K_ASYNC_STATII[${1}]="finished"

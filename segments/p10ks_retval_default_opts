@@ -2,5 +2,5 @@
 
 p10ks_retval_default_opts ()
 {
-  builtin print 'CONDITIONAL;CONDITIONAL;normal;normal;'
+  reply=(CONDITIONAL CONDITIONAL normal normal)
 }
