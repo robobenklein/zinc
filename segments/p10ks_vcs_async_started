@@ -2,7 +2,7 @@
 
 p10ks_vcs_async_started ()
 {
-  _p10ks_vcs_info_msg_0_="loading..."
+  _p10ks_vcs_info_msg_0_=""
 }
 
 p10ks_vcs_async_started "$@"

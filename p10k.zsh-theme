@@ -31,7 +31,7 @@ local P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
 typeset -U fpath
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
-fpath+=("$P10K_INSTALL_DIR/51")
+# fpath+=("$P10K_INSTALL_DIR/51")
 
 # echo $fpath
 

@@ -2,7 +2,7 @@
 
 p10ks_retval ()
 {
-  [[ "${_P10K_RETVAL_STORE}" == "0" ]] && builtin printf '%b' '✔' \
-  || builtin printf '%b' $_P10K_RETVAL_STORE
+  [[ "${_P10K_RETVAL_STORE}" == "0" ]] && REPLY='✔' \
+  || REPLY="${_P10K_RETVAL_STORE}"
   # printf '%b' ",args:(${(j.,.)@})"
 }

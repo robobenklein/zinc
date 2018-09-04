@@ -5,6 +5,7 @@ function prompt_p10k_preexec () {
 
   # Stop running prompt async jobs:
   async_flush_jobs p10k_segment_worker
+  async_worker_eval p10k_segment_worker "cd" "$PWD"
 
   # Reset the async job states back to "" (not-yet-started)
   for async_segment in ${(k)_P10K_ASYNC_STATII}; do

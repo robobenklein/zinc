@@ -35,7 +35,9 @@ function p10k_render_prompt_from_spec () {
     # TODO OPTI
     (( ${+functions[${cur_segment}]} )) || {
       # _P10K_DBG_OUT "need to load $cur_segment X"
-      builtin autoload -U +X $cur_segment
+      builtin autoload -U +X $cur_segment || {
+        echo "P10K failed to find segment ${cur_segment}"
+      }
       _P10K_AUTOLOADED_FUNCTIONS+=("$cur_segment")
     }
 
@@ -115,20 +117,17 @@ function p10k_render_prompt_from_spec () {
     # Detect segment connection
     if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
       # skip drawing the arrow
-      builtin printf '%b' '%K{'${segment_opts[2]}'} '
+      _P10K_SBUF+="%K{${segment_opts[2]}} "
     else
-      [[ "$3" != "right" ]] && builtin printf '%b' ' %K{'${segment_opts[2]}'}%F{'${prev_bg}'}'${P10K_SEP_CHAR}' ' \
-      || printf '%b' ' %F{'${segment_opts[2]}'}'${P10K_SEP_CHAR}'%K{'${segment_opts[2]}'} '
+      [[ "$3" != "right" ]] && _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${P10K_SEP_CHAR} " \
+      || _P10K_SBUF+=" %F{${segment_opts[2]}}${P10K_SEP_CHAR}%K{${segment_opts[2]}} "
     fi
 
     # print actual segment content
-    builtin printf '%b' '%F{'${segment_opts[1]}'}'
-    # [[ ${segment_opts[4]} == "async" ]] && {
-    #   [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "returned" ]] \
-    #   && ${cur_segment}_async
-    # } || {
-      ${cur_segment} "${(@)segment_opts}"
-    # }
+    _P10K_SBUF+="%F{${segment_opts[1]}}"
+    REPLY=""
+    ${cur_segment} "${(@)segment_opts}"
+    _P10K_SBUF+="$REPLY"
 
     # store for next loop
     prev_bg="${segment_opts[2]}"
@@ -136,9 +135,10 @@ function p10k_render_prompt_from_spec () {
 
   # finish the prompt line:
   # the `%{ %}` is an invis wrapper
-  [[ "$3" != "right" ]] && builtin printf '%b' ' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
-  || builtin printf '%b' '%{ %}%k%f'
+  [[ "$3" != "right" ]] && _P10K_SBUF+=' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
+  || _P10K_SBUF+='%{ %}%k%f'
 
+  REPLY="$_P10K_SBUF"
 }
 
 _P10K_AUTOLOADED_FUNCTIONS+=("p10k_render_prompt_from_spec")

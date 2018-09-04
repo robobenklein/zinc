@@ -3,7 +3,7 @@
 echo "" > /tmp/_P10K_DBG_OUT.log
 
 p10k_left=(p10ks_user p10ks_host p10ks_cwd p10ks_vcs)
-p10k_right=(p10ks_retval p10ks_execution_time p10ks_time p10ks_a5)
+p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
 
 typeset -A p10k_opts
 p10k_opts=(
@@ -12,7 +12,7 @@ p10k_opts=(
   p10ks_cwd 'black;blue;normal;;rtab;-t;-l'
   p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;;'
   p10ks_time 'black;white;normal;;'
-  p10ks_a5 'white;black;;async;'
+  # p10ks_a5 'white;black;;async;'
 )
 
 echo ${p10k_left}
@@ -23,25 +23,25 @@ zmodload zsh/zprof
 
 source p10k.zsh-theme
 
-p10k_reload
+# p10k_reload
 
-echo "===== START ====="
-
-p10k_render_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
-print "$_P10K_RENDER_TEST"
-print -P '$_P10K_RENDER_TEST'
-p10k_render_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
-print "$_P10K_RENDER_TEST"
-print -P '$_P10K_RENDER_TEST'
-
-echo -e '\n===== SECOND BUILD ====='
-
-p10k_render_prompt_from_spec p10k_left p10k_opts | read -d $'\0' _P10K_RENDER_TEST
-print "$_P10K_RENDER_TEST"
-print -P '$_P10K_RENDER_TEST'
-p10k_render_prompt_from_spec p10k_right p10k_opts right | read -d $'\0' _P10K_RENDER_TEST
-print "$_P10K_RENDER_TEST"
-print -P '$_P10K_RENDER_TEST'
+# echo "===== START ====="
+#
+# p10k_render_prompt_from_spec p10k_left p10k_opts
+# print "$REPLY"
+# print -P '$REPLY'
+# p10k_render_prompt_from_spec p10k_right p10k_opts right
+# print "$REPLY"
+# print -P '$REPLY'
+#
+# echo -e '\n===== SECOND BUILD ====='
+#
+# p10k_render_prompt_from_spec p10k_left p10k_opts
+# print "$REPLY"
+# print -P '$REPLY'
+# p10k_render_prompt_from_spec p10k_right p10k_opts right
+# print "$REPLY"
+# print -P '$REPLY'
 
 # echo -e '\n===== TIMING ====='
 #

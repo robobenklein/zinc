@@ -2,6 +2,5 @@
 
 p10ks_time ()
 {
-  printf '%b' '%*'
-  # printf '%b' ",args:(${(j.,.)@})"
+  REPLY='%*'
 }

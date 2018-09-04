@@ -15,6 +15,7 @@ function _p10ks_execution_time_precmd () {
 
 function p10ks_execution_time () {
   # TODO conditionally shown
+  # TODO good formatting
   REPLY="${_p10ks_execution_time_last_execution_time}"
 }
 

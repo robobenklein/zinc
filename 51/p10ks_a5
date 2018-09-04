@@ -2,7 +2,7 @@
 
 p10ks_a5 ()
 {
-  builtin printf '%b' "${_p10ks_a5_value}"
+  REPLY="${_p10ks_a5_value}"
 }
 
 typeset -g _p10ks_a5_value="init"

@@ -1,5 +1,5 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function p10ks_a5_default_opts () {
-  printf '%b' 'white;black;normal;async'
+  reply=(white black normal async)
 }

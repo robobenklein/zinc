@@ -58,10 +58,12 @@ function p10k_segment_async_callback () {
 typeset -aU _P10K_AUTOLOADED_FUNCTIONS
 function p10k_reload () {
   async_flush_jobs p10k_segment_worker
-  for segment_function in $_P10K_AUTOLOADED_FUNCTIONS; do
-    unfunction $segment_function
-    echo "Reloading ${segment_function}"
-    builtin autoload -U +X $segment_function
+  for autoloaded_function in $_P10K_AUTOLOADED_FUNCTIONS; do
+    unfunction $autoloaded_function
+    echo "Reloading ${autoloaded_function}"
+    autoload -Uz +X ${autoloaded_function} || {
+      printf '%b\n' "\033[0;31mP10K: Could not reload ${autoloaded_function}!\033[0;0m" >&2
+    }
   done
   builtin unfunction prompt_p10k_setup
   builtin autoload -U +X prompt_p10k_setup
@@ -81,10 +83,14 @@ prompt_p10k_setup () {
 
   # Setup precmd / preexec
   _P10K_ASYNC_STATII["test"]="confirm"
+  autoload -Uz +X prompt_p10k_precmd
   add-zsh-hook precmd prompt_p10k_precmd
+  autoload -Uz +X prompt_p10k_preexec
   add-zsh-hook preexec prompt_p10k_preexec
+  autoload -Uz +X prompt_p10k_chpwd
+  add-zsh-hook chpwd prompt_p10k_chpwd
 
-  PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT} "
+  PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT}"
   RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
 }
 

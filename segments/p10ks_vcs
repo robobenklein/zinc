@@ -1,9 +1,15 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function p10ks_vcs () {
-  printf '%b' "${_p10ks_vcs_info_msg_0_}"
+function _p10ks_vcs_preexec () {
+  _p10ks_vcs_info_msg_0_=""
 }
 
-typeset -g _p10ks_vcs_info_msg_0_="loading..."
+function p10ks_vcs () {
+  REPLY="${_p10ks_vcs_info_msg_0_}"
+}
+
+typeset -g _p10ks_vcs_info_msg_0_=""
+
+add-zsh-hook preexec _p10ks_vcs_preexec
 
 p10ks_vcs "$@"

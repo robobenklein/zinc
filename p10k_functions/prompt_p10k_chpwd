@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function prompt_p10k_chpwd () {
+  async_worker_eval p10k_segment_worker "cd" "$PWD"
+}
+
+_P10K_AUTOLOADED_FUNCTIONS+=("prompt_p10k_chpwd")
+
+prompt_p10k_precmd "$@"

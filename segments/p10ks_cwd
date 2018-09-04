@@ -129,9 +129,8 @@ p10ks_cwd ()
   _P10KS_CWD_STRAT_ARGS=("$@") # dump rest of args for strategy options
 
   [[ "${_P10KS_CWD[output]}" == "" ]] && _p10ks_cwd_chpwd
-  builtin printf '%b' "${_P10KS_CWD[output]}"
 
-  # printf '%b' ",args:(${(j.,.)@})"
+  REPLY="${_P10KS_CWD[output]}"
 }
 
 # cleaner envvars
