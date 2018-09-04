@@ -10,8 +10,8 @@ p10k_opts=(
   p10ks_user 'white;black;normal;;'
   p10ks_host 'white;black;CONNECT_PREV;;'
   p10ks_cwd 'black;blue;normal;;rtab;-t;-l'
-  p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;;'
-  p10ks_time 'black;white;normal;;'
+  p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;normal;'
+  p10ks_time 'black;white;normal;normal;'
   # p10ks_a5 'white;black;;async;'
 )
 

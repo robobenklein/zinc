@@ -13,7 +13,7 @@ _P10K_DBG_OUT () {
 
 typeset -gA _P10K_ASYNC_STATII
 
-function p10k_segment_async_callback () {
+function _p10k_segment_async_callback () {
   # Async args:
   # $1 job name, e.g. the function passed to async_job
   # $2 return code
@@ -22,16 +22,20 @@ function p10k_segment_async_callback () {
   # $5 resulting (stderr) error output from job execution
   # $6 has next result in buffer (0 = buffer empty, 1 = yes)
 
-  # _P10K_DBG_OUT "p10k_segment_async_callback \"$1\" RET:$2"
+  # _P10K_DBG_OUT "_p10k_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
-  [[ "${1}" == "[async/eval]" ]] && return
+  [[ "${1}" == "[async/eval]" ]] && {
+    _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
+    return
+  }
 
   (( ${+functions[${1}_return]} )) || {
-    autoload -U +X "${1}_return"
+    autoload -Uz +X "${1}_return"
     _P10K_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
+  _P10K_DBG_OUT "$1 came back with output: $2; $3"
   [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII[${1}]="returned"
   _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
@@ -55,39 +59,40 @@ function p10k_segment_async_callback () {
   _P10K_ASYNC_STATII[${1}]="finished"
 }
 
-typeset -aU _P10K_AUTOLOADED_FUNCTIONS
+# This needs to be here to ensure we don't get into an autoload infinite loop.
+typeset -gaU _P10K_AUTOLOADED_FUNCTIONS
 function p10k_reload () {
   async_flush_jobs p10k_segment_worker
   for autoloaded_function in $_P10K_AUTOLOADED_FUNCTIONS; do
     unfunction $autoloaded_function
     echo "Reloading ${autoloaded_function}"
-    autoload -Uz +X ${autoloaded_function} || {
-      printf '%b\n' "\033[0;31mP10K: Could not reload ${autoloaded_function}!\033[0;0m" >&2
-    }
+    _p10k_tracked_autoload "${autoloaded_function}"
   done
+  # Self re-init:
   builtin unfunction prompt_p10k_setup
-  builtin autoload -U +X prompt_p10k_setup
+  # Don't call self! Let the user `prompt p10k` if needed.
+  builtin autoload -Uz +X prompt_p10k_setup
 }
 
 prompt_p10k_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
-  builtin autoload -Uz add-zsh-hook
-  builtin autoload -U +X p10k_render_prompt_from_spec
+  builtin autoload -Uz _p10k_tracked_autoload add-zsh-hook
+  _p10k_tracked_autoload p10k_render_prompt_from_spec
 
   # association
   typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
   # array
   typeset -ga p10k_left p10k_right
 
-  # Setup precmd / preexec
-  _P10K_ASYNC_STATII["test"]="confirm"
-  autoload -Uz +X prompt_p10k_precmd
+  # Setup precmd / preexec / chpwd
+  # _P10K_ASYNC_STATII["test"]="confirm"
+  _p10k_tracked_autoload prompt_p10k_precmd
   add-zsh-hook precmd prompt_p10k_precmd
-  autoload -Uz +X prompt_p10k_preexec
+  _p10k_tracked_autoload prompt_p10k_preexec
   add-zsh-hook preexec prompt_p10k_preexec
-  autoload -Uz +X prompt_p10k_chpwd
+  _p10k_tracked_autoload prompt_p10k_chpwd
   add-zsh-hook chpwd prompt_p10k_chpwd
 
   PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT}"
@@ -96,6 +101,6 @@ prompt_p10k_setup () {
 
 async_start_worker p10k_segment_worker -n
 
-async_register_callback p10k_segment_worker p10k_segment_async_callback
+async_register_callback p10k_segment_worker _p10k_segment_async_callback
 
 prompt_p10k_setup "$@"

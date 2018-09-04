@@ -35,7 +35,7 @@ function p10k_render_prompt_from_spec () {
     # TODO OPTI
     (( ${+functions[${cur_segment}]} )) || {
       # _P10K_DBG_OUT "need to load $cur_segment X"
-      builtin autoload -U +X $cur_segment || {
+      builtin autoload -Uz +X $cur_segment || {
         echo "P10K failed to find segment ${cur_segment}"
       }
       _P10K_AUTOLOADED_FUNCTIONS+=("$cur_segment")
@@ -44,19 +44,20 @@ function p10k_render_prompt_from_spec () {
     # Get segment options, fill needed defaults
     segment_optstr="${_p10k_opts[$cur_segment]}"
     segment_opts=("${(@s.;.)segment_optstr}")
-    _P10K_DBG_OUT "$cur_segment opts before default application: ${segment_opts}"
+    # _P10K_DBG_OUT "$cur_segment opts before default application: ${segment_opts}"
     for segment_opt_number in {1..4}; do
       [[ "${segment_opts[$segment_opt_number]}" == "" ]] && {
         # then we need to get the default opt here
         (( ${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]} )) || {
           _P10K_DBG_OUT "getting default opts for $cur_segment ${segment_opt_number}"
-          (( ${+functions[${cur_segment}_default_opts]} )) || {
-            builtin autoload -Uz +X "${cur_segment}_default_opts"
-            _P10K_AUTOLOADED_FUNCTIONS+="${cur_segment}_default_opts"
-          }
+          # (( ${+functions[${cur_segment}_default_opts]} )) || {
+          #   builtin autoload -Uz +X "${cur_segment}_default_opts"
+          #   _P10K_AUTOLOADED_FUNCTIONS+="${cur_segment}_default_opts"
+          # }
+          _p10k_tracked_autoload "${cur_segment}_default_opts"
           ${cur_segment}_default_opts
           local -a new_segment_opts=("${(@s.;.)reply}")
-          _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
+          # _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
           for v in {1..4}; do
             _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${new_segment_opts[${v}]}
           done
@@ -65,23 +66,25 @@ function p10k_render_prompt_from_spec () {
         segment_opts[${segment_opt_number}]="${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]}"
       }
     done
-    _P10K_DBG_OUT "$cur_segment opts after default application: ${segment_opts}"
+    # _P10K_DBG_OUT "$cur_segment opts after default application: ${segment_opts}"
     # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
 
     # Detect segments with asynchronous output enabled
     # async status "" means not yet started
     [[ ${segment_opts[4]} == "async" ]] && \
     [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
-      (( ${+functions[${cur_segment}_async]} )) || {
-        builtin autoload -U +X ${cur_segment}_async
-        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async")
-      }
-      async_worker_eval p10k_segment_worker "autoload" "-U" "+X" "${cur_segment}_async"
+      # (( ${+functions[${cur_segment}_async]} )) || {
+      #   builtin autoload -Uz +X ${cur_segment}_async
+      #   _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async")
+      # }
+      _p10k_tracked_autoload "${cur_segment}_async"
+      async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "${cur_segment}_async"
       [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
-      (( ${+functions[${cur_segment}_async_started]} )) || {
-        builtin autoload -U +X ${cur_segment}_async_started
-        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async_started")
-      }
+      # (( ${+functions[${cur_segment}_async_started]} )) || {
+      #   builtin autoload -Uz +X ${cur_segment}_async_started
+      #   _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_async_started")
+      # }
+      _p10k_tracked_autoload "${cur_segment}_async_started"
       ${cur_segment}_async_started "${(@)segment_opts}"
       _P10K_ASYNC_STATII[${cur_segment}_async]="started"
       async_job p10k_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
@@ -92,10 +95,11 @@ function p10k_render_prompt_from_spec () {
 
     # Detect segments with conditional display
     if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
-      (( ${+functions[${cur_segment}_display_hidden]} )) || {
-        builtin autoload -U +X ${cur_segment}_display_hidden
-        _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_display_hidden")
-      }
+      # (( ${+functions[${cur_segment}_display_hidden]} )) || {
+      #   builtin autoload -Uz +X ${cur_segment}_display_hidden
+      #   _P10K_AUTOLOADED_FUNCTIONS+=("${cur_segment}_display_hidden")
+      # }
+      _p10k_tracked_autoload "${cur_segment}_display_hidden"
       ${cur_segment}_display_hidden && {
         _P10K_DBG_OUT "not displaying ${cur_segment}"
         continue
@@ -104,13 +108,15 @@ function p10k_render_prompt_from_spec () {
 
     # Detect segments with conditional colors
     if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then
-      (( ${+functions[${cur_segment}_fg]} )) || \
-        builtin autoload -U +X ${cur_segment}_fg
+      # (( ${+functions[${cur_segment}_fg]} )) || \
+      #   builtin autoload -Uz +X ${cur_segment}_fg
+      _p10k_tracked_autoload "${cur_segment}_fg"
       segment_opts[1]="$(${cur_segment}_fg)"
     fi
     if [[ ${segment_opts[2]} == "CONDITIONAL" ]]; then
-      (( ${+functions[${cur_segment}_bg]} )) || \
-        builtin autoload -U +X ${cur_segment}_bg
+      # (( ${+functions[${cur_segment}_bg]} )) || \
+      #   builtin autoload -Uz +X ${cur_segment}_bg
+      _p10k_tracked_autoload "${cur_segment}_bg"
       segment_opts[2]="$(${cur_segment}_bg)"
     fi
 
@@ -139,6 +145,8 @@ function p10k_render_prompt_from_spec () {
   || _P10K_SBUF+='%{ %}%k%f'
 
   REPLY="$_P10K_SBUF"
+
+  _P10K_DBG_OUT "<<< render done."
 }
 
 _P10K_AUTOLOADED_FUNCTIONS+=("p10k_render_prompt_from_spec")

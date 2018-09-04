@@ -4,10 +4,8 @@ function prompt_p10k_precmd () {
   _P10K_RETVAL_STORE=$?
   _P10K_RETVAL_STOREs=( "$pipestatus[@]" )
 
-  (( ${+functions[prompt_p10k_render_to_vars]} )) || autoload -U +X prompt_p10k_render_to_vars
+  _p10k_tracked_autoload prompt_p10k_render_to_vars
   prompt_p10k_render_to_vars
 }
-
-_P10K_AUTOLOADED_FUNCTIONS+=("prompt_p10k_precmd")
 
 prompt_p10k_precmd "$@"
