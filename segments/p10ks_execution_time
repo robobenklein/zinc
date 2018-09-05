@@ -2,13 +2,33 @@
 
 function _p10ks_execution_time_preexec () {
   # set the start time point using epoch
-  _p10ks_execution_time_process_start=$EPOCHREALTIME
   _p10ks_execution_time_process_started="1"
+  _p10ks_execution_time_last_execution_time="0"
+  _p10ks_execution_time_process_start=$EPOCHREALTIME
 }
 
 function _p10ks_execution_time_precmd () {
   (( _p10ks_execution_time_process_started )) && {
     _p10ks_execution_time_last_execution_time="$(( EPOCHREALTIME - _p10ks_execution_time_process_start ))"
+    if (( _p10ks_execution_time_last_execution_time < 60 )); then
+      # number of seconds:
+      printf -v REPLY '%.2f' "${_p10ks_execution_time_last_execution_time}"
+      _p10ks_execution_time_formatted_output="${REPLY}⧖"
+    elif (( _p10ks_execution_time_last_execution_time < 3600 )); then
+      # minutes and seconds:
+      printf -v REPLY '%d' "${_p10ks_execution_time_last_execution_time}"
+      strftime -s REPLY -- "%-M:%S" "${REPLY}"
+      _p10ks_execution_time_formatted_output="${REPLY}⧖"
+    elif (( _p10ks_execution_time_last_execution_time < 86400 )); then
+      printf -v REPLY '%d' "${_p10ks_execution_time_last_execution_time}"
+      TZ=GMT strftime -s REPLY -- "%K:%M:%S" "${REPLY}"
+      _p10ks_execution_time_formatted_output="${REPLY}⧖"
+    else
+      # literally days:
+      printf -v REPLY '%d' "${_p10ks_execution_time_last_execution_time}"
+      TZ=GMT strftime -- '%-jd%K:%M:%S'
+      _p10ks_execution_time_formatted_output="${REPLY}⧖"
+    fi
     _p10ks_execution_time_process_started="0"
   }
 }
@@ -16,7 +36,7 @@ function _p10ks_execution_time_precmd () {
 function p10ks_execution_time () {
   # TODO conditionally shown
   # TODO good formatting
-  REPLY="${_p10ks_execution_time_last_execution_time}"
+  REPLY="${_p10ks_execution_time_formatted_output}"
 }
 
 # float (H)ideval:

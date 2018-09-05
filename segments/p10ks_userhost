@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_userhost () {
+  [[ "$5" == "" ]] && {
+    REPLY="%n@%m"
+  } || {
+    REPLY="$5"
+  }
+}

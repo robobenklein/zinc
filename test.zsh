@@ -2,13 +2,14 @@
 
 echo "" > /tmp/_P10K_DBG_OUT.log
 
-p10k_left=(p10ks_user p10ks_host p10ks_cwd p10ks_vcs)
+p10k_left=(p10ks_userhost p10ks_cwd p10ks_vcs)
 p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
 
 typeset -A p10k_opts
 p10k_opts=(
-  p10ks_user 'white;black;normal;;'
-  p10ks_host 'white;black;CONNECT_PREV;;'
+  # p10ks_user 'white;black;normal;;'
+  # p10ks_host 'white;black;CONNECT_PREV;;'
+  p10ks_userhost 'white;black;normal;normal;%n@%m'
   p10ks_cwd 'black;blue;normal;;rtab;-t;-l'
   p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;normal;'
   p10ks_time 'black;white;normal;normal;'

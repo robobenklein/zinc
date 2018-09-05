@@ -3,6 +3,7 @@
 p10ks_vcs_async_started ()
 {
   _P10K_DBG_OUT "p10ks_vcs_async_started called..."
+  # _display_hidden is hooked on the empty scalar:
   _p10ks_vcs_info_msg_0_=""
 }
 
