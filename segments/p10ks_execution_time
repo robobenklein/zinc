@@ -26,7 +26,7 @@ function _p10ks_execution_time_precmd () {
     else
       # literally days:
       printf -v REPLY '%d' "${_p10ks_execution_time_last_execution_time}"
-      TZ=GMT strftime -- '%-jd%K:%M:%S'
+      TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S'
       _p10ks_execution_time_formatted_output="${REPLY}⧖"
     fi
     _p10ks_execution_time_process_started="0"
