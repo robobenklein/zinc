@@ -123,10 +123,9 @@ _p10ks_cwd_chpwd ()
 
 p10ks_cwd ()
 {
-  shift 4 # we don't care for the P10K args
-  _P10KS_CWD[strategy]="$1"
-  shift
-  _P10KS_CWD_STRAT_ARGS=("$@") # dump rest of args for strategy options
+  # shift 4 # we don't care for the P10K args
+  _P10KS_CWD[strategy]="$5"
+  _P10KS_CWD_STRAT_ARGS=("${@:6}") # dump rest of args for strategy options
 
   [[ "${_P10KS_CWD[output]}" == "" ]] && _p10ks_cwd_chpwd
 

@@ -46,7 +46,7 @@ function p10k_render_prompt_from_spec () {
           _p10k_tracked_autoload "${cur_segment}_default_opts"
           ${cur_segment}_default_opts
           local -a new_segment_opts=("${(@s.;.)reply}")
-          # _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
+          _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
           for v in {1..4}; do
             _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${new_segment_opts[${v}]}
           done
