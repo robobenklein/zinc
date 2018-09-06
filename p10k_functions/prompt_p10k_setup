@@ -40,23 +40,25 @@ function _p10k_segment_async_callback () {
   _P10K_ASYNC_STATII[${1}]="returned"
   _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
 
+  [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
+
+  _P10K_ASYNC_STATII[${1}]="finished"
+
   # check to see if there any more async segments yet to return
   local -i async_complete=1 # default done
   for async_segment in ${(k)_P10K_ASYNC_STATII}; do
-    [[ ${_P10K_ASYNC_STATII[${async_segment}]} != "returned" ]] && {
+    [[ ${_P10K_ASYNC_STATII[${async_segment}]} != "finished" ]] && {
       async_complete=0
       break
     }
   done
 
-  # TODO
+  # let segments know we won't be drawing them again until the next precmd
+  # useful for when segments only offered info on the previous command status
   (( async_complete )) && {
-    # call segments that requested to be notified on prompt draw async finish
+    _P10K_DBG_OUT "running async_complete hook"
+    _p10k_run_hook _p10k_async_complete
   }
-
-  [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
-
-  _P10K_ASYNC_STATII[${1}]="finished"
 }
 
 # This needs to be here to ensure we don't get into an autoload infinite loop.
@@ -79,7 +81,8 @@ prompt_p10k_setup () {
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
   builtin autoload -Uz _p10k_tracked_autoload add-zsh-hook
-  _p10k_tracked_autoload p10k_render_prompt_from_spec
+  _p10k_tracked_autoload p10k_render_prompt_from_spec prompt_p10k_render_to_vars
+  _p10k_tracked_autoload _p10k_define_hook _p10k_add_hook _p10k_run_hook
 
   # association
   typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
@@ -95,12 +98,13 @@ prompt_p10k_setup () {
   _p10k_tracked_autoload prompt_p10k_chpwd
   add-zsh-hook chpwd prompt_p10k_chpwd
 
+  _p10k_define_hook _p10k_async_complete
+
   PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT}"
   RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
+
+  async_start_worker p10k_segment_worker -n
+  async_register_callback p10k_segment_worker _p10k_segment_async_callback
 }
-
-async_start_worker p10k_segment_worker -n
-
-async_register_callback p10k_segment_worker _p10k_segment_async_callback
 
 prompt_p10k_setup "$@"

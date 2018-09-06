@@ -41,4 +41,5 @@ The long options can also be set via zstyle, like
   zstyle :prompt:rtab fish yes
 ```
 
-Note that combined short form (`-sl`) options are *NOT* supported.
+Note:
+> Combined short form (`-sl`) options are *NOT* supported.

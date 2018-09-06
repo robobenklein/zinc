@@ -2,12 +2,14 @@
 
 # Load an fpath function only if not yet present.
 function _p10k_tracked_autoload () {
-  (( ${+functions[${1}]} )) || {
-    builtin autoload -Uz +X $1 || {
-      printf '%b\n' "\033[0;31mP10K: Could not find/load ${1}!\033[0;0m" >&2
+  for afunc in ${@}; do
+    (( ${+functions[${afunc}]} )) || {
+      builtin autoload -Uz +X $afunc || {
+        printf '%b\n' "\033[0;31mP10K: Could not find/load ${afunc}!\033[0;0m" >&2
+      }
+      _P10K_AUTOLOADED_FUNCTIONS+=("$afunc")
     }
-    _P10K_AUTOLOADED_FUNCTIONS+=("$1")
-  }
+  done
 }
 
 typeset -gaU _P10K_AUTOLOADED_FUNCTIONS

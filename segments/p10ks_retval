@@ -6,3 +6,7 @@ p10ks_retval ()
   || REPLY="${_P10K_RETVAL_STORE}"
   # printf '%b' ",args:(${(j.,.)@})"
 }
+
+typeset -gA p10ks_retval
+
+p10ks_retval "$@"

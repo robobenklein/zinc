@@ -1,0 +1,7 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function _p10k_run_hook () {
+  for f in ${(P)1}; do
+    $f ${@:2} # send given args to the func
+  done
+}

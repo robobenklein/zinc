@@ -33,9 +33,14 @@ function _p10ks_execution_time_precmd () {
   }
 }
 
+function _p10ks_execution_time_async_complete () {
+  # _P10K_DBG_OUT "pexectime async done..."
+  p10ks_execution_time[last_execution_time]=0
+  p10ks_execution_time[formatted_output]=""
+}
+
 function p10ks_execution_time () {
-  # TODO conditionally shown
-  # TODO good formatting
+  # TODO formatting options
   REPLY="${p10ks_execution_time[formatted_output]}"
 }
 
@@ -49,10 +54,12 @@ typeset -gA p10ks_execution_time
 p10ks_execution_time[process_started]=0
 
 if [[ "${p10ks_execution_time[threshold]}" == "" ]]; then
-  p10ks_execution_time[threshold]="1"
+  [[ "$5" != "" ]] && p10ks_execution_time[threshold]="$5" \
+  || p10ks_execution_time[threshold]="1"
 fi
 
-add-zsh-hook preexec _p10ks_execution_time_preexec
-add-zsh-hook precmd _p10ks_execution_time_precmd
+_p10k_add_hook _p10k_preexec _p10ks_execution_time_preexec
+_p10k_add_hook _p10k_precmd _p10ks_execution_time_precmd
+_p10k_add_hook _p10k_async_complete _p10ks_execution_time_async_complete
 
 p10ks_execution_time "$@"

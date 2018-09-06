@@ -11,10 +11,14 @@ function prompt_p10k_preexec () {
     _P10K_ASYNC_STATII[$async_segment]=""
   done
 
-  _P10K_DBG_OUT "Reset async statii of ${(k)_P10K_ASYNC_STATII}"
+  # _P10K_DBG_OUT "Reset async statii of ${(k)_P10K_ASYNC_STATII}"
+
+  _p10k_run_hook _p10k_preexec
 
 }
 
 _P10K_AUTOLOADED_FUNCTIONS+=("prompt_p10k_preexec")
+
+_p10k_define_hook _p10k_preexec
 
 prompt_p10k_preexec "$@"

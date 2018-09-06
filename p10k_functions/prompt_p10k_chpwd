@@ -2,6 +2,9 @@
 
 function prompt_p10k_chpwd () {
   async_worker_eval p10k_segment_worker 'cd' "$PWD"
+  _p10k_run_hook _p10k_chpwd
 }
+
+_p10k_define_hook _p10k_chpwd
 
 prompt_p10k_chpwd "$@"
