@@ -71,8 +71,10 @@ function p10k_render_prompt_from_spec () {
       async_job p10k_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
     }
 
-    # HACK
-    # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
+    # Run the segment and gather output:
+    REPLY=""
+    ${cur_segment} "${(@)segment_opts}"
+    local segment_output="$REPLY"
 
     # Detect segments with conditional display
     if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
@@ -104,9 +106,7 @@ function p10k_render_prompt_from_spec () {
 
     # print actual segment content
     _P10K_SBUF+="%F{${segment_opts[1]}}"
-    REPLY=""
-    ${cur_segment} "${(@)segment_opts}"
-    _P10K_SBUF+="$REPLY"
+    _P10K_SBUF+="${segment_output}"
 
     # store for next loop
     prev_bg="${segment_opts[2]}"
