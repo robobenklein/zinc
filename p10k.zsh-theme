@@ -21,20 +21,25 @@ else
 fi
 
 ### install location detection
-local _P10K_SCRIPTPATH="${(%):-%N}"
+_P10K_SCRIPTPATH="${(%):-%N}"
 # echo $_P10K_SCRIPTPATH
-local _P10K_INSTALL_LOC="$(_p10k_zrllink $_P10K_SCRIPTPATH)"
+_P10K_INSTALL_LOC="$(_p10k_zrllink $_P10K_SCRIPTPATH)"
 # echo $_P10K_INSTALL_LOC
-local P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
+P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
 
-# TODO check if exist then add, instead of type unique
-typeset -U fpath
-fpath+=("$P10K_INSTALL_DIR/p10k_functions")
-fpath+=("$P10K_INSTALL_DIR/segments")
-# fpath+=("$P10K_INSTALL_DIR/51")
+function p10k_selfdestruct_setup () {
+  # TODO check if exist then add, instead of type unique
+  fpath+=("$P10K_INSTALL_DIR/p10k_functions")
+  fpath+=("$P10K_INSTALL_DIR/segments")
 
-# echo $fpath
+  autoload -Uz promptinit; promptinit
+  # echo $fpath
+  prompt p10k
+  prompt_p10k_render_to_vars
 
-autoload -Uz promptinit; promptinit
+  precmd_functions=("${(@)precmd_functions:#p10k_selfdestruct_setup}")
+}
 
-prompt p10k
+typeset -ga precmd_functions
+
+precmd_functions+=(p10k_selfdestruct_setup)
