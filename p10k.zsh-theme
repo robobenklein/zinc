@@ -32,14 +32,18 @@ function p10k_selfdestruct_setup () {
   fpath+=("$P10K_INSTALL_DIR/p10k_functions")
   fpath+=("$P10K_INSTALL_DIR/segments")
 
-  autoload -Uz promptinit; promptinit
-  # echo $fpath
-  prompt p10k
-  prompt_p10k_render_to_vars
-
   precmd_functions=("${(@)precmd_functions:#p10k_selfdestruct_setup}")
 }
 
-typeset -ga precmd_functions
+# typeset -ga precmd_functions
 
 precmd_functions+=(p10k_selfdestruct_setup)
+
+# echo "fpath: $fpath"
+
+# fpath+=("$P10K_INSTALL_DIR/p10k_functions")
+# fpath+=("$P10K_INSTALL_DIR/segments")
+
+autoload -Uz promptinit; promptinit
+
+prompt p10k
