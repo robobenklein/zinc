@@ -29,8 +29,10 @@ P10K_INSTALL_DIR="${_P10K_INSTALL_LOC%/*}"
 
 function p10k_selfdestruct_setup () {
   # TODO check if exist then add, instead of type unique
-  fpath+=("$P10K_INSTALL_DIR/p10k_functions")
-  fpath+=("$P10K_INSTALL_DIR/segments")
+  (( ${fpath[(I)"$P10K_INSTALL_DIR/p10k_functions"]} )) || {
+    fpath+=("$P10K_INSTALL_DIR/p10k_functions")
+    fpath+=("$P10K_INSTALL_DIR/segments")
+  }
 
   precmd_functions=("${(@)precmd_functions:#p10k_selfdestruct_setup}")
 }

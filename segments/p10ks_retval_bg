@@ -3,9 +3,9 @@
 p10ks_retval_bg ()
 {
   if [[ "$_P10K_RETVAL_STORE" == '0' ]]; then
-    builtin print 'black'
+    REPLY='black'
   else
-    builtin print 'red'
+    REPLY='red'
   fi
 
   # _P10K_DBG_OUT retval_bg says: "$_P10K_RETVAL_STORE"

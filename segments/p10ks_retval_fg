@@ -3,8 +3,8 @@
 p10ks_retval_fg ()
 {
   if [[ $_P10K_RETVAL_STORE == '0' ]]; then
-    builtin print 'green'
+    REPLY='green'
   else
-    builtin print 'black'
+    REPLY='black'
   fi
 }

@@ -7,12 +7,12 @@ p10ks_vcs_async_return ()
   # $3 execution time, floating point e.g. 0.0076138973 seconds
   # $4 resulting (stderr) error output from job execution
 
-  _p10ks_vcs_info_msg_0_="$2"
-  _P10K_DBG_OUT "_p10ks_vcs_info_msg_0_ was set to: $2"
+  _P10K_DBG_OUT "p10ks_vcs working out input: $2"
+  local -a tmp
+  tmp=("${(s.;;;.)2}")
+  p10ks_vcs["_info_msg_0_"]="${tmp[2]}"
+  tmp=("${(s.,.)tmp}")
+  p10ks_vcs["vcs_workdir_dirty"]="${tmp[1]}"
 }
-
-typeset -g _p10ks_vcs_info_msg_0_="$2"
-
-_P10K_DBG_OUT "autoloaded p10ks_vcs_async_return with args: $@"
 
 p10ks_vcs_async_return "$@"

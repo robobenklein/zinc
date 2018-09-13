@@ -5,7 +5,7 @@ autoload -Uz vcs_info
 p10ks_vcs_async ()
 {
   vcs_info
-  printf '%b' "${vcs_info_msg_0_}"
+  printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
 }
 
 # HACK/TODO ex. from my personal shell
@@ -34,6 +34,21 @@ zstyle ':vcs_info:hg*+set-message:*' hooks \
  vcs-detect-changes hg-branchhead
 zstyle ':vcs_info:svn*+set-message:*' hooks \
  vcs-detect-changes svn-detect-changes
+
+### Generic hook functions
+function +vi-vcs-detect-changes() {
+  if [[ "${hook_com[vcs]}" == "hg" ]]; then
+    vcs_visual_identifier='VCS_HG_ICON'
+  elif [[ "${hook_com[vcs]}" == "svn" ]]; then
+    vcs_visual_identifier='VCS_SVN_ICON'
+  fi
+
+  if [[ -n "${hook_com[staged]}" ]] || [[ -n "${hook_com[unstaged]}" ]]; then
+    VCS_WORKDIR_DIRTY=1
+  else
+    VCS_WORKDIR_DIRTY=0
+  fi
+}
 
 ### GIT hook functions
 

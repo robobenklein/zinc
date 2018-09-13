@@ -88,11 +88,15 @@ function p10k_render_prompt_from_spec () {
     # Detect segments with conditional colors
     if [[ "${segment_opts[1]}" == "CONDITIONAL" ]]; then
       _p10k_tracked_autoload "${cur_segment}_fg"
-      segment_opts[1]="$(${cur_segment}_fg)"
+      REPLY="white"
+      ${cur_segment}_fg
+      segment_opts[1]="${REPLY}"
     fi
     if [[ ${segment_opts[2]} == "CONDITIONAL" ]]; then
       _p10k_tracked_autoload "${cur_segment}_bg"
-      segment_opts[2]="$(${cur_segment}_bg)"
+      REPLY="black"
+      ${cur_segment}_bg
+      segment_opts[2]="${REPLY}"
     fi
 
     # Detect segment connection

@@ -1,10 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function p10ks_vcs () {
-  _P10K_DBG_OUT "p10ks_vcs replying with: ${_p10ks_vcs_info_msg_0_}"
-  REPLY="${_p10ks_vcs_info_msg_0_}"
+  _P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
+  REPLY="${p10ks_vcs["_info_msg_0_"]}"
 }
 
-typeset -g _p10ks_vcs_info_msg_0_
+typeset -gA p10ks_vcs
 
 p10ks_vcs "$@"

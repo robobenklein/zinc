@@ -1,0 +1,11 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_vcs_bg () {
+  (( p10ks_vcs["vcs_workdir_dirty"] )) && {
+    REPLY="yellow"
+  } || {
+    REPLY="green"
+  }
+}
+
+p10ks_vcs_bg "$@"
