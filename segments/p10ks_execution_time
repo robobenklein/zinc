@@ -13,22 +13,19 @@ function _p10ks_execution_time_precmd () {
     if (( p10ks_execution_time[last_execution_time] < 60 )); then
       # number of seconds:
       printf -v REPLY '%.2f' "${p10ks_execution_time[last_execution_time]}"
-      p10ks_execution_time[formatted_output]="${REPLY}⧖"
     elif (( p10ks_execution_time[last_execution_time] < 3600 )); then
       # minutes and seconds:
       printf -v REPLY '%d' "${p10ks_execution_time[last_execution_time]}"
       strftime -s REPLY -- "%-M:%S" "${REPLY}"
-      p10ks_execution_time[formatted_output]="${REPLY}⧖"
     elif (( p10ks_execution_time[last_execution_time] < 86400 )); then
       printf -v REPLY '%d' "${p10ks_execution_time[last_execution_time]}"
       TZ=GMT strftime -s REPLY -- "%K:%M:%S" "${REPLY}"
-      p10ks_execution_time[formatted_output]="${REPLY}⧖"
     else
       # literally days:
       printf -v REPLY '%d' "${p10ks_execution_time[last_execution_time]}"
       TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S'
-      p10ks_execution_time[formatted_output]="${REPLY}⧖"
     fi
+    p10ks_execution_time[formatted_output]="${REPLY} ⧖"
     p10ks_execution_time[process_started]="0"
   }
 }
