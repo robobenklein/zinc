@@ -31,6 +31,9 @@ function segmint_default_opts() {
 }
 ```
 
+Note:
+> Only the items 1,2,3,4 are used from `_default_opts`. Further items are ignored. For other defaults, implement them in your segment setup or runtime functions.
+
 ## Optional: `segmint_fg(){}` and `segmint_bg(){}`
 
 If `$1` (fg) or `$2` (bg) are set as `CONDITIONAL` in the segment options, P10K will call these functions to get the desired foreground/background color settings.

@@ -20,10 +20,10 @@ Example dir: `/home/robo/code/configs/zsh`
 
 ### DIR Display Strategy
 
-| Strategy | Description                                      | Example                |
-| -------- | ------------------------------------------------ | ---------------------- |
-|          | No shortening, just `$PWD`                       | `/home/robo/code/p10k` |
-| `rtab`   | Reverse tabbing function, has additional options | `~/c/p10k`             |
+| Strategy | Description | Example |
+| --- | --- | --- |
+|  | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/p10k` |
+| `rtab` | Reverse tabbing function, has additional options | `~/c/p10k`, `~/c/p`, `/h/r/c/p`, etc |
 
 ### Strategy options:
 
