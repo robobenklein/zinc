@@ -41,7 +41,7 @@ function p10k_render_prompt_from_spec () {
     for segment_opt_number in {1..4}; do
       [[ "${segment_opts[$segment_opt_number]}" == "" ]] && {
         # then we need to get the default opt here
-        (( ${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]} )) || {
+        [[ "${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]}" == "" ]] && {
           # _P10K_DBG_OUT "getting default opts for $cur_segment ${segment_opt_number}"
           _p10k_tracked_autoload "${cur_segment}_default_opts"
           reply=()
