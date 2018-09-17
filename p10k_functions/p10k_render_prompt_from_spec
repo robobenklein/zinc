@@ -36,20 +36,20 @@ function p10k_render_prompt_from_spec () {
 
     # Get segment options, fill needed defaults
     segment_optstr="${_p10k_opts[$cur_segment]}"
+    # _P10K_DBG_OUT "$cur_segment segment_optstr: ${segment_optstr}"
     segment_opts=("${(@s.;.)segment_optstr}")
-    # _P10K_DBG_OUT "$cur_segment opts before default application: ${segment_opts}"
+    # _P10K_DBG_OUT "$cur_segment opts before default application: type(${(t)segment_opts}) ${segment_opts}"
     for segment_opt_number in {1..4}; do
       [[ "${segment_opts[$segment_opt_number]}" == "" ]] && {
         # then we need to get the default opt here
         [[ "${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]}" == "" ]] && {
           # _P10K_DBG_OUT "getting default opts for $cur_segment ${segment_opt_number}"
           _p10k_tracked_autoload "${cur_segment}_default_opts"
-          reply=()
+          local -a reply=()
           ${cur_segment}_default_opts
-          local -a new_segment_opts=("${(@s.;.)reply}")
-          # _P10K_DBG_OUT "$cur_segment default opts: ${new_segment_opts}"
+          # _P10K_DBG_OUT "$cur_segment default opts: ${(j.,.)reply}"
           for v in {1..4}; do
-            _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${new_segment_opts[${v}]}
+            _P10K_SEGMENT_DEFAULTS[${cur_segment}_${v}]=${reply[${v}]}
           done
         }
         # set the value from _P10K_SEGMENT_DEFAULTS cache
@@ -61,7 +61,7 @@ function p10k_render_prompt_from_spec () {
 
     # Detect segments with asynchronous output enabled
     # async status "" means not yet started
-    [[ ${segment_opts[4]} == "async" ]] && \
+    [[ "${segment_opts[4]}" == "async" ]] && \
     [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
       _p10k_tracked_autoload "${cur_segment}_async"
       async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "${cur_segment}_async"

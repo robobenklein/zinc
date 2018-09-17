@@ -2,13 +2,16 @@
 
 function _p10ks_execution_time_preexec () {
   # set the start time point using epoch
+  _P10K_DBG_OUT "_p10ks_execution_time_preexec"
   p10ks_execution_time[process_started]="1"
   p10ks_execution_time[last_execution_time]="0"
   _p10ks_execution_time_process_start=$EPOCHREALTIME
 }
 
 function _p10ks_execution_time_precmd () {
+  _P10K_DBG_OUT "_p10ks_execution_time_precmd"
   (( p10ks_execution_time[process_started] )) && {
+    REPLY=""
     p10ks_execution_time[last_execution_time]="$(( EPOCHREALTIME - _p10ks_execution_time_process_start ))"
     if (( p10ks_execution_time[last_execution_time] < 60 )); then
       # number of seconds:
@@ -26,6 +29,7 @@ function _p10ks_execution_time_precmd () {
       TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S'
     fi
     p10ks_execution_time[formatted_output]="${REPLY} ⧖"
+    _P10K_DBG_OUT "p10ks_execution_time[formatted_output]=\"${p10ks_execution_time[formatted_output]}\""
     p10ks_execution_time[process_started]="0"
   }
 }
