@@ -88,6 +88,12 @@ prompt_p10k_setup () {
   typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
   # array
   typeset -ga p10k_left p10k_right
+  [[ "${#p10k_left}" == "0" ]] && {
+    p10k_left=(p10ks_userhost p10ks_cwd p10ks_vcs)
+  }
+  [[ "${#p10k_right}" == "0" ]] && {
+    p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
+  }
 
   # Setup precmd / preexec / chpwd
   # _P10K_ASYNC_STATII["test"]="confirm"
