@@ -1,8 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function prompt_p10k_render_to_vars () {
+  REPLY=""
   p10k_render_prompt_from_spec p10k_left p10k_opts
   _P10K_RENDERED_OUTPUT_PROMPT="$REPLY"
+  REPLY=""
   p10k_render_prompt_from_spec p10k_right p10k_opts right
   _P10K_RENDERED_OUTPUT_RPROMPT="$REPLY"
 }
