@@ -7,9 +7,7 @@ p10ks_retval ()
   elif (( _P10K_RETVAL_STORE <= 128 )); then
     REPLY="${_P10K_RETVAL_STORE}"
   else
-    local sig=$(( _P10K_RETVAL_STORE - 128 ))
-    local idx=$(( sig + 1 ))
-    REPLY="SIG${signals[${idx}]}(${sig})"
+    REPLY="SIG${signals[$(( _P10K_RETVAL_STORE - 127 ))]}($(( _P10K_RETVAL_STORE - 128 )))"
   fi
   # printf '%b' ",args:(${(j.,.)@})"
 }
