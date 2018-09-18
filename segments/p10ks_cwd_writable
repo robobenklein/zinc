@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_cwd_writable () {
+  REPLY="${p10ks_cwd_writable[symbol]}"
+}
+
+typeset -gA p10ks_cwd_writable
+
+p10ks_cwd_writable[symbol]=${p10ks_cwd_writable[symbol]:-$'\UE0A2'}
