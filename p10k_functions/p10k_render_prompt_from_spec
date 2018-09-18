@@ -1,5 +1,12 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+typeset -gA _P10K_SEP_CHARS
+
+_P10K_SEP_CHARS[left]=${_P10K_SEP_CHARS[left]:-''}
+_P10K_SEP_CHARS[right]=${_P10K_SEP_CHARS[right]:-''}
+_P10K_SEP_CHARS[left_bgmatch]=${_P10K_SEP_CHARS[left_bgmatch]:-''}
+_P10K_SEP_CHARS[right_bgmatch]=${_P10K_SEP_CHARS[right_bgmatch]:-''}
+
 function p10k_render_prompt_from_spec () {
   _P10K_DBG_OUT "\n>>> build_prompt: $1 $2"
   # Builds the prompt with the given name.
@@ -9,18 +16,15 @@ function p10k_render_prompt_from_spec () {
   # $3: Render direction
   # $4: Chars to use as segment separator.
 
+  [[ "${(P)#1}" == "0" ]] && _P10K_DBG_OUT 'ERR: no segments' && return
+  _P10K_DBG_OUT "${(P)#1} segments to render"
+
   local _P10K_SBUF=""
 
   # HACK
   # _P10K_DBG_OUT "_P10K_ASYNC_STATII: ${(kv)_P10K_ASYNC_STATII}"
 
-  # TODO OPTI
-  [[ "${(P)#1}" == "0" ]] && echo 'ERR: no segments' && return
-  _P10K_DBG_OUT "${(P)#1} segments to render"
-
-  # Character separator
-  [[ $3 == "right" ]] && P10K_SEP_CHAR=${4:-''} \
-  || P10K_SEP_CHAR=${4:-''}
+  [[ ${3} != "right" ]] && 3="left"
 
   local prev_bg
   [[ $3 != "right" ]] && prev_bg="NOCONNECT"
@@ -100,13 +104,25 @@ function p10k_render_prompt_from_spec () {
       segment_opts[2]="${REPLY}"
     fi
 
+    _P10K_DBG_OUT "prev_bg: ${prev_bg}, current_bg: ${segment_opts[2]}"
+
     # Detect segment connection
     if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
       # skip drawing the arrow
       _P10K_SBUF+="%K{${segment_opts[2]}} "
+    elif [[ "${prev_bg}" == "${segment_opts[2]}" ]]; then
+      _P10K_DBG_OUT "joining segments with same bg"
+      [[ "$3" == "left" ]] && {
+        _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${_P10K_SEP_CHARS[${3}_bgmatch]} "
+      } || {
+        _P10K_SBUF+=" %F{${segment_opts[1]}}${_P10K_SEP_CHARS[${3}_bgmatch]}%K{${segment_opts[2]}} "
+      }
     else
-      [[ "$3" != "right" ]] && _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${P10K_SEP_CHAR} " \
-      || _P10K_SBUF+=" %F{${segment_opts[2]}}${P10K_SEP_CHAR}%K{${segment_opts[2]}} "
+      [[ "$3" == "left" ]] && {
+        _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${_P10K_SEP_CHARS[${3}]} "
+      } || {
+        _P10K_SBUF+=" %F{${segment_opts[2]}}${_P10K_SEP_CHARS[${3}]}%K{${segment_opts[2]}} "
+      }
     fi
 
     # print actual segment content
@@ -119,7 +135,7 @@ function p10k_render_prompt_from_spec () {
 
   # finish the prompt line:
   # the `%{ %}` is an invis wrapper
-  [[ "$3" != "right" ]] && _P10K_SBUF+=' %k%F{'${prev_bg}'}'${P10K_SEP_CHAR}'%f ' \
+  [[ "$3" == "left" ]] && _P10K_SBUF+=' %k%F{'${prev_bg}'}'${_P10K_SEP_CHARS[${3}]}'%f ' \
   || _P10K_SBUF+='%{ %}%k%f'
 
   REPLY="$_P10K_SBUF"
