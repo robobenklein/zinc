@@ -69,11 +69,13 @@ function p10k_render_prompt_from_spec () {
     [[ "${segment_opts[4]}" == "async" ]] && \
     [[ "${_P10K_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
       _p10k_tracked_autoload "${cur_segment}_async"
+      _P10K_DBG_OUT "asyncing segment ${cur_segment}"
       async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "${cur_segment}_async"
       [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
       _p10k_tracked_autoload "${cur_segment}_async_started"
       ${cur_segment}_async_started "${(@)segment_opts}"
       _P10K_ASYNC_STATII[${cur_segment}_async]="started"
+      _P10K_DBG_OUT "async_job: ${cur_segment}_async !! ${(@)segment_opts}"
       async_job p10k_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
     }
 
