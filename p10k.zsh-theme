@@ -37,9 +37,9 @@ function p10k_selfdestruct_setup () {
   precmd_functions=("${(@)precmd_functions:#p10k_selfdestruct_setup}")
 }
 
-# typeset -ga precmd_functions
+autoload -Uz add-zsh-hook
 
-precmd_functions+=(p10k_selfdestruct_setup)
+add-zsh-hook precmd p10k_selfdestruct_setup
 
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
