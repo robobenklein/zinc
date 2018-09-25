@@ -27,7 +27,8 @@ function _p10k_segment_async_callback () {
   # ignore the async evals used to alter worker environment
   if [[ "${1}" == "[async/eval]" ]] || \
      [[ "${1}" == "\[async/eval\]" ]] || \
-     [[ "${1}" == ";" ]]; # wtf this is from I do not know
+     [[ "${1}" == ";" ]] || \
+     [[ "${1}" == "_p10k_tracked_autoload" ]];
   then
     _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
     return
