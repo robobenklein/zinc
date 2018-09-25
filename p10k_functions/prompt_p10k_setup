@@ -158,6 +158,17 @@ prompt_p10k_preview () {
   fi
 }
 
+function prompt_p10k_redraw_soft () {
+  for async_segment in ${(k)_P10K_ASYNC_STATII};do
+    [[ "${_P10K_ASYNC_STATII[$async_segment]}" == "finished" ]] && {
+      _P10K_ASYNC_STATII[$async_segment]=""
+    }
+  done
+  prompt_p10k_render_to_vars
+  zle .reset-prompt
+}
+zle -N prompt_p10k_redraw_soft
+
 typeset -gHA _P10K_0
 _P10K_0[srcfile]="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 _P10K_0[repo]="${_P10K_0[srcfile]:h}"
