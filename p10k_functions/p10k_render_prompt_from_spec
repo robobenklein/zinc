@@ -135,8 +135,13 @@ function p10k_render_prompt_from_spec () {
 
   # finish the prompt line:
   # the `%{ %}` is an invis wrapper
-  [[ "$3" == "left" ]] && _P10K_SBUF+=' %k%F{'${prev_bg}'}'${_P10K_SEP_CHARS[${3}]}'%f ' \
-  || _P10K_SBUF+='%{ %}%k%f'
+  [[ "$3" == "left" ]] && {
+    [[ "${segment_opts[3]}" != "ENDLINE" ]] && {
+      _P10K_SBUF+=' %k%F{'${prev_bg}'}'${_P10K_SEP_CHARS[${3}]}'%f '
+    }
+  } || {
+    _P10K_SBUF+='%{ %}%k%f'
+  }
 
   REPLY="$_P10K_SBUF"
 

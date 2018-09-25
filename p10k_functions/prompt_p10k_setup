@@ -88,12 +88,29 @@ prompt_p10k_setup () {
   typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
   # array
   typeset -ga p10k_left p10k_right
+
+  if [[ "$1" == "dev" ]]; then
+    shift
+    fpath+=("${_P10K_0[repo]}/51")
+  fi
+
+  # load a preset by name
+  if [[ "$1" != "" ]]; then
+    if [[ -r "${_P10K_0[repo]}/presets/${1}.p10kp.zsh" ]]; then
+      _P10K_DBG_OUT "loading preset $1"
+      source "${_P10K_0[repo]}/presets/${1}.p10kp.zsh"
+    else
+      echo "P10K: No such preset."
+    fi
+  fi
+
+  # defaults:
   [[ "${#p10k_left}" == "0" ]] && {
     p10k_left=(p10ks_userhost p10ks_cwd p10ks_vcs)
   }
-  [[ "${#p10k_right}" == "0" ]] && {
-    p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
-  }
+  # [[ "${#p10k_right}" == "0" ]] && {
+  #   p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
+  # }
 
   # Setup precmd / preexec / chpwd
   # _P10K_ASYNC_STATII["test"]="confirm"
@@ -112,5 +129,26 @@ prompt_p10k_setup () {
   async_start_worker p10k_segment_worker -n
   async_register_callback p10k_segment_worker _p10k_segment_async_callback
 }
+
+prompt_p10k_preview () {
+  local -a presets preset
+  presets=()
+  presets+=("" robobenklein)
+  presets+=("idestykk")
+
+  if (( ! $#* )); then
+    for (( i = 1; i <= $#presets; i++ )); do
+      preset=(${presets[$i]})
+      prompt_preview_theme p10k "${preset}"
+      (( i < $#presets )) && print
+    done
+  else
+    prompt_preview_theme p10k "$@"
+  fi
+}
+
+typeset -gHA _P10K_0
+_P10K_0[srcfile]="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+_P10K_0[repo]="${_P10K_0[srcfile]:h}"
 
 prompt_p10k_setup "$@"
