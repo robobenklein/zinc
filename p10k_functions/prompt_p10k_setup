@@ -130,7 +130,7 @@ prompt_p10k_setup () {
   PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT}"
   RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
 
-  async_start_worker p10k_segment_worker -n
+  async_start_worker p10k_segment_worker #-n
   async_register_callback p10k_segment_worker _p10k_segment_async_callback
 }
 
