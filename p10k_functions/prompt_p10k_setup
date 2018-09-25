@@ -25,10 +25,10 @@ function _p10k_segment_async_callback () {
   # _P10K_DBG_OUT "_p10k_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
-  [[ "${1}" == "[async/eval]" ]] && {
+  if [[ "${1}" == "[async/eval]" ]] || [[ "${1}" == "\[async/eval\]" ]]; then
     _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
     return
-  }
+  fi
 
   (( ${+functions[${1}_return]} )) || {
     autoload -Uz +X "${1}_return"
