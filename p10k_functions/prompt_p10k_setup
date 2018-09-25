@@ -11,7 +11,7 @@ _P10K_DBG_OUT () {
   echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
 }
 
-typeset -gA _P10K_ASYNC_STATII
+typeset -gHA _P10K_ASYNC_STATII
 
 function _p10k_segment_async_callback () {
   # Async args:
@@ -25,18 +25,21 @@ function _p10k_segment_async_callback () {
   # _P10K_DBG_OUT "_p10k_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
-  if [[ "${1}" == "[async/eval]" ]] || [[ "${1}" == "\[async/eval\]" ]]; then
+  if [[ "${1}" == "[async/eval]" ]] || \
+     [[ "${1}" == "\[async/eval\]" ]] || \
+     [[ "${1}" == ";" ]]; # wtf this is from I do not know
+  then
     _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
     return
   fi
 
   (( ${+functions[${1}_return]} )) || {
-    autoload -Uz +X "${1}_return"
+    _p10k_tracked_autoload "${1}_return"
     _P10K_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
   _P10K_DBG_OUT "_p10k_segment_async_callback!!! ${(j.\n.)@}"
-  [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
+  # [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII[${1}]="returned"
   _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
 
