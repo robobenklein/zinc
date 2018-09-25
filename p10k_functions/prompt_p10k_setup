@@ -35,7 +35,7 @@ function _p10k_segment_async_callback () {
     _P10K_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
-  _P10K_DBG_OUT "$1 came back with output: $2; $3"
+  _P10K_DBG_OUT "_p10k_segment_async_callback!!! ${(j.\n.)@}"
   [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
   _P10K_ASYNC_STATII[${1}]="returned"
   _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
