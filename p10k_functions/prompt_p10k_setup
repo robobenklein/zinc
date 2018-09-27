@@ -168,6 +168,28 @@ function prompt_p10k_redraw_soft () {
 }
 zle -N prompt_p10k_redraw_soft
 
+function prompt_p10k_compile () {
+  emulate -L zsh
+  setopt extendedglob
+  unsetopt autopushd
+  local curdir="$PWD"
+  cd ${_P10K_0[repo]}/p10k_functions
+  for f in ./*; do
+    [[ $f != *.zwc ]] && {
+      echo "compiling $f ..."
+      zcompile $f
+    }
+  done
+  cd ../segments
+  for f in ./*; do
+    [[ $f != *.zwc ]] && {
+      echo "compiling $f ..."
+      zcompile $f
+    }
+  done
+  cd $curdir
+}
+
 typeset -gHA _P10K_0
 _P10K_0[srcfile]="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 _P10K_0[repo]="${_P10K_0[srcfile]:h}"
