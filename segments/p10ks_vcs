@@ -5,6 +5,12 @@ function p10ks_vcs () {
   REPLY="${p10ks_vcs["_info_msg_0_"]}"
 }
 
+# function _p10ks_vcs_async_complete () {
+#   # p10ks_vcs["_info_msg_0_"]="<loading...>"
+# }
+#
+# _p10k_add_hook _p10k_async_complete _p10ks_vcs_async_complete
+
 typeset -gA p10ks_vcs
 p10ks_vcs["_info_msg_0_"]="<async:vcs>"
 
