@@ -1,8 +1,13 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 function p10ks_jobs () {
-  REPLY="${#jobstates} ${p10ks_jobs[symbol_running]}"
+  (( ${(Mw)#jobstates#suspended} == 0 )) && {
+    REPLY="${#jobstates} ${p10ks_jobs[symbol_running]}"
+  } || {
+    REPLY="${(Mw)#jobstates#running}${p10ks_jobs[symbol_running]} ${(Mw)#jobstates#suspended}${p10ks_jobs[symbol_suspended]}"
+  }
 }
 
 typeset -gA p10ks_jobs
-p10ks_jobs[symbol_running]=${p10ks_jobs[symbol_running]:-'⚙'}
+p10ks_jobs[symbol_running]=${p10ks_jobs[symbol_running]:-'⚙ '}
+p10ks_jobs[symbol_suspended]=${p10ks_jobs[symbol_suspended]:-'❚❚'}
