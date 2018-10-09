@@ -13,5 +13,6 @@ function p10ks_vcs () {
 
 typeset -gA p10ks_vcs
 p10ks_vcs["_info_msg_0_"]="<async:vcs>"
+p10ks_vcs[status]="loading"
 
 p10ks_vcs "$@"

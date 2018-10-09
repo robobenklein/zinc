@@ -12,7 +12,7 @@ p10ks_vcs_async_return ()
   tmp=("${(s.;;;.)2}")
   p10ks_vcs["_info_msg_0_"]="${tmp[2]}"
   tmp=("${(s.,.)tmp}")
-  p10ks_vcs["vcs_workdir_dirty"]="${tmp[1]}"
+  (( ${tmp[1]} )) && p10ks_vcs[status]="dirty" || p10ks_vcs[status]="returned"
 }
 
 p10ks_vcs_async_return "$@"
