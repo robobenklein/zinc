@@ -52,7 +52,7 @@ This is so that segments are shown by default.
 
 ## Optional: `segmint_async(){}`
 
-This and other asynchronous segment functions are covered in detail in the [Asynchronous Interface Docs](segment_interface_async.md)
+This and other asynchronous segment functions are covered in detail in the [Asynchronous Interface Docs](segment_interface_async.md).
 
 # Using P10K hooks
 

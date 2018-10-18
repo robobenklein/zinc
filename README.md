@@ -9,7 +9,7 @@ P10K compared to P9K is ...
 
  - Less user-friendly to configure
  - Much, much faster than P9K during runtime
- - Easily extensible (works via `fpath`)
+ - Easily extensible (works via shell functions and zsh's `fpath`)
  - More customizable (make your own segments with a standard API!)
 
 Many configuration convenience sacrifices have been made to improve the speed, reliability, and usability of the prompt during runtime. After all, we might only spend a few hours configuring our prompt, but we'll spend orders of magnitude more actually *using* it.
