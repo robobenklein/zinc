@@ -1,0 +1,5 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_default_opts () {
+  reply=(CONDITIONAL CONDITIONAL CONDITIONAL async)
+}

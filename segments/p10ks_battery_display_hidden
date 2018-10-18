@@ -1,0 +1,13 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_display_hidden () {
+  [[ ${p10ks_battery[percent]} == "" ]]
+}
+
+[[ "${(t)p10ks_battery}" != "association" ]] && {
+  typeset -gA p10ks_battery
+}
+p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
+p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
+
+p10ks_battery_display_hidden "$@"

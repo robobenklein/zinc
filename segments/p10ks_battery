@@ -1,0 +1,14 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery () {
+  (( ${p10ks_battery[verbose]} )) && {
+    REPLY="${p10ks_battery[percent]}%% <time>"
+  } || {
+    REPLY="${p10ks_battery[percent]}%%"
+  }
+}
+
+typeset -gA p10ks_battery
+p10ks_battery[percent]=""
+
+p10ks_battery "$@"

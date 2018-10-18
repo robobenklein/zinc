@@ -1,0 +1,8 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_async () {
+  # TODO more configurations
+  cat '/sys/class/power_supply/BAT0/capacity'
+}
+
+p10ks_battery_async "$@"

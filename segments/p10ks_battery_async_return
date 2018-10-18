@@ -1,0 +1,6 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_async_return () {
+  _P10K_DBG_OUT "bat returned with ${2}"
+  p10ks_battery[percent]="${2}"
+}

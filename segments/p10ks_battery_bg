@@ -1,0 +1,24 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_bg () {
+  # change color based on charge level
+  if (( ${p10ks_battery[percent]} <= ${p10ks_battery[threshold_low]} )); then
+    REPLY="${p10ks_battery[bgcolor_low]}"
+  elif (( ${p10ks_battery[percent]} >= ${p10ks_battery[threshold_charged]} )); then
+    REPLY="${p10ks_battery[bgcolor_charged]}"
+  else
+    REPLY="${p10ks_battery[bgcolor_default]}"
+  fi
+}
+
+[[ "${(t)p10ks_battery}" != "association" ]] && {
+  typeset -gA p10ks_battery
+}
+p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
+p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
+
+p10ks_battery[bgcolor_low]="red"
+p10ks_battery[bgcolor_charged]="black"
+p10ks_battery[bgcolor_default]="black"
+
+p10ks_battery_bg "$@"
