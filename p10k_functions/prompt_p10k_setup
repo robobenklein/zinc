@@ -6,10 +6,7 @@
 
 autoload -Uz async && async
 
-_P10K_DBG_OUT () {
-  # ' >/tmp/_P10K_DBG_OUT.log 2>&1'
-  echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
-}
+_P10K_DBG_OUT () {;}
 
 typeset -gHA _P10K_ASYNC_STATII
 
@@ -100,6 +97,12 @@ prompt_p10k_setup () {
   if [[ "$1" == "dev" ]]; then
     shift
     fpath+=("${_P10K_0[repo]}/51")
+
+    # enable debugging logging
+    _P10K_DBG_OUT () {
+      # ' >/tmp/_P10K_DBG_OUT.log 2>&1'
+      echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
+    }
   fi
 
   # load a preset by name
@@ -115,10 +118,8 @@ prompt_p10k_setup () {
   # defaults:
   [[ "${#p10k_left}" == "0" ]] && {
     p10k_left=(p10ks_userhost p10ks_cwd p10ks_vcs)
+    p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
   }
-  # [[ "${#p10k_right}" == "0" ]] && {
-  #   p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
-  # }
 
   # Setup precmd / preexec / chpwd
   # _P10K_ASYNC_STATII["test"]="confirm"
