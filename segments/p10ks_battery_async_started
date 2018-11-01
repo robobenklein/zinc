@@ -2,7 +2,7 @@
 
 function p10ks_battery_async_started () {
   # p10ks_battery[percent]="??"
-  p10ks_battery[status]="loading"
+  p10ks_battery[state]=""
   p10ks_battery[time_remaining]="..."
 }
 
