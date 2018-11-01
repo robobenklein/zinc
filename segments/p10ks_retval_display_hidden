@@ -16,3 +16,5 @@ p10ks_retval[ac]=1
 
 _p10k_add_hook _p10k_preexec _p10ks_retval_preexec
 _p10k_add_hook _p10k_async_complete _p10ks_retval_async_complete
+
+p10ks_retval_display_hidden "$@"

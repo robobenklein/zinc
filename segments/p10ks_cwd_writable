@@ -7,3 +7,5 @@ function p10ks_cwd_writable () {
 typeset -gA p10ks_cwd_writable
 
 p10ks_cwd_writable[symbol]=${p10ks_cwd_writable[symbol]:-$'\UE0A2'}
+
+p10ks_cwd_writable "$@"

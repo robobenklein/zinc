@@ -4,5 +4,3 @@ function p10ks_time_default_opts ()
 {
   reply=(black white normal normal)
 }
-
-p10ks_time_default_opts "$@"
