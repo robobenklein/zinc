@@ -17,8 +17,8 @@ function p10ks_battery_bg () {
 p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
 p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
 
-p10ks_battery[bgcolor_low]="red"
-p10ks_battery[bgcolor_charged]="black"
-p10ks_battery[bgcolor_default]="black"
+p10ks_battery[bgcolor_default]="${p10ks_battery[bgcolor_default]:-black}"
+p10ks_battery[bgcolor_low]="${p10ks_battery[bgcolor_low]:-red}"
+p10ks_battery[bgcolor_charged]="${p10ks_battery[bgcolor_charged]:-${p10ks_battery[bgcolor_default]}}"
 
 p10ks_battery_bg "$@"
