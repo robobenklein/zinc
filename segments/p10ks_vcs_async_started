@@ -8,6 +8,14 @@ p10ks_vcs_async_started ()
   p10ks_vcs[status]="loading"
 }
 
-typeset -gA p10ks_vcs
+[[ "${(t)p10ks_vcs}" != "association" ]] && {
+  typeset -gA p10ks_vcs
+}
+
+function _p10ks_vcs_async_complete () {
+  _p10k_segment_async_reset_status p10ks_vcs
+}
+
+_p10k_add_hook _p10k_async_complete _p10ks_vcs_async_complete
 
 p10ks_vcs_async_started "$@"
