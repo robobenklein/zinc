@@ -5,7 +5,8 @@ function p10ks_battery () {
     if [[ -n ${p10ks_battery[time_remaining]} ]]; then
       REPLY="${p10ks_battery[percent]}%% (${p10ks_battery[time_remaining]})"
     else
-      REPLY="${p10ks_battery[percent]}%%"
+      # continue to else case below
+      false
     fi
   } || {
     REPLY="${p10ks_battery[percent]}%%"
