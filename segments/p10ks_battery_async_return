@@ -3,8 +3,11 @@
 function p10ks_battery_async_return () {
   _P10K_DBG_OUT "bat returned with ${2}"
   p10ks_battery[asyncdata]="${2}"
-  returndata=(${(s.;.)p10ks_battery[asyncdata]})
+  local -a returndata
+  returndata=(${(s.;.)2})
   p10ks_battery[state]="${returndata[1]}"
   p10ks_battery[percent]="${returndata[2]}"
   p10ks_battery[time_remaining]="${returndata[3]}"
 }
+
+p10ks_battery_async_return "$@"

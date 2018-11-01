@@ -66,6 +66,14 @@ function _p10k_segment_async_callback () {
   }
 }
 
+# This is to allow segments to re-run async tasks by preference.
+function _p10k_segment_async_reset_status () {
+  [[ -z "$1" ]] && return
+  _P10K_DBG_OUT "resetting async status of $1"
+  _P10K_ASYNC_STATII[${1}_async]=""
+}
+
+# Function that reloads all functions that were autoloaded by P10K.
 # This needs to be here to ensure we don't get into an autoload infinite loop.
 typeset -gaU _P10K_AUTOLOADED_FUNCTIONS
 function p10k_reload () {
