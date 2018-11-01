@@ -4,6 +4,8 @@ function p10ks_battery () {
   (( ${p10ks_battery[verbose]} )) && {
     if [[ -n ${p10ks_battery[time_remaining]} ]]; then
       REPLY="${p10ks_battery[percent]}%% (${p10ks_battery[time_remaining]})"
+    else
+      REPLY="${p10ks_battery[percent]}%%"
     fi
   } || {
     REPLY="${p10ks_battery[percent]}%%"
