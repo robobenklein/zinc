@@ -19,12 +19,12 @@ P10K was built to support mixed async and non-async segments from the ground up.
 Also, async segments are smart:
 
  - redrawing the prompt doesn't start duplicate jobs
- - async output is by default cached until your next command (optional, configurable)
- - custom async segments are easy to implement and require no changes to P10K code
+ - async output can be cached differently per-segment
+ - custom async segments are easy to implement (3 shell functions) and require no changes to P10K code
 
 ## Performance:
 
- - Only functions that get used are loaded via `fpath`
+ - Only functions that get used are loaded via ZSH's `fpath` autoload functionality
  - **There are no external calls in the main thread.** Program calls and shell forking is all done in an async worker.
  - Prompt segments can be compiled to ZSH word code for better startup time. (Just execute `prompt_p10k_compile`)
  - ZSH builtins and binary modules are preferred to GNU utils / external binaries.
@@ -34,7 +34,7 @@ Timing example compared to other shell prompts:
 # P10K: Renders both left and right variables:
 ( repeat 1000; do; prompt_p10k_render_to_vars > /dev/null; done; )  1.28s user 0.26s system 99% cpu 1.542 total
 
-# P9K: Functions for left/right
+# P9K 0.6: Functions for left/right
 ( repeat 1000; do; build_left_prompt > /dev/null && build_right_prompt > ; ; )  88.42s user 50.85s system 114% cpu 2:01.69 total
 
 # Pure: render in precmd
