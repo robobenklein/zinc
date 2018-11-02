@@ -20,7 +20,6 @@ FUNCTIONS
  p10ks_battery
  p10ks_battery_async
  _p10ks_battery_async_complete
- p10ks_battery_async_old
  p10ks_battery_async_return
  p10ks_battery_async_started
  p10ks_battery_bg
@@ -71,7 +70,7 @@ Called by:
 p10ks_battery_async
 ~~~~~~~~~~~~~~~~~~~
 
-Has 40 line(s). Doesn't call other functions.
+Has 41 line(s). Doesn't call other functions.
 
 Called by:
 
@@ -81,13 +80,6 @@ _p10ks_battery_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-p10ks_battery_async_old
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Has 29 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
