@@ -65,8 +65,9 @@ zstyle :prompt:rtab fish yes
 ```
 
 Note:
-> Combined short form (`-sl`) options are *NOT* supported.
-
+____
+Combined short form (`-sl`) options are *NOT* supported.
+____
 
 
 FUNCTIONS

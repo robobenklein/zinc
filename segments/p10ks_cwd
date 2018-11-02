@@ -57,8 +57,9 @@
 # ```
 #
 # Note:
-# > Combined short form (`-sl`) options are *NOT* supported.
-#
+# ____
+# Combined short form (`-sl`) options are *NOT* supported.
+# ____
 # }}}
 
 # env-vars {{{
