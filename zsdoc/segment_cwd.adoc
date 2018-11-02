@@ -1,0 +1,69 @@
+segment_cwd(1)
+==============
+:compat-mode!:
+
+NAME
+----
+segment_cwd - a shell script
+
+SYNOPSIS
+--------
+Documentation automatically generated with `zshelldoc'
+
+FUNCTIONS
+---------
+
+ p10ks_cwd
+ p10ks_cwd_default_opts
+ _p10ks_cwd_strat_rtab
+CHPWD-HOOK _p10ks_cwd_chpwd
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 7 line(s). Calls functions:
+
+ Script-Body
+ `-- p10ks_cwd
+     `-- _p10ks_cwd_chpwd
+
+p10ks_cwd
+~~~~~~~~~
+
+Has 6 line(s). Calls functions:
+
+ p10ks_cwd
+ `-- _p10ks_cwd_chpwd
+
+Called by:
+
+ Script-Body
+
+_p10ks_cwd_chpwd
+~~~~~~~~~~~~~~~~
+
+Has 8 line(s). *Is a chpwd hook*. Doesn't call other functions.
+
+Called by:
+
+ p10ks_cwd
+
+p10ks_cwd_default_opts
+~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+_p10ks_cwd_strat_rtab
+~~~~~~~~~~~~~~~~~~~~~
+
+Has 93 line(s). Doesn't call other functions.
+
+Uses feature(s): _unfunction_, _zstyle_
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+

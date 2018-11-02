@@ -1,0 +1,179 @@
+segment_vcs(1)
+==============
+:compat-mode!:
+
+NAME
+----
+segment_vcs - a shell script
+
+SYNOPSIS
+--------
+Documentation automatically generated with `zshelldoc'
+
+FUNCTIONS
+---------
+
+ p10ks_vcs
+ p10ks_vcs_async
+ _p10ks_vcs_async_complete
+ p10ks_vcs_async_return
+ p10ks_vcs_async_started
+ p10ks_vcs_bg
+ p10ks_vcs_default_opts
+ p10ks_vcs_display_hidden
+ +vi-git-aheadbehind
+ +vi-git-untracked
+ +vi-hg-branchhead
+ +vi-hg-storerev
+ +vi-vcs-detect-changes
+AUTOLOAD vcs_info
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 43 line(s). Calls functions:
+
+ Script-Body
+ |-- p10ks_vcs
+ |-- p10ks_vcs_async
+ |   `-- vcs_info
+ |-- p10ks_vcs_async_return
+ |-- p10ks_vcs_async_started
+ `-- p10ks_vcs_bg
+
+Uses feature(s): _autoload_, _zstyle_
+
+p10ks_vcs
+~~~~~~~~~
+
+Has 2 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_vcs_async
+~~~~~~~~~~~~~~~
+
+Has 2 line(s). Calls functions:
+
+ p10ks_vcs_async
+ `-- vcs_info
+
+Called by:
+
+ Script-Body
+
+_p10ks_vcs_async_complete
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_vcs_async_return
+~~~~~~~~~~~~~~~~~~~~~~
+
+Has 6 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_vcs_async_started
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 3 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_vcs_bg
+~~~~~~~~~~~~
+
+Has 5 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_vcs_default_opts
+~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_vcs_display_hidden
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-git-aheadbehind
+~~~~~~~~~~~~~~~~~~~
+
+Has 8 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-git-untracked
+~~~~~~~~~~~~~~~~~
+
+____
+ ### GIT hook functions
+____
+
+Has 3 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-hg-branchhead
+~~~~~~~~~~~~~~~~~
+
+Has 15 line(s). Doesn't call other functions.
+
+Uses feature(s): _read_
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-hg-storerev
+~~~~~~~~~~~~~~~
+
+____
+ ### HG hook functions
+____
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-vcs-detect-changes
+~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ ### Generic hook functions
+____
+
+Has 11 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+vcs_info
+~~~~~~~~
+
+Has 148 line(s). Calls functions:
+
+ vcs_info
+
+Uses feature(s): _autoload_
+
+Called by:
+
+ p10ks_vcs_async
+

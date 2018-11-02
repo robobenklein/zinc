@@ -1,0 +1,40 @@
+segment_user(1)
+===============
+:compat-mode!:
+
+NAME
+----
+segment_user - a shell script
+
+SYNOPSIS
+--------
+Documentation automatically generated with `zshelldoc'
+
+FUNCTIONS
+---------
+
+ p10ks_user
+ p10ks_user_default_opts
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 1 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
+
+p10ks_user
+~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_user_default_opts
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+

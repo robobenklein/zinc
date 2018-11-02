@@ -102,8 +102,8 @@ prompt_p10k_setup () {
   # array
   typeset -ga p10k_left p10k_right
 
-  if [[ "$1" == "dev" ]]; then
-    shift
+  if [[ "$1" == "dev" ]] || [[ ! -z "${P10K_DEV}" ]]; then
+    [[ "$1" == "dev" ]] && shift
     fpath+=("${_P10K_0[repo]}/51")
 
     # enable debugging logging

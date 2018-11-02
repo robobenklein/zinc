@@ -1,0 +1,141 @@
+segment_battery(1)
+==================
+:compat-mode!:
+
+NAME
+----
+segment_battery - a shell script
+
+SYNOPSIS
+--------
+
+Battery segment that displays percent charge,
+reacts to charging/discharging/charged,
+and has other options.
+
+
+FUNCTIONS
+---------
+
+ p10ks_battery
+ p10ks_battery_async
+ _p10ks_battery_async_complete
+ p10ks_battery_async_return
+ p10ks_battery_async_started
+ p10ks_battery_bg
+ p10ks_battery_default_opts
+ p10ks_battery_display_hidden
+ p10ks_battery_fg
+
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|p10ks_battery[fgcolor_charging]|color of text when charging
+|p10ks_battery[fgcolor_default]|default foreground color
+|p10ks_battery[fgcolor_low]|color of text when battery below threshold_low
+|======
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 50 line(s). Calls functions:
+
+ Script-Body
+ |-- p10ks_battery
+ |-- p10ks_battery_async
+ |-- p10ks_battery_async_return
+ |-- p10ks_battery_async_started
+ |-- p10ks_battery_bg
+ |-- p10ks_battery_display_hidden
+ `-- p10ks_battery_fg
+
+p10ks_battery
+~~~~~~~~~~~~~
+
+____
+ # P10K Battery segment
+ # Mostly stolen code from P9K
+____
+
+Has 9 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_async
+~~~~~~~~~~~~~~~~~~~
+
+Has 41 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+_p10ks_battery_async_complete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_async_return
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 7 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_async_started
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 2 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_bg
+~~~~~~~~~~~~~~~~
+
+Has 7 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_default_opts
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_display_hidden
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 12 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_fg
+~~~~~~~~~~~~~~~~
+
+____
+ # Change fg color based on low, charging, or default.
+____
+
+Has 7 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+

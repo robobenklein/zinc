@@ -22,6 +22,10 @@ Also, async segments are smart:
  - async output can be cached differently per-segment
  - custom async segments are easy to implement (3 shell functions) and require no changes to P10K code
 
+### Note about Icons
+
+If you're in it for the super-fancy icons from Nerd-Fonts, etc, Powerlevel9K is still a better choice as the advanced Icon registry and alternative font support is not present in P10K by default.
+
 ## Performance:
 
  - Only functions that get used are loaded via ZSH's `fpath` autoload functionality

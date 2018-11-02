@@ -43,6 +43,7 @@ function p10k_render_prompt_from_spec () {
     # _P10K_DBG_OUT "$cur_segment segment_optstr: ${segment_optstr}"
     segment_opts=("${(@s.;.)segment_optstr}")
     # _P10K_DBG_OUT "$cur_segment opts before default application: type(${(t)segment_opts}) ${segment_opts}"
+    local segment_opts_default_filled=0
     for segment_opt_number in {1..4}; do
       [[ "${segment_opts[$segment_opt_number]}" == "" ]] && {
         # then we need to get the default opt here
@@ -59,9 +60,13 @@ function p10k_render_prompt_from_spec () {
         }
         # set the value from _P10K_SEGMENT_DEFAULTS cache
         segment_opts[${segment_opt_number}]="${_P10K_SEGMENT_DEFAULTS[${cur_segment}_${segment_opt_number}]}"
+        segment_opts_default_filled=1
       }
     done
-    # _P10K_DBG_OUT "$cur_segment opts after default application: ${segment_opts}"
+    (( segment_opts_default_filled == 1 )) && {
+      _P10K_DBG_OUT "filling options assoc ${2}[${cur_segment}] with new defaults"
+      eval "${2}[${cur_segment}]=\${(j.;.)segment_opts}"
+    }
     # _P10K_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
 
     # Detect segments with asynchronous output enabled

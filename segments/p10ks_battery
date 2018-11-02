@@ -1,5 +1,21 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+# synopsis {{{
+# Battery segment that displays percent charge,
+# reacts to charging/discharging/charged,
+# and has other options.
+# }}}
+
+# TODO/HACK awaiting https://github.com/zdharma/zshelldoc/issues/8
+# env-not-vars {{{
+typeset -gA p10ks_battery
+p10ks_battery[percent]=""
+# p10ks_battery[verbose] -> 0/1: enables showing time until full/empty (requiress acpi)
+p10ks_battery[verbose]="${p10ks_battery[verbose]:-1}"
+# }}}
+
+# P10K Battery segment
+# Mostly stolen code from P9K
 function p10ks_battery () {
   (( ${p10ks_battery[verbose]} )) && {
     if [[ -n ${p10ks_battery[time_remaining]} ]]; then
@@ -12,9 +28,5 @@ function p10ks_battery () {
     REPLY="${p10ks_battery[percent]}%%"
   }
 }
-
-typeset -gA p10ks_battery
-p10ks_battery[percent]=""
-p10ks_battery[verbose]="${p10ks_battery[verbose]:-1}"
 
 p10ks_battery "$@"
