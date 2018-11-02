@@ -1,11 +1,20 @@
 
-local zsdocoutputfolder=${zsdocoutputfolder:-zsdoc-src}
+local pzsd_segment_sources=${pzsd_segment_sources:-segments}
+local pzsd_outputfolder=${pzsd_outputfolder:-zsdoc-src}
+
+set -e
 
 function create_doc_scaffold () {
   local outputfile="$1"
   local segment="$2"
   echo > $outputfile
-  print "autoload -Uz p10ks_${segment}" >> $outputfile
+  [[ -s ${pzsd_segment_sources}/p10ks_${segment} ]] || {
+    echo "Couldn't load source ${pzsd_segment_sources}/p10ks_${segment}"
+  }
+  local -a lines
+  lines=( "${(@f)"$(<${pzsd_segment_sources}/p10ks_${segment})"}" )
+  print "${(j.\n.)lines}" >> $outputfile
+  printf '%b' "\n# P10K Autodoc added: \n" >> $outputfile
   print "autoload -Uz p10ks_${segment}_default_opts" >> $outputfile
   print "autoload -Uz p10ks_${segment}_display_hidden" >> $outputfile
   print "autoload -Uz p10ks_${segment}_bg" >> $outputfile
@@ -16,7 +25,7 @@ function create_doc_scaffold () {
   print "autoload -Uz p10ks_${segment}_async_started" >> $outputfile
 }
 
-mkdir -p ${zsdocoutputfolder}
+mkdir -p ${pzsd_outputfolder}/segments
 
 local -a segments
 segments=(
@@ -34,5 +43,5 @@ segments=(
 )
 
 for segment in ${segments}; do
-  create_doc_scaffold ${zsdocoutputfolder}/${segment}.zsh $segment
+  create_doc_scaffold ${pzsd_outputfolder}/segments/${segment} $segment
 done
