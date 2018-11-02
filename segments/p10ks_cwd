@@ -22,17 +22,17 @@
 # Example dir: `/home/robo/code/configs/zsh`
 #
 # |===
-# | optstring        | Example Output |
-# | `;;;;rtab;`      | `/h/r/c/c/z`   |
-# | `;;;;rtab;-t;-l` | `~/c/con/zsh`  |
+# | optstring        | Example Output
+# | `;;;;rtab;`      | `/h/r/c/c/z`
+# | `;;;;rtab;-t;-l` | `~/c/con/zsh`
 # |===
 #
 # ### DIR Display Strategy
 #
 # |===
-# | Strategy | Description | Example |
-# | default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/p10k` |
-# | `rtab` | Reverse tabbing function, has additional options | `~/c/p10k`, `~/c/p`, `/h/r/c/p`, etc |
+# | Strategy | Description | Example
+# | default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/p10k`
+# | `rtab` | Reverse tabbing function, has additional options | `~/c/p10k`, `~/c/p`, `/h/r/c/p`, etc
 # |===
 #
 # ### Strategy options:
