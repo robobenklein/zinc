@@ -1,7 +1,0 @@
-if (( p10ks_battery[percent] <= p10ks_battery[threshold_low] )); then
-  REPLY="${p10ks_battery[bgcolor_low]}"
-elif (( p10ks_battery[percent] >= p10ks_battery[threshold_charged] )); then
-  REPLY="${p10ks_battery[bgcolor_charged]}"
-else
-  REPLY="${p10ks_battery[bgcolor_default]}"
-fi

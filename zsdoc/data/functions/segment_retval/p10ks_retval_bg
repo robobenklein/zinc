@@ -1,5 +1,0 @@
-if [[ "$_P10K_RETVAL_STORE" == '0' ]]; then
-  REPLY='black'
-else
-  REPLY='red'
-fi

@@ -1,5 +1,0 @@
-if (( p10ks_execution_time[threshold] <= p10ks_execution_time[last_execution_time] )); then
-  false
-else
-  true
-fi

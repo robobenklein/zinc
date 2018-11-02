@@ -1,6 +1,0 @@
-_P10KS_CWD[strategy]="$5"
-_P10KS_CWD_STRAT_ARGS=("${@:6}")
-
-[[ "${_P10KS_CWD[output]}" == "" ]] && _p10ks_cwd_chpwd
-
-REPLY="${_P10KS_CWD[output]}"

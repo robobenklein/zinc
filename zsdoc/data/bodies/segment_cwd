@@ -1,7 +1,0 @@
-
-typeset -gA _P10KS_CWD
-typeset -ga _P10KS_CWD_STRAT_ARGS
-
-add-zsh-hook chpwd _p10ks_cwd_chpwd
-
-p10ks_cwd "$@"

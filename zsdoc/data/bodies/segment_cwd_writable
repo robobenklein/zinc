@@ -1,7 +1,0 @@
-
-
-typeset -gA p10ks_cwd_writable
-
-p10ks_cwd_writable[symbol]=${p10ks_cwd_writable[symbol]:-$''}
-
-p10ks_cwd_writable "$@"

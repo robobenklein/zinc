@@ -1,5 +1,0 @@
-(( ${(Mw)#jobstates#suspended} == 0 )) && {
-  REPLY="${#jobstates} ${p10ks_jobs[symbol_running]}"
-} || {
-  REPLY="${(Mw)#jobstates#running}${p10ks_jobs[symbol_running]} ${(Mw)#jobstates#suspended}${p10ks_jobs[symbol_suspended]}"
-}

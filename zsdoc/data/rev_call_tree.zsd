@@ -1,6 +1,0 @@
-segment_vcs/p10ks_vcs:  segment_vcs/zsd_script_body
-segment_vcs/p10ks_vcs_async:  segment_vcs/zsd_script_body
-segment_vcs/p10ks_vcs_async_return:  segment_vcs/zsd_script_body
-segment_vcs/p10ks_vcs_async_started:  segment_vcs/zsd_script_body
-segment_vcs/p10ks_vcs_bg:  segment_vcs/zsd_script_body
-segment_vcs/vcs_info:  segment_vcs/p10ks_vcs_async  segment_vcs/vcs_info

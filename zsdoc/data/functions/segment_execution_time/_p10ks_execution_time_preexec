@@ -1,4 +1,0 @@
-_P10K_DBG_OUT "_p10ks_execution_time_preexec"
-p10ks_execution_time[process_started]="1"
-p10ks_execution_time[last_execution_time]="0"
-_p10ks_execution_time_process_start=$EPOCHREALTIME
