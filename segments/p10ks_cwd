@@ -207,7 +207,7 @@ p10ks_cwd ()
   [[ "${p10ks_cwd[output]}" == "" ]] && _p10ks_cwd_chpwd
 
   if (( p10ks_cwd[add_hyperlink] )); then
-    REPLY="\e]8;;file://${HOSTNAME}${PWD}\e\\${p10ks_cwd[output]}\e]8;;\e\\"
+    REPLY=$'%{\e]8;;file://'${HOSTNAME}${PWD}$'\e\\%}'${p10ks_cwd[output]}$'%{\e]8;;\e\\%}'
   else
     REPLY="${p10ks_cwd[output]}"
   fi
