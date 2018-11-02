@@ -1,10 +1,10 @@
-cwd(1)
-======
+segment_cwd(1)
+==============
 :compat-mode!:
 
 NAME
 ----
-cwd - a shell script
+segment_cwd - a shell script
 
 SYNOPSIS
 --------

@@ -1,10 +1,10 @@
-battery(1)
-==========
+segment_battery(1)
+==================
 :compat-mode!:
 
 NAME
 ----
-battery - a shell script
+segment_battery - a shell script
 
 SYNOPSIS
 --------

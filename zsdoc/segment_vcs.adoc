@@ -1,10 +1,10 @@
-vcs(1)
-======
+segment_vcs(1)
+==============
 :compat-mode!:
 
 NAME
 ----
-vcs - a shell script
+segment_vcs - a shell script
 
 SYNOPSIS
 --------

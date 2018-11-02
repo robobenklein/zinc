@@ -9,6 +9,7 @@
 # and has other options.
 # }}}
 
+# TODO/HACK awaiting https://github.com/zdharma/zshelldoc/issues/8
 # env-not-vars {{{
 # p10ks_battery[verbose] -> 0/1: enables showing time until full/empty (requiress acpi)
 # }}}

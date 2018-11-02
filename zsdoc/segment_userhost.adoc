@@ -1,10 +1,10 @@
-userhost(1)
-===========
+segment_userhost(1)
+===================
 :compat-mode!:
 
 NAME
 ----
-userhost - a shell script
+segment_userhost - a shell script
 
 SYNOPSIS
 --------

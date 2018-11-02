@@ -1,3 +1,3 @@
-vcs/p10ks_vcs_async: vcs/vcs_info
-vcs/vcs_info: vcs/vcs_info
-vcs/zsd_script_body: vcs/p10ks_vcs  vcs/p10ks_vcs_bg  vcs/p10ks_vcs_async  vcs/p10ks_vcs_async_return  vcs/p10ks_vcs_async_started
+segment_vcs/p10ks_vcs_async: segment_vcs/vcs_info
+segment_vcs/vcs_info: segment_vcs/vcs_info
+segment_vcs/zsd_script_body: segment_vcs/p10ks_vcs  segment_vcs/p10ks_vcs_bg  segment_vcs/p10ks_vcs_async  segment_vcs/p10ks_vcs_async_return  segment_vcs/p10ks_vcs_async_started

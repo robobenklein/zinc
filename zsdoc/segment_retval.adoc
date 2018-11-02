@@ -1,10 +1,10 @@
-retval(1)
-=========
+segment_retval(1)
+=================
 :compat-mode!:
 
 NAME
 ----
-retval - a shell script
+segment_retval - a shell script
 
 SYNOPSIS
 --------
