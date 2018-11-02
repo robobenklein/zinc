@@ -8,15 +8,43 @@ segment_cwd - a shell script
 
 SYNOPSIS
 --------
-Documentation automatically generated with `zshelldoc'
+
+Current Working Directory
+
+Renders segment content on the `chpwd` hook.
+Has different strategy options for rendering the path.
+
+Right now, the only strategies available are `rtab` and the shell default.
+
+## Options:
+- `$1`: FG
+- `$2`: BG
+- `$3`: Visual Draw Mode
+- `$4`: Render Process Mode
+- `$5`: DIR Display Strategy
+- `$@`: Additional args passed to the chosen strategy
+
+
+WARN: The `rtab` strategy uses a single subshell to explore the path.
+Although it does spawn a subshell, it is seemingly more performant to explore
+the path in a subshell rather than clean up and reset the main thread's chpwd
+hooks, variables, etc.
+
 
 FUNCTIONS
 ---------
 
- p10ks_cwd
- p10ks_cwd_default_opts
  _p10ks_cwd_strat_rtab
-CHPWD-HOOK _p10ks_cwd_chpwd
+
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|p10ks_cwd|Array for segment runtime use
+|p10ks_cwd[add_hyperlink]|If '1', create a hyperlink around the path that is
+clickable in most VTE terminals!
+|p10ks_cwd[strategy]|The current render strategy for displaying the CWD path
+|======
 
 DETAILS
 -------
@@ -24,46 +52,28 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 7 line(s). Calls functions:
-
- Script-Body
- `-- p10ks_cwd
-     `-- _p10ks_cwd_chpwd
-
-p10ks_cwd
-~~~~~~~~~
-
-Has 6 line(s). Calls functions:
-
- p10ks_cwd
- `-- _p10ks_cwd_chpwd
-
-Called by:
-
- Script-Body
-
-_p10ks_cwd_chpwd
-~~~~~~~~~~~~~~~~
-
-Has 8 line(s). *Is a chpwd hook*. Doesn't call other functions.
-
-Called by:
-
- p10ks_cwd
-
-p10ks_cwd_default_opts
-~~~~~~~~~~~~~~~~~~~~~~
-
-Has 1 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+Has 5 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
 
 _p10ks_cwd_strat_rtab
 ~~~~~~~~~~~~~~~~~~~~~
 
-Has 93 line(s). Doesn't call other functions.
+____
+ # A modification of the reverse tabbing utility by Daniel Friesel <derf@xxxxxxxxxxxxxxxxxx>
+ ## reverse tabbing, useful in the prompt
+ ## Copyright (C) 2008 by Daniel Friesel <derf@xxxxxxxxxxxxxxxxxx>
+ ## Copyright (C) 2018 by Ben Klein <robobenklein@xxxxxxxxxxxxxxxxxx>
+ ## License: WTFPL <http://sam.zoy.org/wtfpl>
+ ##
+ ## Robobenklein: The original had a CAVEAT:
+ ## "directory-names containing two or more consecutive spaces are not supported"
+ ## This issue has been fixed.
+ ##
+ ## Also the script is now a ZSH function instead of an executable shebang file.
+____
 
-Uses feature(s): _unfunction_, _zstyle_
+Has 171 line(s). Doesn't call other functions.
+
+Uses feature(s): _zstyle_
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
