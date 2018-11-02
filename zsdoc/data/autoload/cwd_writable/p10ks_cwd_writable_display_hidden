@@ -1,5 +1,0 @@
-# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
-
-function p10ks_cwd_writable_display_hidden () {
-  [[ -w "$PWD" ]]
-}

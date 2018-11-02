@@ -1,0 +1,1 @@
+[[ "${p10ks_vcs["_info_msg_0_"]}" == "" ]] && true || false

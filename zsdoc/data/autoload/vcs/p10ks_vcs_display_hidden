@@ -1,5 +1,0 @@
-# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
-
-function p10ks_vcs_display_hidden () {
-  [[ "${p10ks_vcs["_info_msg_0_"]}" == "" ]] && true || false
-}

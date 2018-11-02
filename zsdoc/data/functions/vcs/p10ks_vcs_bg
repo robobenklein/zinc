@@ -1,0 +1,5 @@
+case "${p10ks_vcs[status]}" in
+  "dirty") REPLY=${p10ks_vcs[color_dirty]} ;;
+  "loading") REPLY=${p10ks_vcs[color_loading]} ;;
+  *) REPLY=${p10ks_vcs[color_default]} ;;
+esac

@@ -1,0 +1,2 @@
+vcs_info
+printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"

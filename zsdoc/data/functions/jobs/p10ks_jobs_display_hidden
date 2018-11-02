@@ -1,0 +1,1 @@
+(( ${#jobstates} == 0 )) && true || false

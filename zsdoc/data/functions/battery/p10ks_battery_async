@@ -1,0 +1,40 @@
+local current_state='unknown'
+local sysp="${ROOT_PREFIX}/sys/class/power_supply"
+local potential_bats=( "$sysp/*" )
+[[ ${#${(M)potential_bats:#*(BAT|battery)*}} ]] \n      && local bats=(${$(ls -d $sysp/(battery|BAT*))}) \n      || return
+
+local numerator="0"
+local denominator="0"
+local battery_status_full=true
+local battery_status_charging=false
+for bat in $bats; do
+  numerator+="+ $(cat $bat/capacity) * $(cat $bat/(energy|charge)_full)"
+  denominator+="+ $(cat $bat/(energy|charge)_full)"
+  [[ $(cat $bat/status) != Full ]] && battery_status_full=false
+  [[ $(cat $bat/status) == Charging ]] && battery_status_charging=true
+done
+
+local capacity=$(( ($numerator)/($denominator) ))
+[[ $capacity -gt 100 ]] \n      && local bat_percent=100 \n      || local bat_percent=$capacity
+[[ $battery_status_full == true || $battery_status_charging == true ]] \n      && local connected=true
+
+if [[ -z $connected ]]; then
+  [[ $bat_percent -lt $P9K_BATTERY_LOW_THRESHOLD ]] \n        && current_state="low" \n        || current_state="disconnected"
+else
+  [[ $bat_percent =~ 100 ]] && current_state="charged"
+  [[ $bat_percent -lt 100 ]] && current_state="charging"
+fi
+if [[ -f ${ROOT_PREFIX}/usr/bin/acpi ]]; then
+  declare -a acpi_lines
+  acpi_lines=( "${(@f)$(${ROOT_PREFIX}/usr/bin/acpi)}" )
+  local time_remaining=${${=${(M)acpi_lines:#*([[:digit:]][[:digit:]]:|rate)*}}[5]}
+  unset acpi_lines
+
+  if [[ $time_remaining =~ "rate" ]]; then
+    local tstring="..."
+  elif [[ $time_remaining =~ "[[:digit:]]+" ]]; then
+    local tstring=${(f)$(date -u -d "$(echo $time_remaining)" +%k:%M 2> /dev/null)}
+  fi
+fi
+
+builtin print "${current_state};${bat_percent};${tstring}"

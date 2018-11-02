@@ -4,11 +4,40 @@ typeset -gA p10ks_vcs
 p10ks_vcs["_info_msg_0_"]="<async:vcs>"
 p10ks_vcs[status]="loading"
 
-p10ks_vcs "$@" 
-autoload -Uz p10ks_vcs_default_opts
-autoload -Uz p10ks_vcs_display_hidden
-autoload -Uz p10ks_vcs_bg
-autoload -Uz p10ks_vcs_fg
-autoload -Uz p10ks_vcs_async
-autoload -Uz p10ks_vcs_async_return
-autoload -Uz p10ks_vcs_async_started
+p10ks_vcs "$@"
+
+p10ks_vcs[color_dirty]=${p10ks_vcs[color_dirty]:-"yellow"}
+p10ks_vcs[color_loading]=${p10ks_vcs[color_loading]:-"8"}
+p10ks_vcs[color_default]=${p10ks_vcs[color_default]:-"green"}
+
+p10ks_vcs_bg "$@"
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:svn*:*' actionformats '%c%u %F{red}| %a%f'
+zstyle ':vcs_info:*' actionformats '%b %F{red}| %a%f'
+zstyle ':vcs_info:hg*:*' branchformat ' %b'
+zstyle ':vcs_info:git*:*' branchformat ' %b'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable git hg svn
+zstyle ':vcs_info:svn*:*' formats %c%u
+zstyle ':vcs_info:*' formats %b%c%u%m
+zstyle ':vcs_info:hg*:*' get-bookmarks true
+zstyle ':vcs_info:hg*:*' get-revision true
+zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
+zstyle ':vcs_info:*' stagedstr ' ✚'
+zstyle ':vcs_info:*' unstagedstr ' ●'
+zstyle ':vcs_info:git*+set-message:*' hooks \n vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname
+zstyle ':vcs_info:hg*+set-message:*' hooks \n vcs-detect-changes hg-branchhead
+zstyle ':vcs_info:svn*+set-message:*' hooks \n vcs-detect-changes svn-detect-changes
+
+p10ks_vcs_async "$@"
+
+p10ks_vcs_async_return "$@"
+
+[[ "${(t)p10ks_vcs}" != "association" ]] && {
+  typeset -gA p10ks_vcs
+}
+
+_p10k_add_hook _p10k_async_complete _p10ks_vcs_async_complete
+
+p10ks_vcs_async_started "$@"

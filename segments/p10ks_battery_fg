@@ -1,5 +1,19 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+# env-vars {{{
+[[ "${(t)p10ks_battery}" != "association" ]] && {
+  typeset -gA p10ks_battery
+}
+p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
+# p10ks_battery[fgcolor_low] -> color of text when battery below threshold_low
+p10ks_battery[fgcolor_low]="${p10ks_battery[fgcolor_low]:-black}"
+# p10ks_battery[fgcolor_charging] -> color of text when charging
+p10ks_battery[fgcolor_charging]="${p10ks_battery[fgcolor_charging]:-green}"
+# p10ks_battery[fgcolor_default] -> default foreground color
+p10ks_battery[fgcolor_default]="${p10ks_battery[fgcolor_default]:-white}"
+# }}}
+
+# Change fg color based on low, charging, or default.
 function p10ks_battery_fg () {
   # change color based on charge level
   if (( p10ks_battery[percent] <= p10ks_battery[threshold_low] )); then
@@ -12,14 +26,5 @@ function p10ks_battery_fg () {
     REPLY="${p10ks_battery[fgcolor_default]}"
   fi
 }
-
-[[ "${(t)p10ks_battery}" != "association" ]] && {
-  typeset -gA p10ks_battery
-}
-p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
-
-p10ks_battery[fgcolor_low]="${p10ks_battery[fgcolor_low]:-black}"
-p10ks_battery[fgcolor_charging]="${p10ks_battery[fgcolor_charging]:-green}"
-p10ks_battery[fgcolor_default]="${p10ks_battery[fgcolor_default]:-white}"
 
 p10ks_battery_fg "$@"

@@ -1,4 +1,10 @@
 Script_Body_
-`-- p10ks_battery
+|-- p10ks_battery
+|-- p10ks_battery_async
+|-- p10ks_battery_async_return
+|-- p10ks_battery_async_started
+|-- p10ks_battery_bg
+|-- p10ks_battery_display_hidden
+`-- p10ks_battery_fg
 
-1 directory, 0 files
+7 directories, 0 files

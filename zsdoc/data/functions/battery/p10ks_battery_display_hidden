@@ -1,0 +1,12 @@
+if [[ ${p10ks_battery[state]} == "charged" ]]; then
+  return 0
+elif [[ ${p10ks_battery[state]} == "disconnected" ]]; then
+  return 1
+elif (( p10ks_battery[percent] >= p10ks_battery[threshold_hidden] )); then
+  true
+elif [[ ${p10ks_battery[state]} == "unknown" ]] || [[ ${p10ks_battery[state]} == "" ]]; then
+  _P10K_DBG_OUT "Not showing battery segment: unknown status."
+  true
+else
+  false
+fi
