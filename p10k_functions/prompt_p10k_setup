@@ -199,6 +199,13 @@ function prompt_p10k_compile () {
   cd $curdir
 }
 
+function prompt_p10k_minmode () {
+  _P10K_SEP_CHARS[left]=''
+  _P10K_SEP_CHARS[right]=''
+  _P10K_SEP_CHARS[left_bgmatch]=''
+  _P10K_SEP_CHARS[right_bgmatch]=''
+}
+
 typeset -gHA _P10K_0
 _P10K_0[srcfile]="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 _P10K_0[repo]="${_P10K_0[srcfile]:h}"
