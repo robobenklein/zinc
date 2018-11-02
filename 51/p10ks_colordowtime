@@ -1,0 +1,36 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+# inspiration: https://twitter.com/iDestyKK/status/919745224762626048
+
+function p10ks_colordowtime () {
+  strftime -s _DOW '%a' $EPOCHSECONDS
+  REPLY="${p10ks_colordowtime[$_DOW]}"
+}
+
+typeset -gHA p10ks_colordowtime
+
+p10ks_colordowtime=(
+  Sun "日"
+  Sun_fg "15"
+  Sun_bg "93"
+  Mon "月"
+  Mon_fg "15"
+  Mon_bg "201"
+  Tue "火"
+  Tue_fg "15"
+  Tue_bg "124"
+  Wed "水"
+  Wedfbg "15"
+  Wed_bg "38"
+  Thu "木"
+  Thufbg "15"
+  Thu_bg "71"
+  Fri "金"
+  Fri_fg "15"
+  Fri_bg "226"
+  Sat "土"
+  Sat_fg "15"
+  Sat_bg "198"
+)
+
+p10ks_colordowtime "$@"
