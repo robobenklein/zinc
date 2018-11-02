@@ -1,0 +1,14 @@
+
+
+typeset -gA p10ks_battery
+p10ks_battery[percent]=""
+p10ks_battery[verbose]="${p10ks_battery[verbose]:-1}"
+
+p10ks_battery "$@" 
+autoload -Uz p10ks_battery_default_opts
+autoload -Uz p10ks_battery_display_hidden
+autoload -Uz p10ks_battery_bg
+autoload -Uz p10ks_battery_fg
+autoload -Uz p10ks_battery_async
+autoload -Uz p10ks_battery_async_return
+autoload -Uz p10ks_battery_async_started

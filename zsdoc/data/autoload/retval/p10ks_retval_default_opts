@@ -1,0 +1,6 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+p10ks_retval_default_opts ()
+{
+  reply=(CONDITIONAL CONDITIONAL CONDITIONAL normal)
+}

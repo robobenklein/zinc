@@ -1,0 +1,24 @@
+_P10K_DBG_OUT "_p10ks_execution_time_precmd"
+(( p10ks_execution_time[process_started] )) && {
+  REPLY=""
+  p10ks_execution_time[last_execution_time]="$(( EPOCHREALTIME - _p10ks_execution_time_process_start ))"
+  if (( p10ks_execution_time[last_execution_time] < 60 )); then
+    print -zf '%.2f' "${p10ks_execution_time[last_execution_time]}"
+    read -rz
+  elif (( p10ks_execution_time[last_execution_time] < 3600 )); then
+    print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+    read -rz
+    strftime -s REPLY -- "%-M:%S" "${REPLY}"
+  elif (( p10ks_execution_time[last_execution_time] < 86400 )); then
+    print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+    read -rz
+    TZ=GMT strftime -s REPLY -- "%K:%M:%S" "${REPLY}"
+  else
+    print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+    read -rz
+    TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S' "${REPLY}"
+  fi
+  p10ks_execution_time[formatted_output]="${REPLY} ⧖"
+  _P10K_DBG_OUT "p10ks_execution_time[formatted_output]="${p10ks_execution_time[formatted_output]}""
+  p10ks_execution_time[process_started]="0"
+}

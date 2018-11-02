@@ -1,0 +1,116 @@
+battery(1)
+==========
+:compat-mode!:
+
+NAME
+----
+battery - a shell script
+
+SYNOPSIS
+--------
+
+Battery segment that displays percent charge,
+reacts to charging/discharging/charged,
+and has other options.
+
+
+FUNCTIONS
+---------
+
+ p10ks_battery
+AUTOLOAD p10ks_battery_async
+AUTOLOAD p10ks_battery_async_return
+AUTOLOAD p10ks_battery_async_started
+AUTOLOAD p10ks_battery_bg
+AUTOLOAD p10ks_battery_default_opts
+AUTOLOAD p10ks_battery_display_hidden
+AUTOLOAD p10ks_battery_fg
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 14 line(s). Calls functions:
+
+ Script-Body
+ `-- p10ks_battery
+
+Uses feature(s): _autoload_
+
+p10ks_battery
+~~~~~~~~~~~~~
+
+____
+ # P10K Battery segment
+ # Mostly stolen code from P9K
+____
+
+Has 9 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_battery_async
+~~~~~~~~~~~~~~~~~~~
+
+Has 103 line(s). Calls functions:
+
+ p10ks_battery_async
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_async_return
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 13 line(s). Calls functions:
+
+ p10ks_battery_async_return
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_async_started
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 19 line(s). Calls functions:
+
+ p10ks_battery_async_started
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_bg
+~~~~~~~~~~~~~~~~
+
+Has 24 line(s). Calls functions:
+
+ p10ks_battery_bg
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_default_opts
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 5 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_display_hidden
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 24 line(s). Calls functions:
+
+ p10ks_battery_display_hidden
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_battery_fg
+~~~~~~~~~~~~~~~~
+
+Has 25 line(s). Calls functions:
+
+ p10ks_battery_fg
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+

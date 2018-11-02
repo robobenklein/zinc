@@ -1,0 +1,8 @@
+case "${_P10KS_CWD[strategy]}" in
+  'rtab')
+    _P10KS_CWD[output]="$(_p10ks_cwd_strat_rtab ${_P10KS_CWD_STRAT_ARGS} )"
+    ;;
+  *)
+    _P10KS_CWD[output]="%~"
+    ;;
+esac

@@ -1,0 +1,14 @@
+
+typeset -gA _P10KS_CWD
+typeset -ga _P10KS_CWD_STRAT_ARGS
+
+add-zsh-hook chpwd _p10ks_cwd_chpwd
+
+p10ks_cwd "$@" 
+autoload -Uz p10ks_cwd_default_opts
+autoload -Uz p10ks_cwd_display_hidden
+autoload -Uz p10ks_cwd_bg
+autoload -Uz p10ks_cwd_fg
+autoload -Uz p10ks_cwd_async
+autoload -Uz p10ks_cwd_async_return
+autoload -Uz p10ks_cwd_async_started

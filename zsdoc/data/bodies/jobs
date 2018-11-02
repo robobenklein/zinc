@@ -1,0 +1,14 @@
+
+
+typeset -gA p10ks_jobs
+p10ks_jobs[symbol_running]=${p10ks_jobs[symbol_running]:-'⚙ '}
+p10ks_jobs[symbol_suspended]=${p10ks_jobs[symbol_suspended]:-'❚❚'}
+
+p10ks_jobs "$@" 
+autoload -Uz p10ks_jobs_default_opts
+autoload -Uz p10ks_jobs_display_hidden
+autoload -Uz p10ks_jobs_bg
+autoload -Uz p10ks_jobs_fg
+autoload -Uz p10ks_jobs_async
+autoload -Uz p10ks_jobs_async_return
+autoload -Uz p10ks_jobs_async_started

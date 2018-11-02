@@ -1,0 +1,7 @@
+if (( _P10K_RETVAL_STORE == 0 )); then
+  REPLY='✔'
+elif (( _P10K_RETVAL_STORE <= 128 )); then
+  REPLY="${_P10K_RETVAL_STORE}"
+else
+  REPLY="SIG${signals[$(( _P10K_RETVAL_STORE - 127 ))]}($(( _P10K_RETVAL_STORE - 128 )))"
+fi

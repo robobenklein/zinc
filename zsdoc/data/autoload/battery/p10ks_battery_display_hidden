@@ -1,0 +1,24 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_battery_display_hidden () {
+  if [[ ${p10ks_battery[state]} == "charged" ]]; then
+    return 0
+  elif [[ ${p10ks_battery[state]} == "disconnected" ]]; then
+    return 1
+  elif (( p10ks_battery[percent] >= p10ks_battery[threshold_hidden] )); then
+    true
+  elif [[ ${p10ks_battery[state]} == "unknown" ]] || [[ ${p10ks_battery[state]} == "" ]]; then
+    # battery not supported on this system?
+    _P10K_DBG_OUT "Not showing battery segment: unknown status."
+    true
+  else
+    false
+  fi
+}
+
+[[ "${(t)p10ks_battery}" != "association" ]] && {
+  typeset -gA p10ks_battery
+}
+p10ks_battery[threshold_hidden]=${p10ks_battery[threshold_hidden]:-"99"}
+
+p10ks_battery_display_hidden "$@"

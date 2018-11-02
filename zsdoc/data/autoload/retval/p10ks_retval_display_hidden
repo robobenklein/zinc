@@ -1,0 +1,20 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function _p10ks_retval_preexec () {
+  p10ks_retval[ac]=0
+}
+
+function _p10ks_retval_async_complete () {
+  p10ks_retval[ac]=1
+}
+
+function p10ks_retval_display_hidden () {
+  (( p10ks_retval[ac] )) && true || false
+}
+
+p10ks_retval[ac]=1
+
+_p10k_add_hook _p10k_preexec _p10ks_retval_preexec
+_p10k_add_hook _p10k_async_complete _p10ks_retval_async_complete
+
+p10ks_retval_display_hidden "$@"

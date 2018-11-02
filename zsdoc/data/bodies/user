@@ -1,0 +1,8 @@
+ 
+autoload -Uz p10ks_user_default_opts
+autoload -Uz p10ks_user_display_hidden
+autoload -Uz p10ks_user_bg
+autoload -Uz p10ks_user_fg
+autoload -Uz p10ks_user_async
+autoload -Uz p10ks_user_async_return
+autoload -Uz p10ks_user_async_started

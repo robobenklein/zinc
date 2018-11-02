@@ -1,0 +1,6 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_time_default_opts ()
+{
+  reply=(black white normal normal)
+}

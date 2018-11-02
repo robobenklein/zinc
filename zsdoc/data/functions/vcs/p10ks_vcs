@@ -1,0 +1,2 @@
+_P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
+REPLY="${p10ks_vcs["_info_msg_0_"]}"
