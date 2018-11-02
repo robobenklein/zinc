@@ -49,5 +49,5 @@ segments=(
 )
 
 for segment in ${segments}; do
-  create_doc_scaffold ${pzsd_outputfolder}/segment_${segment} $segment
+  create_doc_scaffold ${pzsd_outputfolder}/p10ks_${segment} $segment
 done

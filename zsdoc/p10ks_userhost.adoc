@@ -1,10 +1,10 @@
-segment_userhost(1)
-===================
+p10ks_userhost(1)
+=================
 :compat-mode!:
 
 NAME
 ----
-segment_userhost - a shell script
+p10ks_userhost - a shell script
 
 SYNOPSIS
 --------

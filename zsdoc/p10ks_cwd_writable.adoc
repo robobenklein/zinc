@@ -1,10 +1,10 @@
-segment_jobs(1)
-===============
+p10ks_cwd_writable(1)
+=====================
 :compat-mode!:
 
 NAME
 ----
-segment_jobs - a shell script
+p10ks_cwd_writable - a shell script
 
 SYNOPSIS
 --------
@@ -13,9 +13,9 @@ Documentation automatically generated with `zshelldoc'
 FUNCTIONS
 ---------
 
- p10ks_jobs
- p10ks_jobs_default_opts
- p10ks_jobs_display_hidden
+ p10ks_cwd_writable
+ p10ks_cwd_writable_default_opts
+ p10ks_cwd_writable_display_hidden
 
 DETAILS
 -------
@@ -26,26 +26,26 @@ Script Body
 Has 7 line(s). Calls functions:
 
  Script-Body
- `-- p10ks_jobs
+ `-- p10ks_cwd_writable
 
-p10ks_jobs
-~~~~~~~~~~
+p10ks_cwd_writable
+~~~~~~~~~~~~~~~~~~
 
-Has 5 line(s). Doesn't call other functions.
+Has 1 line(s). Doesn't call other functions.
 
 Called by:
 
  Script-Body
 
-p10ks_jobs_default_opts
-~~~~~~~~~~~~~~~~~~~~~~~
+p10ks_cwd_writable_default_opts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_jobs_display_hidden
-~~~~~~~~~~~~~~~~~~~~~~~~~
+p10ks_cwd_writable_display_hidden
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 

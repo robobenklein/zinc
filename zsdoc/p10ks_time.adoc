@@ -1,10 +1,10 @@
-segment_time(1)
-===============
+p10ks_time(1)
+=============
 :compat-mode!:
 
 NAME
 ----
-segment_time - a shell script
+p10ks_time - a shell script
 
 SYNOPSIS
 --------
