@@ -69,7 +69,7 @@
 # p10ks_cwd -> Array for segment runtime use
 typeset -gA p10ks_cwd
 typeset -ga _P10KS_CWD_STRAT_ARGS
-# p10ks_cwd[add_hyperlink] -> If '1', create a hyperlink around the path that is
+# p10ks_cwd[add_hyperlink] -> If '1', create a hyperlink ANSI escape around the path that is
 # clickable in most VTE terminals!
 p10ks_cwd[add_hyperlink]="0"
 # p10ks_cwd[strategy] -> The current render strategy for displaying the CWD path
@@ -210,7 +210,7 @@ p10ks_cwd ()
   [[ "${p10ks_cwd[output]}" == "" ]] && _p10ks_cwd_chpwd
 
   if (( p10ks_cwd[add_hyperlink] )); then
-    REPLY="]8;;file://${HOSTNAME}${PWD}\${p10ks_cwd[output]}]8;;\"
+    REPLY=$'%{]8;;file://'${HOSTNAME}${PWD}$'\%}'${p10ks_cwd[output]}$'%{]8;;\%}'
   else
     REPLY="${p10ks_cwd[output]}"
   fi

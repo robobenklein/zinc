@@ -80,7 +80,7 @@ ENVIRONMENT VARIABLES
 [width="80%",cols="4,10"]
 |======
 |p10ks_cwd|Array for segment runtime use
-|p10ks_cwd[add_hyperlink]|If '1', create a hyperlink around the path that is
+|p10ks_cwd[add_hyperlink]|If '1', create a hyperlink ANSI escape around the path that is
 clickable in most VTE terminals!
 |p10ks_cwd[strategy]|The current render strategy for displaying the CWD path
 |======
