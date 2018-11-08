@@ -11,8 +11,8 @@ P10K is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zs
 
 - [Why P10K?](#why-p10k)
   - [Note about Icon support](#note-about-icon-support)
-- [Quickstart & Documentation](#quickstart--documentation)
-- [Performance:](#performance)
+- [Quickstart and Documentation](#quickstart-and-documentation)
+- [Performance](#performance)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
