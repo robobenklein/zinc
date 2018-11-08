@@ -5,6 +5,17 @@ Inspired by Powerlevel9K, this is a powerline theme written from scratch in pure
 
 P10K is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zsh-100-Commits-Club )
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Why P10K?](#why-p10k)
+  - [Note about Icon support](#note-about-icon-support)
+- [Quickstart & Documentation](#quickstart--documentation)
+- [Performance:](#performance)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Why P10K?
 
 P10K compared to P9K is ...
@@ -22,7 +33,7 @@ Also, async segments are smart:
  - async output can be cached differently per-segment
  - custom async segments are easy to implement (3 shell functions) and require no changes to P10K code
 
-### Note about Icons
+### Note about Icon support
 
 If you're in it for the super-fancy icons from Nerd-Fonts, etc, Powerlevel9K is still a better choice as the advanced Icon registry and alternative font support is not present in P10K by default.
 
