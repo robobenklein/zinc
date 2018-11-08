@@ -37,13 +37,13 @@ Also, async segments are smart:
 
 If you're in it for the super-fancy icons from Nerd-Fonts, etc, Powerlevel9K is still a better choice as the advanced Icon registry and alternative font support is not present in P10K by default.
 
-## Quickstart & Documentation
+## Quickstart and Documentation
 
 Visit the GitLab / GitHub Wiki! There you'll find docs about how to install and configure P10K.
 
 If you're looking for the individual segment options, look in the `zsdoc` folder.
 
-## Performance:
+## Performance
 
  - Only functions that get used are loaded via ZSH's `fpath` autoload functionality
  - **There are no external calls in the main thread.** Program calls and shell forking is all done in an async worker.
