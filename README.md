@@ -63,3 +63,9 @@ Timing example compared to other shell prompts:
 
 ```
 > All tests done with Git information enabled and with the same git repo state.
+
+## GitLab vs GitHub
+
+P10K started on [GitLab](https://gitlab.com/robobenklein/p10k), but is mirrored to GitHub for availability purposes. Both the repo and the wiki are mirrored.
+
+Issues should be reported on [GitLab](https://gitlab.com/robobenklein/p10k/issues), as it has a slightly better issue tracker and allows things like file attachments.
