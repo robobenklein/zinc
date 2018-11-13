@@ -19,7 +19,6 @@ p10ks_battery[verbose]="${p10ks_battery[verbose]:-1}"
 # }}}
 
 # P10K Battery segment
-# Mostly stolen code from P9K
 function p10ks_battery () {
   (( ${p10ks_battery[verbose]} )) && {
     if [[ -n ${p10ks_battery[time_remaining]} ]]; then

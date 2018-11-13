@@ -8,7 +8,11 @@ p10ks_vcs - a shell script
 
 SYNOPSIS
 --------
-Documentation automatically generated with `zshelldoc'
+
+VCS segment that makes use of ZSH's vcs_info builtin autoloadable.
+
+Is async and will run vcs_info in worker process.
+
 
 FUNCTIONS
 ---------
@@ -27,6 +31,17 @@ FUNCTIONS
  +vi-hg-storerev
  +vi-vcs-detect-changes
 AUTOLOAD vcs_info
+
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|p10ks_battery[color_loading]|bgcolor while async process is running
+|p10ks_vcs[color_default]|color when repo is clean
+|p10ks_vcs[color_dirty]|bgcolor when repo is dirty
+|p10ks_vcs[loading_msg]|message while waiting for async process
+(set to blank string to hide the segment during async wait)
+|======
 
 DETAILS
 -------
@@ -49,6 +64,14 @@ Uses feature(s): _autoload_, _zstyle_
 p10ks_vcs
 ~~~~~~~~~
 
+____
+ # synopsis {{{
+ # VCS segment that makes use of ZSH's vcs_info builtin autoloadable.
+ #
+ # Is async and will run vcs_info in worker process.
+ # }}}
+____
+
 Has 2 line(s). Doesn't call other functions.
 
 Called by:
@@ -69,6 +92,10 @@ Called by:
 
 _p10ks_vcs_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ # }}}
+____
 
 Has 1 line(s). Doesn't call other functions.
 

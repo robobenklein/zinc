@@ -65,7 +65,6 @@ p10ks_battery
 
 ____
  # P10K Battery segment
- # Mostly stolen code from P9K
 ____
 
 Has 9 line(s). Doesn't call other functions.

@@ -13,6 +13,7 @@ P10K is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zs
   - [Note about Icon support](#note-about-icon-support)
 - [Quickstart and Documentation](#quickstart-and-documentation)
 - [Performance](#performance)
+- [GitLab vs GitHub](#gitlab-vs-github)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
