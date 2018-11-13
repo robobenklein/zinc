@@ -9,8 +9,9 @@
 # and has other options.
 # }}}
 
-# TODO/HACK awaiting https://github.com/zdharma/zshelldoc/issues/8
-# env-not-vars {{{
+# awaiting https://github.com/zdharma/zshelldoc/issues/8
+# update: works now
+# env-vars {{{
 typeset -gA p10ks_battery
 p10ks_battery[percent]=""
 # p10ks_battery[verbose] -> 0/1: enables showing time until full/empty (requiress acpi)
@@ -67,7 +68,10 @@ function p10ks_battery_display_hidden () {
 [[ "${(t)p10ks_battery}" != "association" ]] && {
   typeset -gA p10ks_battery
 }
+# env-vars {{{
+# p10ks_battery[threshold_hidden] -> hide the segment when above this percentage
 p10ks_battery[threshold_hidden]=${p10ks_battery[threshold_hidden]:-"99"}
+# }}}
 
 p10ks_battery_display_hidden "$@"
 
@@ -90,12 +94,19 @@ function p10ks_battery_bg () {
 [[ "${(t)p10ks_battery}" != "association" ]] && {
   typeset -gA p10ks_battery
 }
-p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
-p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
 
+# env-vars {{{
+# p10ks_battery[threshold_low] -> percentage
+p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
+# p10ks_battery[threshold_charged] -> percentage
+p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
+# p10ks_battery[bgcolor_default] -> bgcolor when not low or charged
 p10ks_battery[bgcolor_default]="${p10ks_battery[bgcolor_default]:-black}"
+# p10ks_battery[bgcolor_low] -> color when below threshold_low
 p10ks_battery[bgcolor_low]="${p10ks_battery[bgcolor_low]:-red}"
+# p10ks_battery[bgcolor_charged] -> color when above threshold_charged
 p10ks_battery[bgcolor_charged]="${p10ks_battery[bgcolor_charged]:-${p10ks_battery[bgcolor_default]}}"
+# }}}
 
 p10ks_battery_bg "$@"
 

@@ -31,9 +31,16 @@ ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
+|p10ks_battery[bgcolor_charged]|color when above threshold_charged
+|p10ks_battery[bgcolor_default]|bgcolor when not low or charged
+|p10ks_battery[bgcolor_low]|color when below threshold_low
 |p10ks_battery[fgcolor_charging]|color of text when charging
 |p10ks_battery[fgcolor_default]|default foreground color
 |p10ks_battery[fgcolor_low]|color of text when battery below threshold_low
+|p10ks_battery[threshold_charged]|percentage
+|p10ks_battery[threshold_hidden]|hide the segment when above this percentage
+|p10ks_battery[threshold_low]|percentage
+|p10ks_battery[verbose]|0/1: enables showing time until full/empty (requiress acpi)
 |======
 
 DETAILS
@@ -42,7 +49,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 50 line(s). Calls functions:
+Has 49 line(s). Calls functions:
 
  Script-Body
  |-- p10ks_battery

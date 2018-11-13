@@ -14,11 +14,18 @@ function p10ks_battery_bg () {
 [[ "${(t)p10ks_battery}" != "association" ]] && {
   typeset -gA p10ks_battery
 }
-p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
-p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
 
+# env-vars {{{
+# p10ks_battery[threshold_low] -> percentage
+p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
+# p10ks_battery[threshold_charged] -> percentage
+p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
+# p10ks_battery[bgcolor_default] -> bgcolor when not low or charged
 p10ks_battery[bgcolor_default]="${p10ks_battery[bgcolor_default]:-black}"
+# p10ks_battery[bgcolor_low] -> color when below threshold_low
 p10ks_battery[bgcolor_low]="${p10ks_battery[bgcolor_low]:-red}"
+# p10ks_battery[bgcolor_charged] -> color when above threshold_charged
 p10ks_battery[bgcolor_charged]="${p10ks_battery[bgcolor_charged]:-${p10ks_battery[bgcolor_default]}}"
+# }}}
 
 p10ks_battery_bg "$@"

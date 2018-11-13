@@ -19,6 +19,9 @@ function p10ks_battery_display_hidden () {
 [[ "${(t)p10ks_battery}" != "association" ]] && {
   typeset -gA p10ks_battery
 }
+# env-vars {{{
+# p10ks_battery[threshold_hidden] -> hide the segment when above this percentage
 p10ks_battery[threshold_hidden]=${p10ks_battery[threshold_hidden]:-"99"}
+# }}}
 
 p10ks_battery_display_hidden "$@"
