@@ -65,11 +65,7 @@ p10ks_vcs
 ~~~~~~~~~
 
 ____
- # synopsis {{{
- # VCS segment that makes use of ZSH's vcs_info builtin autoloadable.
- #
- # Is async and will run vcs_info in worker process.
- # }}}
+ # basic echo of _info_msg_0_
 ____
 
 Has 2 line(s). Doesn't call other functions.
@@ -94,7 +90,7 @@ _p10ks_vcs_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ____
- # }}}
+ # resets the async status when done with renders
 ____
 
 Has 1 line(s). Doesn't call other functions.

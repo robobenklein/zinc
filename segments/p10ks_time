@@ -1,5 +1,9 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+# synopsis {{{
+# Uses zsh's expansion of %*
+# }}}
+
 p10ks_time ()
 {
   REPLY='%*'

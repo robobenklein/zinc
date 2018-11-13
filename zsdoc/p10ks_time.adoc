@@ -8,7 +8,9 @@ p10ks_time - a shell script
 
 SYNOPSIS
 --------
-Documentation automatically generated with `zshelldoc'
+
+Uses zsh's expansion of %*
+
 
 FUNCTIONS
 ---------
@@ -26,6 +28,12 @@ Has 1 line(s). No functions are called (may set up e.g. a hook, a Zle widget bou
 
 p10ks_time
 ~~~~~~~~~~
+
+____
+ # synopsis {{{
+ # Uses zsh's expansion of %*
+ # }}}
+____
 
 Has 1 line(s). Doesn't call other functions.
 

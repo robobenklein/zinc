@@ -1,5 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+# synopsis {{{
+# Shows counts of shell jobs.
+# }}}
+
+# if no suspended jobs, only show running job count
 function p10ks_jobs () {
   (( ${(Mw)#jobstates#suspended} == 0 )) && {
     REPLY="${#jobstates} ${p10ks_jobs[symbol_running]}"
@@ -9,7 +14,11 @@ function p10ks_jobs () {
 }
 
 typeset -gA p10ks_jobs
+# env-vars {{{
+# p10ks_jobs[symbol_running] -> symbol for running jobs
 p10ks_jobs[symbol_running]=${p10ks_jobs[symbol_running]:-'⚙ '}
+# p10ks_jobs[symbol_suspended] -> symbol for suspended jobs
 p10ks_jobs[symbol_suspended]=${p10ks_jobs[symbol_suspended]:-'❚❚'}
+# }}}
 
 p10ks_jobs "$@"

@@ -9,6 +9,7 @@
 # Is async and will run vcs_info in worker process.
 # }}}
 
+# basic echo of _info_msg_0_
 function p10ks_vcs () {
   _P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
   REPLY="${p10ks_vcs["_info_msg_0_"]}"
@@ -241,6 +242,7 @@ p10ks_vcs_async_started ()
 p10ks_vcs[loading_msg]=${p10ks_vcs[loading_msg]:-"<loading...>"}
 # }}}
 
+# resets the async status when done with renders
 function _p10ks_vcs_async_complete () {
   _p10k_segment_async_reset_status p10ks_vcs
 }

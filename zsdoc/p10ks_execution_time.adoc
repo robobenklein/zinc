@@ -20,13 +20,20 @@ FUNCTIONS
  _p10ks_execution_time_precmd
  _p10ks_execution_time_preexec
 
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|p10ks_execution_time[threshold]|minimum seconds of runtime to display segment
+|======
+
 DETAILS
 -------
 
 Script Body
 ~~~~~~~~~~~
 
-Has 24 line(s). Calls functions:
+Has 23 line(s). Calls functions:
 
  Script-Body
  |-- p10ks_execution_time

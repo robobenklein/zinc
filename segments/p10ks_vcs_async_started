@@ -17,6 +17,7 @@ p10ks_vcs_async_started ()
 p10ks_vcs[loading_msg]=${p10ks_vcs[loading_msg]:-"<loading...>"}
 # }}}
 
+# resets the async status when done with renders
 function _p10ks_vcs_async_complete () {
   _p10k_segment_async_reset_status p10ks_vcs
 }
