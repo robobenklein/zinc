@@ -147,6 +147,9 @@ prompt_p10k_setup () {
   async_register_callback p10k_segment_worker _p10k_segment_async_callback
 
   async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "_p10k_tracked_autoload"
+
+  # gives segments a setup run before the first precmd
+  prompt_p10k_render_to_vars
 }
 
 prompt_p10k_preview () {
