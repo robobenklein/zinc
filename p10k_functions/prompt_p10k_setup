@@ -150,6 +150,10 @@ prompt_p10k_setup () {
 
   # gives segments a setup run before the first precmd
   prompt_p10k_preexec
+
+  for segment in ${p10k_left} ${p10k_right}; do
+    _p10k_tracked_autoload ${segment}
+  done
 }
 
 prompt_p10k_preview () {
