@@ -68,7 +68,7 @@ typeset -gA p10ks_cwd
 typeset -ga _P10KS_CWD_STRAT_ARGS
 # p10ks_cwd[add_hyperlink] -> If '1', create a hyperlink ANSI escape around the path that is
 # clickable in most VTE terminals!
-p10ks_cwd[add_hyperlink]="0"
+p10ks_cwd[add_hyperlink]=${p10ks_cwd[add_hyperlink]:-"0"}
 # p10ks_cwd[strategy] -> The current render strategy for displaying the CWD path
 p10ks_cwd[strategy]=${p10ks_cwd[strategy]:-"default"}
 # }}}
