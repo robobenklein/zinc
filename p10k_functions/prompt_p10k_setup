@@ -23,7 +23,8 @@ function _p10k_segment_async_callback () {
 
   # ignore the async evals used to alter worker environment
   if [[ "${1}" == "[async/eval]" ]] || \
-     [[ "${1}" == ";" ]];
+     [[ "${1}" == ";" ]] || \
+     [[ "${1}" == "[async]" ]];
   then
     _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
     return
@@ -119,7 +120,7 @@ prompt_p10k_setup () {
       _P10K_DBG_OUT "loading preset $1"
       source "${_P10K_0[repo]}/presets/${1}.p10kp.zsh"
     else
-      echo "P10K: No such preset."
+      echo "P10K: No such preset found in ${_P10K_0[repo]}/presets/."
     fi
   fi
 
