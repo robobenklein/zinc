@@ -6,6 +6,15 @@ _P10K_SEP_CHARS[left]=${_P10K_SEP_CHARS[left]:-''}
 _P10K_SEP_CHARS[right]=${_P10K_SEP_CHARS[right]:-''}
 _P10K_SEP_CHARS[left_bgmatch]=${_P10K_SEP_CHARS[left_bgmatch]:-''}
 _P10K_SEP_CHARS[right_bgmatch]=${_P10K_SEP_CHARS[right_bgmatch]:-''}
+if (( ! ${+_P10K_SEP_CHARS[rprompt_terminating_space]} )); then
+  # if in tmux/etc don't use the hidden end space trick
+  # causes alignment issues with the left prompt -> command
+  if [[ "${TMUX}${SCREEN_NO}" != "" ]]; then
+    _P10K_SEP_CHARS[rprompt_terminating_space]=" %{%k%f%}"
+  else
+    _P10K_SEP_CHARS[rprompt_terminating_space]="%{ %k%f%}"
+  fi
+fi
 
 function p10k_render_prompt_from_spec () {
   _P10K_DBG_OUT "\n>>> build_prompt: $1 $2"
@@ -118,24 +127,24 @@ function p10k_render_prompt_from_spec () {
     # Detect segment connection
     if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
       # skip drawing the arrow
-      _P10K_SBUF+="%K{${segment_opts[2]}} "
+      _P10K_SBUF+="%{%K{${segment_opts[2]}}%} "
     elif [[ "${prev_bg}" == "${segment_opts[2]}" ]]; then
       _P10K_DBG_OUT "joining segments with same bg"
       [[ "$3" == "left" ]] && {
-        _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${_P10K_SEP_CHARS[${3}_bgmatch]} "
+        _P10K_SBUF+=" %{%K{${segment_opts[2]}}%F{${prev_bg}}%}${_P10K_SEP_CHARS[${3}_bgmatch]} "
       } || {
-        _P10K_SBUF+=" %F{${segment_opts[1]}}${_P10K_SEP_CHARS[${3}_bgmatch]}%K{${segment_opts[2]}} "
+        _P10K_SBUF+=" %{%F{${segment_opts[1]}}%}${_P10K_SEP_CHARS[${3}_bgmatch]}%{%K{${segment_opts[2]}}%} "
       }
     else
       [[ "$3" == "left" ]] && {
-        _P10K_SBUF+=" %K{${segment_opts[2]}}%F{${prev_bg}}${_P10K_SEP_CHARS[${3}]} "
+        _P10K_SBUF+=" %{%K{${segment_opts[2]}}%F{${prev_bg}}%}${_P10K_SEP_CHARS[${3}]} "
       } || {
-        _P10K_SBUF+=" %F{${segment_opts[2]}}${_P10K_SEP_CHARS[${3}]}%K{${segment_opts[2]}} "
+        _P10K_SBUF+=" %{%F{${segment_opts[2]}}%}${_P10K_SEP_CHARS[${3}]}%{%K{${segment_opts[2]}}%} "
       }
     fi
 
     # print actual segment content
-    _P10K_SBUF+="%F{${segment_opts[1]}}"
+    _P10K_SBUF+="%{%F{${segment_opts[1]}}%}"
     _P10K_SBUF+="${segment_output}"
 
     # store for next loop
@@ -146,10 +155,10 @@ function p10k_render_prompt_from_spec () {
   # the `%{ %}` is an invis wrapper
   [[ "$3" == "left" ]] && {
     [[ "${segment_opts[3]}" != "ENDLINE" ]] && {
-      _P10K_SBUF+=' %k%F{'${prev_bg}'}'${_P10K_SEP_CHARS[${3}]}'%f '
+      _P10K_SBUF+=' %{%k%F{'${prev_bg}'}%}'${_P10K_SEP_CHARS[${3}]}'%f '
     }
-  } || {
-    _P10K_SBUF+='%{ %}%k%f'
+  } || { # right prompt
+    _P10K_SBUF+="${_P10K_SEP_CHARS[rprompt_terminating_space]}"
   }
 
   REPLY="$_P10K_SBUF"
