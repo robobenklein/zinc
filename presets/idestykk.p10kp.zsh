@@ -1,9 +1,12 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 p10k_left=(
-  p10ks_time p10ks_colordowtime
-  p10ks_retval p10ks_userhost
-  p10ks_vcs p10ks_cwd
+  p10ks_time
+  p10ks_colordowtime
+  p10ks_retval
+  p10ks_userhost
+  p10ks_vcs
+  p10ks_cwd
   idestykk_newline
 )
 
