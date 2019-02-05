@@ -1,7 +1,9 @@
 
 # P10K
 
-Inspired by Powerlevel9K, this is a powerline theme written from scratch in pure ZSH. It supports mixed async segments using zsh-async as a backend.
+Inspired by Powerlevel9K, Agnoster, and friends this is a powerline theme written from scratch in pure ZSH. It supports mixed async segments using zsh-async as a backend.
+
+![P10K Prompt Screenshot](presets/p10k-zsh-f-git-demo.png)
 
 P10K is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zsh-100-Commits-Club )
 
@@ -13,6 +15,7 @@ P10K is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zs
 - [Why P10K?](#why-p10k)
 - [Note about Icons and Symbols](#note-about-icons-and-symbols)
 - [Performance](#performance)
+  - [See it for yourself](#see-it-for-yourself)
 - [GitLab vs GitHub](#gitlab-vs-github)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
