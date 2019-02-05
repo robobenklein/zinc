@@ -72,6 +72,15 @@ Timing example compared to other shell prompts: (Nov. 2018)
 ```
 > All tests done with Git information enabled and with the same git repo state.
 
+### See it for yourself
+
+One of my standard performance requirements for a prompt is that it should be able to render faster than I can input into the shell.
+
+This is best demonstrated by holding down 'Enter' and seeing for yourself how your prompt responds. I've made a demo of this for P10K vs Powerlevel9K:
+
+Powerlevel9K: https://asciinema.org/a/hKf2aUfU8JKI72vY4FS56EHYz  
+P10K: https://asciinema.org/a/7ZRRsKQEvUPbTo3HAt8Agri6U
+
 ## GitLab vs GitHub
 
 P10K started on [GitLab](https://gitlab.com/robobenklein/p10k), but is mirrored to GitHub for availability purposes. Both the repo and the wiki are mirrored. (So `robobenklein/p10k` works in plugin managers with GitHub as the default.)
