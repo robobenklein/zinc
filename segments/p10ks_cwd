@@ -213,6 +213,6 @@ p10ks_cwd ()
   fi
 }
 
-add-zsh-hook chpwd _p10ks_cwd_chpwd
+_p10k_add_hook _p10k_chpwd _p10ks_cwd_chpwd
 
 p10ks_cwd "$@"
