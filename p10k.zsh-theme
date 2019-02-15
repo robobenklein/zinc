@@ -44,6 +44,8 @@ add-zsh-hook precmd p10k_selfdestruct_setup
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
 
-autoload -Uz promptinit; promptinit
+autoload -Uz promptinit 2>&1 >/dev/null && promptinit
 
-prompt p10k
+autoload -Uz +X prompt_p10k_setup
+prompt_p10k_setup
+
