@@ -34,6 +34,7 @@ function p10k_selfdestruct_setup () {
     fpath+=("$P10K_INSTALL_DIR/segments")
   }
 
+  # remove self from precmd
   precmd_functions=("${(@)precmd_functions:#p10k_selfdestruct_setup}")
 
   autoload -Uz +X prompt_p10k_setup async
@@ -54,4 +55,6 @@ add-zsh-hook precmd p10k_selfdestruct_setup
 
 fpath+=("$P10K_INSTALL_DIR/p10k_functions")
 fpath+=("$P10K_INSTALL_DIR/segments")
+
+autoload -Uz +X prompt_p10k_setup async
 

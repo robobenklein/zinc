@@ -215,7 +215,7 @@ function prompt_p10k_minmode () {
 }
 
 typeset -gHA _P10K_0
-_P10K_0[srcfile]="${ZERO:-${(%):-%N}}"
+_P10K_0[srcfile]="${_P10K_SCRIPTPATH:-${ZERO:-${(%):-%N}}}"
 _P10K_0[repo]="${_P10K_0[srcfile]:h}"
 
 prompt_p10k_setup "$@"
