@@ -8,7 +8,7 @@ p10ks_gitstatus_async ()
   set +x
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
 
-  echo -nE $'\uE220 '"$VCS_STATUS_LOCAL_BRANCH"
+  echo -nE "$VCS_STATUS_LOCAL_BRANCH"
   if [[ -n "$VCS_STATUS_ACTION" ]]; then
     echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
   else
