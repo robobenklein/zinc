@@ -1,19 +1,17 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 # synopsis {{{
-# VCS segment that makes use of ZSH's vcs_info builtin autoloadable.
+# VCS segment that makes use of https://github.com/romkatv/gitstatus.
 #
-# Is async and will run vcs_info in worker process.
+# Is async and will talk to git in worker process.
 # }}}
 
-# basic echo of _info_msg_0_
-function p10ks_vcs () {
-  _P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
-  REPLY="${p10ks_vcs["_info_msg_0_"]}"
+function p10ks_gitstatus () {
+  REPLY="${p10ks_gitstatus["prompt"]}"
 }
 
-typeset -gA p10ks_vcs
-p10ks_vcs["_info_msg_0_"]="<async:vcs>"
-p10ks_vcs[status]="loading"
+typeset -gA p10ks_gitstatus
+p10ks_gitstatus["prompt"]="<async:gitstatus>"
+p10ks_gitstatus[status]="loading"
 
-p10ks_vcs "$@"
+p10ks_gitstatus "$@"
