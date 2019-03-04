@@ -5,7 +5,7 @@
 # within a git repo, this segment displays the same prompt as vcs segment but 3 times faster.
 # Otherwise it does nothing.
 #
-# Is async and will talk to git in worker process.
+# Just like vcs, this segment is async. It talks to git in a worker process.
 # }}}
 
 function p10ks_gitstatus () {
