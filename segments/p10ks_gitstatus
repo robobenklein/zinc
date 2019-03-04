@@ -1,7 +1,9 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 # synopsis {{{
-# VCS segment that makes use of https://github.com/romkatv/gitstatus.
+# If https://github.com/romkatv/gitstatus plugin is enabled and the current directory is
+# within a git repo, this segment displays the same prompt as vcs segment but 3 times faster.
+# Otherwise it does nothing.
 #
 # Is async and will talk to git in worker process.
 # }}}
