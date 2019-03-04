@@ -2,10 +2,7 @@
 
 p10ks_gitstatus_async ()
 {
-  emulate -L zsh
-  set -x
-  gitstatus_query_dir 2>>! /tmp/p10ks.log || return
-  set +x
+  gitstatus_query_dir || return
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
 
   echo -nE "$VCS_STATUS_LOCAL_BRANCH"
