@@ -2,6 +2,7 @@
 
 p10ks_gitstatus_async ()
 {
+  echo here >>! /tmp/p10ks.log
   gitstatus_query_dir || return
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
 
