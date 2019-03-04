@@ -1,0 +1,19 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+# synopsis {{{
+# VCS segment that makes use of ZSH's vcs_info builtin autoloadable.
+#
+# Is async and will run vcs_info in worker process.
+# }}}
+
+# basic echo of _info_msg_0_
+function p10ks_vcs () {
+  _P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
+  REPLY="${p10ks_vcs["_info_msg_0_"]}"
+}
+
+typeset -gA p10ks_vcs
+p10ks_vcs["_info_msg_0_"]="<async:vcs>"
+p10ks_vcs[status]="loading"
+
+p10ks_vcs "$@"

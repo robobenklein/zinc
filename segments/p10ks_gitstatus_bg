@@ -1,0 +1,20 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function p10ks_vcs_bg () {
+  case "${p10ks_vcs[status]}" in
+    "dirty") REPLY=${p10ks_vcs[color_dirty]} ;;
+    "loading") REPLY=${p10ks_vcs[color_loading]} ;;
+    *) REPLY=${p10ks_vcs[color_default]} ;;
+  esac
+}
+
+# env-vars {{{
+# p10ks_vcs[color_dirty] -> bgcolor when repo is dirty
+p10ks_vcs[color_dirty]=${p10ks_vcs[color_dirty]:-"yellow"}
+# p10ks_battery[color_loading] -> bgcolor while async process is running
+p10ks_vcs[color_loading]=${p10ks_vcs[color_loading]:-"8"}
+# p10ks_vcs[color_default] -> color when repo is clean
+p10ks_vcs[color_default]=${p10ks_vcs[color_default]:-"green"}
+# }}}
+
+p10ks_vcs_bg "$@"
