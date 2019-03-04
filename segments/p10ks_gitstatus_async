@@ -4,7 +4,6 @@ p10ks_gitstatus_async ()
 {
   emulate -L zsh
   set -x
-  source ~/gitstatus/gitstatus.plugin.zsh 2>>! /tmp/p10ks.log || return
   gitstatus_query_dir 2>>! /tmp/p10ks.log || return
   set +x
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
