@@ -36,6 +36,7 @@ ENVIRONMENT VARIABLES
 [width="80%",cols="4,10"]
 |======
 |p10ks_battery[color_loading]|bgcolor while async process is running
+|p10ks_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
 |p10ks_vcs[color_default]|color when repo is clean
 |p10ks_vcs[color_dirty]|bgcolor when repo is dirty
 |p10ks_vcs[loading_msg]|message while waiting for async process
@@ -48,7 +49,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 41 line(s). Calls functions:
+Has 46 line(s). Calls functions:
 
  Script-Body
  |-- p10ks_vcs
@@ -76,7 +77,11 @@ Called by:
 p10ks_vcs_async
 ~~~~~~~~~~~~~~~
 
-Has 25 line(s). Calls functions:
+____
+ # }}}
+____
+
+Has 27 line(s). Calls functions:
 
  p10ks_vcs_async
  `-- vcs_info
