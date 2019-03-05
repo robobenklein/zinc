@@ -2,10 +2,37 @@
 
 autoload -Uz vcs_info
 
-p10ks_vcs_async ()
-{
-  vcs_info
-  printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
+p10ks_vcs_async() {
+  [[ -v GITSTATUS_DAEMON_PID ]] && gitstatus_query_dir && {
+    # Fast path: use vcs info provided by gitstatus.
+    echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
+
+    echo -nE "$VCS_STATUS_LOCAL_BRANCH"
+    [[ -n "$VCS_STATUS_ACTION" ]] && {
+      echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
+    } || {
+      # If local and remote branch names differ, show "local → remote" instead of just "local".
+      [[ -z "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+        [[ "$VCS_STATUS_LOCAL_BRANCH" == "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+        echo -nE $' \u2192 '"$VCS_STATUS_REMOTE_BRANCH"
+      local icons=''
+      (( VCS_STATUS_HAS_STAGED != 1 )) || icons+='✚'
+      (( VCS_STATUS_HAS_UNSTAGED != 1 )) || icons+='●'
+      (( VCS_STATUS_HAS_UNTRACKED != 1 )) || icons+='◌'
+      echo -nE "${icons:+ $icons}"
+      (( VCS_STATUS_COMMITS_AHEAD <= 0 )) || echo -nE " +$VCS_STATUS_COMMITS_AHEAD"
+      (( VCS_STATUS_COMMITS_BEHIND <= 0 )) || echo -nE " -$VCS_STATUS_COMMITS_BEHIND"
+      (( VCS_STATUS_STASHES <= 0 )) || echo -nE " ⋄$VCS_STATUS_STASHES"
+    }
+  } || {
+    # If GITSTATUS_DAEMON_PID is set, we've ended up here because $PWD is not a git repo.
+    # In this case we can disable git backend in vcs_info and only look for hg and cvs.
+    [[ -v GITSTATUS_DAEMON_PID ]] &&
+      zstyle ':vcs_info:*' enable hg svn ||
+      zstyle ':vcs_info:*' enable git hg svn
+    vcs_info
+    printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
+  }
 }
 
 # HACK/TODO ex. from my personal shell
@@ -13,10 +40,7 @@ zstyle ':vcs_info:svn*:*' actionformats '%c%u %F{red}| %a%f'
 zstyle ':vcs_info:*' actionformats '%b %F{red}| %a%f'
 # TODO unicode
 zstyle ':vcs_info:hg*:*' branchformat ' %b'
-# TODO unicode
-zstyle ':vcs_info:git*:*' branchformat ' %b'
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:svn*:*' formats %c%u
 zstyle ':vcs_info:*' formats %b%c%u%m
 zstyle ':vcs_info:hg*:*' get-bookmarks true
@@ -29,20 +53,14 @@ zstyle ':vcs_info:*' unstagedstr ' ●'
 
 # VCS_INFO HOOKS
 zstyle ':vcs_info:git*+set-message:*' hooks \
- vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname
+  vcs-detect-changes git-untracked git-aheadbehind
 zstyle ':vcs_info:hg*+set-message:*' hooks \
- vcs-detect-changes hg-branchhead
+  vcs-detect-changes hg-branchhead
 zstyle ':vcs_info:svn*+set-message:*' hooks \
- vcs-detect-changes svn-detect-changes
+  vcs-detect-changes svn-detect-changes
 
 ### Generic hook functions
 function +vi-vcs-detect-changes() {
-  if [[ "${hook_com[vcs]}" == "hg" ]]; then
-    vcs_visual_identifier='VCS_HG_ICON'
-  elif [[ "${hook_com[vcs]}" == "svn" ]]; then
-    vcs_visual_identifier='VCS_SVN_ICON'
-  fi
-
   if [[ -n "${hook_com[staged]}" ]] || [[ -n "${hook_com[unstaged]}" ]]; then
     VCS_WORKDIR_DIRTY=1
   else
@@ -82,23 +100,6 @@ function +vi-git-aheadbehind() {
 
   hook_com[misc]+=${(j:/:)gitstatus}
 }
-
-# function +vi-git-remotebranch() {
-#   local remote
-#
-#   # Are we on a remote-tracking branch?
-#   remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
-#     --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
-#
-#   # The first test will show a tracking branch whenever there is one. The
-#   # second test, however, will only show the remote branch's name if it
-#   # differs from the local one.
-#   if [[ -n ${remote} ]] ; then
-#   #if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
-#     # TODO unicode
-#     hook_com[branch]=" ${hook_com[branch]} [${remote}]"
-#   fi
-# }
 
 ### HG hook functions
 
