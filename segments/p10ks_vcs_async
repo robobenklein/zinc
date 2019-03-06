@@ -2,47 +2,77 @@
 
 autoload -Uz vcs_info
 
-p10ks_vcs_async ()
-{
-  vcs_info
-  printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
+[[ "${(t)p10ks_vcs}" != "association" ]] && {
+  typeset -gA p10ks_vcs
+}
+
+# env-vars {{{
+# p10ks_vcs[backends] -> space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
+: ${p10ks_vcs[backends]=git svn hg}
+# }}}
+
+p10ks_vcs_async() {
+  local -a backends=(${(z)p10ks_vcs[backends]})
+  (( ${backends[(I)git]} )) && [[ -v GITSTATUS_DAEMON_PID ]] && gitstatus_query_dir && {
+    # Fast path: use vcs info provided by gitstatus.
+    echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
+    echo -nE "$VCS_STATUS_LOCAL_BRANCH"
+    [[ -n "$VCS_STATUS_ACTION" ]] && {
+      echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
+    } || {
+      # If local and remote branch names differ, show "local→remote" instead of just "local".
+      [[ -z "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+        [[ "$VCS_STATUS_LOCAL_BRANCH" == "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+        echo -nE $'\u2192'"$VCS_STATUS_REMOTE_BRANCH"
+      local icons=''
+      (( VCS_STATUS_HAS_STAGED != 1 )) || icons+=$'\u271a'    # ✚
+      (( VCS_STATUS_HAS_UNSTAGED != 1 )) || icons+=$'\u25cf'  # ●
+      (( VCS_STATUS_HAS_UNTRACKED != 1 )) || icons+=$'\u25cc' # ◌
+      echo -nE "${icons:+ $icons}"
+      (( VCS_STATUS_COMMITS_AHEAD <= 0 )) || echo -nE " +$VCS_STATUS_COMMITS_AHEAD"
+      (( VCS_STATUS_COMMITS_BEHIND <= 0 )) || echo -nE " -$VCS_STATUS_COMMITS_BEHIND"
+      (( VCS_STATUS_STASHES <= 0 )) || echo -nE $' \u22c4'"$VCS_STATUS_STASHES"
+      # Prompt example with all optional parts present:
+      #
+      #   feature→master ✚●◌ +1 -2 ⋄3
+      #
+      # We are on branch "feature" that tracks "origin/master". We have staged, unstaged and
+      # untracked files. We are 1 commit ahead and 2 commits behind. We have 3 stashes.
+    }
+  } || {
+    # Remove git from the list of backends if we know we aren't in a git repo.
+    [[ ! -v GITSTATUS_DAEMON_PID ]] || backends=(${backends:#git})
+    (( ! #backends )) || {
+      zstyle ':vcs_info:*' enable ${backends}
+      vcs_info
+      printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
+    }
+  }
 }
 
 # HACK/TODO ex. from my personal shell
 zstyle ':vcs_info:svn*:*' actionformats '%c%u %F{red}| %a%f'
 zstyle ':vcs_info:*' actionformats '%b %F{red}| %a%f'
-# TODO unicode
-zstyle ':vcs_info:hg*:*' branchformat ' %b'
-# TODO unicode
-zstyle ':vcs_info:git*:*' branchformat ' %b'
+zstyle ':vcs_info:hg*:*' branchformat '%b'
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:svn*:*' formats %c%u
 zstyle ':vcs_info:*' formats %b%c%u%m
 zstyle ':vcs_info:hg*:*' get-bookmarks true
 zstyle ':vcs_info:hg*:*' get-revision true
 zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-# TODO unicode
-zstyle ':vcs_info:*' stagedstr ' ✚'
-# TODO unicode
-zstyle ':vcs_info:*' unstagedstr ' ●'
+zstyle ':vcs_info:*' stagedstr $' \u271a'   # ✚
+zstyle ':vcs_info:*' unstagedstr $' \u25cf' # ●
 
 # VCS_INFO HOOKS
 zstyle ':vcs_info:git*+set-message:*' hooks \
- vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname
+  vcs-detect-changes git-untracked git-aheadbehind
 zstyle ':vcs_info:hg*+set-message:*' hooks \
- vcs-detect-changes hg-branchhead
+  vcs-detect-changes hg-branchhead
 zstyle ':vcs_info:svn*+set-message:*' hooks \
- vcs-detect-changes svn-detect-changes
+  vcs-detect-changes svn-detect-changes
 
 ### Generic hook functions
 function +vi-vcs-detect-changes() {
-  if [[ "${hook_com[vcs]}" == "hg" ]]; then
-    vcs_visual_identifier='VCS_HG_ICON'
-  elif [[ "${hook_com[vcs]}" == "svn" ]]; then
-    vcs_visual_identifier='VCS_SVN_ICON'
-  fi
-
   if [[ -n "${hook_com[staged]}" ]] || [[ -n "${hook_com[unstaged]}" ]]; then
     VCS_WORKDIR_DIRTY=1
   else
@@ -59,8 +89,7 @@ function +vi-git-untracked(){
     # If instead you want to show the marker only if there are untracked
     # files in $PWD, use:
     #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-    # TODO unicode
-    hook_com[unstaged]+='◌'
+    hook_com[unstaged]+=$'\u25cc' # '◌'
   fi
 }
 
@@ -71,40 +100,17 @@ function +vi-git-aheadbehind() {
   # for git prior to 1.7
   # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
   ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-  # TODO unicode
   (( $ahead )) && gitstatus+=( " +${ahead}" )
 
   # for git prior to 1.7
   # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
   behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-  # TODO unicode
   (( $behind )) && gitstatus+=( " -${behind}" )
 
   hook_com[misc]+=${(j:/:)gitstatus}
 }
 
-# function +vi-git-remotebranch() {
-#   local remote
-#
-#   # Are we on a remote-tracking branch?
-#   remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
-#     --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
-#
-#   # The first test will show a tracking branch whenever there is one. The
-#   # second test, however, will only show the remote branch's name if it
-#   # differs from the local one.
-#   if [[ -n ${remote} ]] ; then
-#   #if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
-#     # TODO unicode
-#     hook_com[branch]=" ${hook_com[branch]} [${remote}]"
-#   fi
-# }
-
 ### HG hook functions
-
-function +vi-hg-storerev() {
-  user_data[hash]=${hook_com[hash]}
-}
 
 function +vi-hg-branchhead() {
   local branchheadsfile i_tiphash i_branchname

@@ -28,7 +28,6 @@ FUNCTIONS
  +vi-git-aheadbehind
  +vi-git-untracked
  +vi-hg-branchhead
- +vi-hg-storerev
  +vi-vcs-detect-changes
 AUTOLOAD vcs_info
 
@@ -37,6 +36,7 @@ ENVIRONMENT VARIABLES
 [width="80%",cols="4,10"]
 |======
 |p10ks_battery[color_loading]|bgcolor while async process is running
+|p10ks_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
 |p10ks_vcs[color_default]|color when repo is clean
 |p10ks_vcs[color_dirty]|bgcolor when repo is dirty
 |p10ks_vcs[loading_msg]|message while waiting for async process
@@ -49,7 +49,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 43 line(s). Calls functions:
+Has 46 line(s). Calls functions:
 
  Script-Body
  |-- p10ks_vcs
@@ -77,10 +77,16 @@ Called by:
 p10ks_vcs_async
 ~~~~~~~~~~~~~~~
 
-Has 2 line(s). Calls functions:
+____
+ # }}}
+____
+
+Has 27 line(s). Calls functions:
 
  p10ks_vcs_async
  `-- vcs_info
+
+Uses feature(s): _zstyle_
 
 Called by:
 
@@ -159,20 +165,13 @@ Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 +vi-hg-branchhead
 ~~~~~~~~~~~~~~~~~
 
-Has 15 line(s). Doesn't call other functions.
-
-Uses feature(s): _read_
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-+vi-hg-storerev
-~~~~~~~~~~~~~~~
-
 ____
  ### HG hook functions
 ____
 
-Has 1 line(s). Doesn't call other functions.
+Has 15 line(s). Doesn't call other functions.
+
+Uses feature(s): _read_
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
@@ -183,7 +182,7 @@ ____
  ### Generic hook functions
 ____
 
-Has 11 line(s). Doesn't call other functions.
+Has 5 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
