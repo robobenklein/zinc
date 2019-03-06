@@ -39,6 +39,7 @@ segments=(
   cwd
   cwd_writable
   execution_time
+  gitstatus
   host
   jobs
   retval

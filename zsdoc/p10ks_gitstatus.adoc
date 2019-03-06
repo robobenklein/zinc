@@ -1,0 +1,136 @@
+p10ks_gitstatus(1)
+==================
+:compat-mode!:
+
+NAME
+----
+p10ks_gitstatus - a shell script
+
+SYNOPSIS
+--------
+
+If https://github.com/romkatv/gitstatus plugin is enabled and the current directory is
+within a git repo, this segment displays the same prompt as vcs segment but 3 times faster.
+Otherwise it does nothing.
+
+Is async and will talk to git in worker process.
+
+
+FUNCTIONS
+---------
+
+ p10ks_gitstatus
+ p10ks_gitstatus_async
+ _p10ks_gitstatus_async_complete
+ p10ks_gitstatus_async_return
+ p10ks_gitstatus_async_started
+ p10ks_gitstatus_bg
+ p10ks_gitstatus_default_opts
+ p10ks_gitstatus_display_hidden
+
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|p10ks_battery[color_loading]|bgcolor while async process is running
+|p10ks_gitstatus[color_default]|color when repo is clean
+|p10ks_gitstatus[color_dirty]|bgcolor when repo is dirty
+|p10ks_gitstatus[loading_msg]|message while waiting for async process
+(set to blank string to hide the segment during async wait)
+|======
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 25 line(s). Calls functions:
+
+ Script-Body
+ |-- p10ks_gitstatus
+ |-- p10ks_gitstatus_async
+ |-- p10ks_gitstatus_async_return
+ |-- p10ks_gitstatus_async_started
+ `-- p10ks_gitstatus_bg
+
+p10ks_gitstatus
+~~~~~~~~~~~~~~~
+
+____
+ # synopsis {{{
+ # If https://github.com/romkatv/gitstatus plugin is enabled and the current directory is
+ # within a git repo, this segment displays the same prompt as vcs segment but 3 times faster.
+ # Otherwise it does nothing.
+ #
+ # Is async and will talk to git in worker process.
+ # }}}
+____
+
+Has 1 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_gitstatus_async
+~~~~~~~~~~~~~~~~~~~~~
+
+Has 19 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+_p10ks_gitstatus_async_complete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ # resets the async status when done with renders
+____
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_gitstatus_async_return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 5 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_gitstatus_async_started
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 2 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_gitstatus_bg
+~~~~~~~~~~~~~~~~~~
+
+Has 5 line(s). Doesn't call other functions.
+
+Called by:
+
+ Script-Body
+
+p10ks_gitstatus_default_opts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+p10ks_gitstatus_display_hidden
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+

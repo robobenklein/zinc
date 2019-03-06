@@ -1,0 +1,19 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+# synopsis {{{
+# If https://github.com/romkatv/gitstatus plugin is enabled and the current directory is
+# within a git repo, this segment displays the same prompt as vcs segment but 3 times faster.
+# Otherwise it does nothing.
+#
+# Just like vcs, this segment is async. It talks to git in a worker process.
+# }}}
+
+function p10ks_gitstatus () {
+  REPLY="${p10ks_gitstatus["prompt"]}"
+}
+
+typeset -gA p10ks_gitstatus
+p10ks_gitstatus["prompt"]="<async:gitstatus>"
+p10ks_gitstatus[status]="loading"
+
+p10ks_gitstatus "$@"
