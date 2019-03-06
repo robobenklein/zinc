@@ -42,7 +42,7 @@ p10ks_vcs_async() {
   } || {
     # Remove git from the list of backends if we know we aren't in a git repo.
     [[ ! -v GITSTATUS_DAEMON_PID ]] || backends=(${backends:#git})
-    (( ! backends )) || {
+    (( ! #backends )) || {
       zstyle ':vcs_info:*' enable ${backends}
       vcs_info
       printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
