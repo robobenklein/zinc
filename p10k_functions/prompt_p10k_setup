@@ -90,6 +90,17 @@ function p10k_reload () {
   builtin autoload -Uz +X prompt_p10k_setup
 }
 
+function p10k_restart () {
+  p10k_reload
+  async_stop_worker p10k_segment_worker
+  async_start_worker p10k_segment_worker
+  async_register_callback p10k_segment_worker _p10k_segment_async_callback
+  async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "_p10k_tracked_autoload"
+  async_worker_eval p10k_segment_worker "p10k_reload"
+  prompt_p10k_chpwd
+  prompt_p10k_precmd
+}
+
 prompt_p10k_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
@@ -110,7 +121,7 @@ prompt_p10k_setup () {
     # enable debugging logging
     _P10K_DBG_OUT () {
       # ' >/tmp/_P10K_DBG_OUT.log 2>&1'
-      echo -e "$@" >>/tmp/_P10K_DBG_OUT.log
+      echo -e "$@" >>~/tmp/_P10K_DBG_OUT.log
     }
   fi
 
@@ -219,4 +230,3 @@ _P10K_0[srcfile]="${_P10K_SCRIPTPATH:-${ZERO:-${(%):-%N}}}"
 _P10K_0[repo]="${_P10K_0[srcfile]:h}"
 
 prompt_p10k_setup "$@"
-
