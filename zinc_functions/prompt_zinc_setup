@@ -46,7 +46,8 @@ function _zinc_segment_async_callback () {
   _ZINC_ASYNC_STATII[${1}]="returned"
   _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
 
-  [[ "$6" == "0" ]] && prompt_zinc_render_to_vars && zle .reset-prompt
+  # [[ "$6" == "0" ]] && prompt_zinc_render_to_vars && zle .reset-prompt
+  prompt_zinc_render_to_vars && zle .reset-prompt
 
   _ZINC_ASYNC_STATII[${1}]="finished"
 
