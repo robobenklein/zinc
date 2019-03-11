@@ -121,7 +121,7 @@ prompt_zinc_setup () {
     # enable debugging logging
     _ZINC_DBG_OUT () {
       # ' >/tmp/_ZINC_DBG_OUT.log 2>&1'
-      echo -e "$@" >>~/tmp/_ZINC_DBG_OUT.log
+      echo -e "$@" >> ~/._ZINC_DBG_OUT.log
     }
   fi
 
