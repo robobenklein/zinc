@@ -9,7 +9,7 @@ function zincs_battery_display_hidden () {
     true
   elif [[ ${zincs_battery[state]} == "unknown" ]] || [[ ${zincs_battery[state]} == "" ]]; then
     # battery not supported on this system?
-    _ZINC_DBG_OUT "Not showing battery segment: unknown status."
+    # _ZINC_DBG_OUT "Not showing battery segment: unknown status."
     true
   else
     false

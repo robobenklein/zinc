@@ -8,7 +8,7 @@
 
 # basic echo of _info_msg_0_
 function zincs_vcs () {
-  _ZINC_DBG_OUT "zincs_vcs replying with: ${zincs_vcs["_info_msg_0_"]}"
+  # _ZINC_DBG_OUT "zincs_vcs replying with: ${zincs_vcs["_info_msg_0_"]}"
   REPLY="${zincs_vcs["_info_msg_0_"]}"
 }
 

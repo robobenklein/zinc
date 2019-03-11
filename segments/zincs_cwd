@@ -187,7 +187,7 @@ _zincs_cwd_chpwd ()
 {
   case "${zincs_cwd[strategy]}" in
     'rtab')
-      _ZINC_DBG_OUT "_zincs_cwd_strat_rtab ${_ZINCS_CWD_STRAT_ARGS}"
+      # _ZINC_DBG_OUT "_zincs_cwd_strat_rtab ${_ZINCS_CWD_STRAT_ARGS}"
       REPLY=""
       _zincs_cwd_strat_rtab ${_ZINCS_CWD_STRAT_ARGS}
       zincs_cwd[output]="${REPLY}"

@@ -26,7 +26,7 @@ function zinc_render_prompt_from_spec () {
   # $4: Chars to use as segment separator.
 
   [[ "${(P)#1}" == "0" ]] && _ZINC_DBG_OUT 'ERR: no segments' && return
-  _ZINC_DBG_OUT "${(P)#1} segments to render"
+  # _ZINC_DBG_OUT "${(P)#1} segments to render"
 
   local _ZINC_SBUF=""
 
@@ -73,7 +73,7 @@ function zinc_render_prompt_from_spec () {
       }
     done
     (( segment_opts_default_filled == 1 )) && {
-      _ZINC_DBG_OUT "filling options assoc ${2}[${cur_segment}] with new defaults"
+      # _ZINC_DBG_OUT "filling options assoc ${2}[${cur_segment}] with new defaults"
       eval "${2}[${cur_segment}]=\${(j.;.)segment_opts}"
     }
     # _ZINC_DBG_OUT "opts for "$cur_segment':' "${(j.,.)segment_opts}"
@@ -83,14 +83,14 @@ function zinc_render_prompt_from_spec () {
     [[ "${segment_opts[4]}" == "async" ]] && \
     [[ "${_ZINC_ASYNC_STATII[${cur_segment}_async]}" == "" ]] && {
       # -zinc-tracked-autoload "${cur_segment}_async"
-      _ZINC_DBG_OUT "asyncing segment ${cur_segment}"
+      # _ZINC_DBG_OUT "asyncing segment ${cur_segment}"
       async_worker_eval zinc_segment_worker "-zinc-tracked-autoload" "${cur_segment}_async"
       [[ "${(t)_ZINC_ASYNC_STATII}" == "association" ]] || typeset -gA _ZINC_ASYNC_STATII
       -zinc-tracked-autoload "${cur_segment}_async_started"
       ${cur_segment}_async_started "${(@)segment_opts}"
       _ZINC_ASYNC_STATII[${cur_segment}_async]="started"
-      _ZINC_DBG_OUT "async_job: ${cur_segment}_async !! ${(@)segment_opts}"
-      _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
+      # _ZINC_DBG_OUT "async_job: ${cur_segment}_async !! ${(@)segment_opts}"
+      # _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
       async_job zinc_segment_worker "${cur_segment}_async" "${(@)segment_opts}"
     }
 
@@ -103,7 +103,7 @@ function zinc_render_prompt_from_spec () {
     if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
       -zinc-tracked-autoload "${cur_segment}_display_hidden"
       ${cur_segment}_display_hidden && {
-        _ZINC_DBG_OUT "not displaying ${cur_segment}"
+        # _ZINC_DBG_OUT "not displaying ${cur_segment}"
         continue
       }
     fi
@@ -122,14 +122,14 @@ function zinc_render_prompt_from_spec () {
       segment_opts[2]="${REPLY}"
     fi
 
-    _ZINC_DBG_OUT "prev_bg: ${prev_bg}, current_bg: ${segment_opts[2]}"
+    # _ZINC_DBG_OUT "prev_bg: ${prev_bg}, current_bg: ${segment_opts[2]}"
 
     # Detect segment connection
     if [[ $prev_bg == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
       # skip drawing the arrow
       _ZINC_SBUF+="%{%K{${segment_opts[2]}}%} "
     elif [[ "${prev_bg}" == "${segment_opts[2]}" ]]; then
-      _ZINC_DBG_OUT "joining segments with same bg"
+      # _ZINC_DBG_OUT "joining segments with same bg"
       [[ "$3" == "left" ]] && {
         _ZINC_SBUF+=" %{%K{${segment_opts[2]}}%F{${prev_bg}}%}${_ZINC_SEP_CHARS[${3}_bgmatch]} "
       } || {

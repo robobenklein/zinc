@@ -26,7 +26,7 @@ function _zinc_segment_async_callback () {
      [[ "${1}" == ";" ]] || \
      [[ "${1}" == "[async]" ]];
   then
-    _ZINC_DBG_OUT "async eval: ${(j. !! .)@}"
+    # _ZINC_DBG_OUT "async eval: ${(j. !! .)@}"
     return
   fi
 
@@ -41,15 +41,16 @@ function _zinc_segment_async_callback () {
     _ZINC_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
-  _ZINC_DBG_OUT "_zinc_segment_async_callback!!! ${(j.\n.)@}"
+  # _ZINC_DBG_OUT "_zinc_segment_async_callback!!! ${(j.\n.)@}"
   # [[ "${(t)_ZINC_ASYNC_STATII}" == "association" ]] || typeset -A _ZINC_ASYNC_STATII
   _ZINC_ASYNC_STATII[${1}]="returned"
-  _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
+  # _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
 
+  # TODO investigate reliability of $6
   # [[ "$6" == "0" ]] && prompt_zinc_render_to_vars && zle .reset-prompt
   prompt_zinc_render_to_vars && zle .reset-prompt
 
-  _ZINC_ASYNC_STATII[${1}]="finished"
+  # _ZINC_ASYNC_STATII[${1}]="finished"
 
   # check to see if there any more async segments yet to return
   local -i async_complete=1 # default done
@@ -63,7 +64,7 @@ function _zinc_segment_async_callback () {
   # let segments know we won't be drawing them again until the next precmd
   # useful for when segments only offered info on the previous command status
   (( async_complete )) && {
-    _ZINC_DBG_OUT "running async_complete hook"
+    # _ZINC_DBG_OUT "running async_complete hook"
     -zinc-run-hook _zinc_async_complete
   }
 }
@@ -71,7 +72,7 @@ function _zinc_segment_async_callback () {
 # This is to allow segments to re-run async tasks by preference.
 function _zinc_segment_async_reset_status () {
   [[ -z "$1" ]] && return
-  _ZINC_DBG_OUT "resetting async status of $1"
+  # _ZINC_DBG_OUT "resetting async status of $1"
   _ZINC_ASYNC_STATII[${1}_async]=""
 }
 

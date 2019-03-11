@@ -2,7 +2,7 @@
 
 zincs_vcs_async_started ()
 {
-  _ZINC_DBG_OUT "zincs_vcs_async_started called..."
+  # _ZINC_DBG_OUT "zincs_vcs_async_started called..."
   # _display_hidden is hooked on the empty scalar:
   zincs_vcs["_info_msg_0_"]="${zincs_vcs[loading_msg]}"
   zincs_vcs[status]="loading"
