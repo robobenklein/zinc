@@ -1,16 +1,16 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 #
-# P10K
+# ZINC
 #
 # A powerline ZSH theme, inspired by Powerlevel9k and friends.
 
 autoload -Uz async && async
 
-_P10K_DBG_OUT () {;}
+_ZINC_DBG_OUT () {;}
 
-typeset -gHA _P10K_ASYNC_STATII
+typeset -gHA _ZINC_ASYNC_STATII
 
-function _p10k_segment_async_callback () {
+function _zinc_segment_async_callback () {
   # Async args:
   # $1 job name, e.g. the function passed to async_job
   # $2 return code
@@ -19,41 +19,41 @@ function _p10k_segment_async_callback () {
   # $5 resulting (stderr) error output from job execution
   # $6 has next result in buffer (0 = buffer empty, 1 = yes)
 
-  # _P10K_DBG_OUT "_p10k_segment_async_callback \"$1\" RET:$2"
+  # _ZINC_DBG_OUT "_zinc_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
   if [[ "${1}" == "[async/eval]" ]] || \
      [[ "${1}" == ";" ]] || \
      [[ "${1}" == "[async]" ]];
   then
-    _P10K_DBG_OUT "async eval: ${(j. !! .)@}"
+    _ZINC_DBG_OUT "async eval: ${(j. !! .)@}"
     return
   fi
 
-  # if [[ "${1}" == "_p10k_tracked_autoload" ]] || \
+  # if [[ "${1}" == "_zinc_tracked_autoload" ]] || \
   #    [[ "${1}" == "autoload" ]];
   # then
   #   shift 2
   # fi
 
   (( ${+functions[${1}_return]} )) || {
-    _p10k_tracked_autoload "${1}_return"
-    _P10K_AUTOLOADED_FUNCTIONS+=("${1}_return")
+    _zinc_tracked_autoload "${1}_return"
+    _ZINC_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
-  _P10K_DBG_OUT "_p10k_segment_async_callback!!! ${(j.\n.)@}"
-  # [[ "${(t)_P10K_ASYNC_STATII}" == "association" ]] || typeset -A _P10K_ASYNC_STATII
-  _P10K_ASYNC_STATII[${1}]="returned"
-  _P10K_DBG_OUT "_P10K_ASYNC_STATII now: ${(kv)_P10K_ASYNC_STATII}"
+  _ZINC_DBG_OUT "_zinc_segment_async_callback!!! ${(j.\n.)@}"
+  # [[ "${(t)_ZINC_ASYNC_STATII}" == "association" ]] || typeset -A _ZINC_ASYNC_STATII
+  _ZINC_ASYNC_STATII[${1}]="returned"
+  _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
 
-  [[ "$6" == "0" ]] && prompt_p10k_render_to_vars && zle .reset-prompt
+  [[ "$6" == "0" ]] && prompt_zinc_render_to_vars && zle .reset-prompt
 
-  _P10K_ASYNC_STATII[${1}]="finished"
+  _ZINC_ASYNC_STATII[${1}]="finished"
 
   # check to see if there any more async segments yet to return
   local -i async_complete=1 # default done
-  for async_segment in ${(k)_P10K_ASYNC_STATII}; do
-    [[ ${_P10K_ASYNC_STATII[${async_segment}]} != "finished" ]] && {
+  for async_segment in ${(k)_ZINC_ASYNC_STATII}; do
+    [[ ${_ZINC_ASYNC_STATII[${async_segment}]} != "finished" ]] && {
       async_complete=0
       break
     }
@@ -62,113 +62,113 @@ function _p10k_segment_async_callback () {
   # let segments know we won't be drawing them again until the next precmd
   # useful for when segments only offered info on the previous command status
   (( async_complete )) && {
-    _P10K_DBG_OUT "running async_complete hook"
-    _p10k_run_hook _p10k_async_complete
+    _ZINC_DBG_OUT "running async_complete hook"
+    _zinc_run_hook _zinc_async_complete
   }
 }
 
 # This is to allow segments to re-run async tasks by preference.
-function _p10k_segment_async_reset_status () {
+function _zinc_segment_async_reset_status () {
   [[ -z "$1" ]] && return
-  _P10K_DBG_OUT "resetting async status of $1"
-  _P10K_ASYNC_STATII[${1}_async]=""
+  _ZINC_DBG_OUT "resetting async status of $1"
+  _ZINC_ASYNC_STATII[${1}_async]=""
 }
 
-# Function that reloads all functions that were autoloaded by P10K.
+# Function that reloads all functions that were autoloaded by ZINC.
 # This needs to be here to ensure we don't get into an autoload infinite loop.
-typeset -gaU _P10K_AUTOLOADED_FUNCTIONS
-function p10k_reload () {
-  async_flush_jobs p10k_segment_worker
-  for autoloaded_function in $_P10K_AUTOLOADED_FUNCTIONS; do
+typeset -gaU _ZINC_AUTOLOADED_FUNCTIONS
+function zinc_reload () {
+  async_flush_jobs zinc_segment_worker
+  for autoloaded_function in $_ZINC_AUTOLOADED_FUNCTIONS; do
     unfunction $autoloaded_function
     echo "Reloading ${autoloaded_function}"
-    _p10k_tracked_autoload "${autoloaded_function}"
+    _zinc_tracked_autoload "${autoloaded_function}"
   done
   # Self re-init:
-  builtin unfunction prompt_p10k_setup
-  # Don't call self! Let the user `prompt p10k` if needed.
-  builtin autoload -Uz +X prompt_p10k_setup
+  builtin unfunction prompt_zinc_setup
+  # Don't call self! Let the user `prompt zinc` if needed.
+  builtin autoload -Uz +X prompt_zinc_setup
 }
 
-function p10k_restart () {
-  p10k_reload
-  async_stop_worker p10k_segment_worker
-  async_start_worker p10k_segment_worker
-  async_register_callback p10k_segment_worker _p10k_segment_async_callback
-  async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "_p10k_tracked_autoload"
-  async_worker_eval p10k_segment_worker "p10k_reload"
-  prompt_p10k_chpwd
-  prompt_p10k_precmd
+function zinc_restart () {
+  zinc_reload
+  async_stop_worker zinc_segment_worker
+  async_start_worker zinc_segment_worker
+  async_register_callback zinc_segment_worker _zinc_segment_async_callback
+  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "_zinc_tracked_autoload"
+  async_worker_eval zinc_segment_worker "zinc_reload"
+  prompt_zinc_chpwd
+  prompt_zinc_precmd
 }
 
-prompt_p10k_setup () {
+prompt_zinc_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
-  builtin autoload -Uz _p10k_tracked_autoload add-zsh-hook
-  _p10k_tracked_autoload p10k_render_prompt_from_spec prompt_p10k_render_to_vars
-  _p10k_tracked_autoload _p10k_define_hook _p10k_add_hook _p10k_run_hook
+  builtin autoload -Uz _zinc_tracked_autoload add-zsh-hook
+  _zinc_tracked_autoload zinc_render_prompt_from_spec prompt_zinc_render_to_vars
+  _zinc_tracked_autoload _zinc_define_hook _zinc_add_hook _zinc_run_hook
 
   # association
-  typeset -gA p10k_opts _P10K_SEGMENT_DEFAULTS _P10K_ASYNC_STATII
+  typeset -gA zinc_opts _ZINC_SEGMENT_DEFAULTS _ZINC_ASYNC_STATII
   # array
-  typeset -ga p10k_left p10k_right
+  typeset -ga zinc_left zinc_right
 
-  if [[ "$1" == "dev" ]] || [[ ! -z "${P10K_DEV}" ]]; then
+  if [[ "$1" == "dev" ]] || [[ ! -z "${ZINC_DEV}" ]]; then
     [[ "$1" == "dev" ]] && shift
-    fpath+=("${_P10K_0[repo]}/51")
+    fpath+=("${_ZINC_0[repo]}/51")
 
     # enable debugging logging
-    _P10K_DBG_OUT () {
-      # ' >/tmp/_P10K_DBG_OUT.log 2>&1'
-      echo -e "$@" >>~/tmp/_P10K_DBG_OUT.log
+    _ZINC_DBG_OUT () {
+      # ' >/tmp/_ZINC_DBG_OUT.log 2>&1'
+      echo -e "$@" >>~/tmp/_ZINC_DBG_OUT.log
     }
   fi
 
   # load a preset by name
   if [[ "$1" != "" ]]; then
-    if [[ -r "${_P10K_0[repo]}/presets/${1}.p10kp.zsh" ]]; then
-      _P10K_DBG_OUT "loading preset $1"
-      source "${_P10K_0[repo]}/presets/${1}.p10kp.zsh"
+    if [[ -r "${_ZINC_0[repo]}/presets/${1}.zincp.zsh" ]]; then
+      _ZINC_DBG_OUT "loading preset $1"
+      source "${_ZINC_0[repo]}/presets/${1}.zincp.zsh"
     else
-      echo "P10K: No such preset found in ${_P10K_0[repo]}/presets/."
+      echo "ZINC: No such preset found in ${_ZINC_0[repo]}/presets/."
     fi
   fi
 
   # defaults:
-  [[ "${#p10k_left}" == "0" ]] && {
-    p10k_left=(p10ks_userhost p10ks_cwd p10ks_vcs)
-    p10k_right=(p10ks_retval p10ks_execution_time p10ks_time)
+  [[ "${#zinc_left}" == "0" ]] && {
+    zinc_left=(zincs_userhost zincs_cwd zincs_vcs)
+    zinc_right=(zincs_retval zincs_execution_time zincs_time)
   }
 
   # Setup precmd / preexec / chpwd
-  # _P10K_ASYNC_STATII["test"]="confirm"
-  _p10k_tracked_autoload prompt_p10k_precmd
-  add-zsh-hook precmd prompt_p10k_precmd
-  _p10k_tracked_autoload prompt_p10k_preexec
-  add-zsh-hook preexec prompt_p10k_preexec
-  _p10k_tracked_autoload prompt_p10k_chpwd
-  add-zsh-hook chpwd prompt_p10k_chpwd
+  # _ZINC_ASYNC_STATII["test"]="confirm"
+  _zinc_tracked_autoload prompt_zinc_precmd
+  add-zsh-hook precmd prompt_zinc_precmd
+  _zinc_tracked_autoload prompt_zinc_preexec
+  add-zsh-hook preexec prompt_zinc_preexec
+  _zinc_tracked_autoload prompt_zinc_chpwd
+  add-zsh-hook chpwd prompt_zinc_chpwd
 
-  _p10k_define_hook _p10k_async_complete
+  _zinc_define_hook _zinc_async_complete
 
-  PROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_PROMPT}"
-  RPROMPT="%f%b%k\${_P10K_RENDERED_OUTPUT_RPROMPT}%f%b%k"
+  PROMPT="%f%b%k\${_ZINC_RENDERED_OUTPUT_PROMPT}"
+  RPROMPT="%f%b%k\${_ZINC_RENDERED_OUTPUT_RPROMPT}%f%b%k"
 
-  async_start_worker p10k_segment_worker #-n
-  async_register_callback p10k_segment_worker _p10k_segment_async_callback
+  async_start_worker zinc_segment_worker #-n
+  async_register_callback zinc_segment_worker _zinc_segment_async_callback
 
-  async_worker_eval p10k_segment_worker "autoload" "-Uz" "+X" "_p10k_tracked_autoload"
+  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "_zinc_tracked_autoload"
 
   # gives segments a setup run before the first precmd
-  prompt_p10k_preexec
+  prompt_zinc_preexec
 
-  for segment in ${p10k_left} ${p10k_right}; do
-    _p10k_tracked_autoload ${segment}
+  for segment in ${zinc_left} ${zinc_right}; do
+    _zinc_tracked_autoload ${segment}
   done
 }
 
-prompt_p10k_preview () {
+prompt_zinc_preview () {
   local -a presets preset
   presets=()
   presets+=("" robobenklein)
@@ -177,31 +177,31 @@ prompt_p10k_preview () {
   if (( ! $#* )); then
     for (( i = 1; i <= $#presets; i++ )); do
       preset=(${presets[$i]})
-      prompt_preview_theme p10k "${preset}"
+      prompt_preview_theme zinc "${preset}"
       (( i < $#presets )) && print
     done
   else
-    prompt_preview_theme p10k "$@"
+    prompt_preview_theme zinc "$@"
   fi
 }
 
-function prompt_p10k_redraw_soft () {
-  for async_segment in ${(k)_P10K_ASYNC_STATII};do
-    [[ "${_P10K_ASYNC_STATII[$async_segment]}" == "finished" ]] && {
-      _P10K_ASYNC_STATII[$async_segment]=""
+function prompt_zinc_redraw_soft () {
+  for async_segment in ${(k)_ZINC_ASYNC_STATII};do
+    [[ "${_ZINC_ASYNC_STATII[$async_segment]}" == "finished" ]] && {
+      _ZINC_ASYNC_STATII[$async_segment]=""
     }
   done
-  prompt_p10k_render_to_vars
+  prompt_zinc_render_to_vars
   zle .reset-prompt
 }
-zle -N prompt_p10k_redraw_soft
+zle -N prompt_zinc_redraw_soft
 
-function prompt_p10k_compile () {
+function prompt_zinc_compile () {
   emulate -L zsh
   setopt extendedglob
   unsetopt autopushd
   local curdir="$PWD"
-  cd ${_P10K_0[repo]}/p10k_functions
+  cd ${_ZINC_0[repo]}/zinc_functions
   for f in ./*; do
     [[ $f != *.zwc ]] && {
       echo "compiling $f ..."
@@ -218,15 +218,15 @@ function prompt_p10k_compile () {
   cd $curdir
 }
 
-function prompt_p10k_minmode () {
-  _P10K_SEP_CHARS[left]=''
-  _P10K_SEP_CHARS[right]=''
-  _P10K_SEP_CHARS[left_bgmatch]=''
-  _P10K_SEP_CHARS[right_bgmatch]=''
+function prompt_zinc_minmode () {
+  _ZINC_SEP_CHARS[left]=''
+  _ZINC_SEP_CHARS[right]=''
+  _ZINC_SEP_CHARS[left_bgmatch]=''
+  _ZINC_SEP_CHARS[right_bgmatch]=''
 }
 
-typeset -gHA _P10K_0
-_P10K_0[srcfile]="${_P10K_SCRIPTPATH:-${ZERO:-${(%):-%N}}}"
-_P10K_0[repo]="${_P10K_0[srcfile]:h}"
+typeset -gHA _ZINC_0
+_ZINC_0[srcfile]="${_ZINC_SCRIPTPATH:-${ZERO:-${(%):-%N}}}"
+_ZINC_0[repo]="${_ZINC_0[srcfile]:h}"
 
-prompt_p10k_setup "$@"
+prompt_zinc_setup "$@"

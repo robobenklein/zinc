@@ -1,10 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function prompt_p10k_chpwd () {
-  async_worker_eval p10k_segment_worker 'cd' "$PWD"
-  _p10k_run_hook _p10k_chpwd
+function prompt_zinc_chpwd () {
+  async_worker_eval zinc_segment_worker 'cd' "$PWD"
+  _zinc_run_hook _zinc_chpwd
 }
 
-_p10k_define_hook _p10k_chpwd
+_zinc_define_hook _zinc_chpwd
 
-prompt_p10k_chpwd "$@"
+prompt_zinc_chpwd "$@"

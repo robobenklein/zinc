@@ -31,8 +31,8 @@
 #
 # |===
 # | Strategy | Description | Example
-# | default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/p10k`
-# | `rtab` | Reverse tabbing function, has additional options | `~/c/p10k`, `~/c/p`, `/h/r/c/p`, etc
+# | default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/zinc`
+# | `rtab` | Reverse tabbing function, has additional options | `~/c/zinc`, `~/c/p`, `/h/r/c/p`, etc
 # |===
 #
 # ### Strategy options:
@@ -63,14 +63,14 @@
 # }}}
 
 # env-vars {{{
-# p10ks_cwd -> Array for segment runtime use
-typeset -gA p10ks_cwd
-typeset -ga _P10KS_CWD_STRAT_ARGS
-# p10ks_cwd[add_hyperlink] -> If '1', create a hyperlink ANSI escape around the path that is
+# zincs_cwd -> Array for segment runtime use
+typeset -gA zincs_cwd
+typeset -ga _ZINCS_CWD_STRAT_ARGS
+# zincs_cwd[add_hyperlink] -> If '1', create a hyperlink ANSI escape around the path that is
 # clickable in most VTE terminals!
-p10ks_cwd[add_hyperlink]=${p10ks_cwd[add_hyperlink]:-"0"}
-# p10ks_cwd[strategy] -> The current render strategy for displaying the CWD path
-p10ks_cwd[strategy]=${p10ks_cwd[strategy]:-"default"}
+zincs_cwd[add_hyperlink]=${zincs_cwd[add_hyperlink]:-"0"}
+# zincs_cwd[strategy] -> The current render strategy for displaying the CWD path
+zincs_cwd[strategy]=${zincs_cwd[strategy]:-"default"}
 # }}}
 
 # A modification of the reverse tabbing utility by Daniel Friesel <derf@xxxxxxxxxxxxxxxxxx>
@@ -84,7 +84,7 @@ p10ks_cwd[strategy]=${p10ks_cwd[strategy]:-"default"}
 ## This issue has been fixed.
 ##
 ## Also the script is now a ZSH function instead of an executable shebang file.
-function _p10ks_cwd_strat_rtab () {
+function _zincs_cwd_strat_rtab () {
 
   setopt localoptions
   setopt rc_quotes null_glob
@@ -183,36 +183,36 @@ function _p10ks_cwd_strat_rtab () {
 }
 
 # Re-renders the segment output on the chpwd hook.
-_p10ks_cwd_chpwd ()
+_zincs_cwd_chpwd ()
 {
-  case "${p10ks_cwd[strategy]}" in
+  case "${zincs_cwd[strategy]}" in
     'rtab')
-      _P10K_DBG_OUT "_p10ks_cwd_strat_rtab ${_P10KS_CWD_STRAT_ARGS}"
+      _ZINC_DBG_OUT "_zincs_cwd_strat_rtab ${_ZINCS_CWD_STRAT_ARGS}"
       REPLY=""
-      _p10ks_cwd_strat_rtab ${_P10KS_CWD_STRAT_ARGS}
-      p10ks_cwd[output]="${REPLY}"
+      _zincs_cwd_strat_rtab ${_ZINCS_CWD_STRAT_ARGS}
+      zincs_cwd[output]="${REPLY}"
       ;;
     *)
-      p10ks_cwd[output]="%~"
+      zincs_cwd[output]="%~"
       ;;
   esac
 }
 
-p10ks_cwd ()
+zincs_cwd ()
 {
-  # shift 4 # we don't care for the P10K args
-  p10ks_cwd[strategy]="$5"
-  _P10KS_CWD_STRAT_ARGS=("${@:6}") # dump rest of args for strategy options
+  # shift 4 # we don't care for the ZINC args
+  zincs_cwd[strategy]="$5"
+  _ZINCS_CWD_STRAT_ARGS=("${@:6}") # dump rest of args for strategy options
 
-  [[ "${p10ks_cwd[output]}" == "" ]] && _p10ks_cwd_chpwd
+  [[ "${zincs_cwd[output]}" == "" ]] && _zincs_cwd_chpwd
 
-  if (( p10ks_cwd[add_hyperlink] )); then
-    REPLY=$'%{\e]8;;file://'${HOSTNAME}${PWD}$'\e\\%}'${p10ks_cwd[output]}$'%{\e]8;;\e\\%}'
+  if (( zincs_cwd[add_hyperlink] )); then
+    REPLY=$'%{\e]8;;file://'${HOSTNAME}${PWD}$'\e\\%}'${zincs_cwd[output]}$'%{\e]8;;\e\\%}'
   else
-    REPLY="${p10ks_cwd[output]}"
+    REPLY="${zincs_cwd[output]}"
   fi
 }
 
-_p10k_add_hook _p10k_chpwd _p10ks_cwd_chpwd
+_zinc_add_hook _zinc_chpwd _zincs_cwd_chpwd
 
-p10ks_cwd "$@"
+zincs_cwd "$@"

@@ -1,30 +1,30 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10k_left=(
-  p10ks_time
-  p10ks_colordowtime
-  p10ks_retval
-  p10ks_userhost
-  p10ks_vcs
-  p10ks_cwd
+zinc_left=(
+  zincs_time
+  zincs_colordowtime
+  zincs_retval
+  zincs_userhost
+  zincs_vcs
+  zincs_cwd
   idestykk_newline
 )
 
-p10k_right=()
+zinc_right=()
 
-p10k_opts=(
-  p10ks_time 'CONDITIONAL;CONDITIONAL;;;'
-  p10ks_colordowtime 'CONDITIONAL;CONDITIONAL;normal;normal;'
-  p10ks_retval 'CONDITIONAL;CONDITIONAL;normal;;'
-  p10ks_userhost 'CONDITIONAL;CONDITIONAL;;;%n:%m'
-  p10ks_vcs 'white;239;;;'
-  p10ks_cwd 'CONDITIONAL;white;;;'
+zinc_opts=(
+  zincs_time 'CONDITIONAL;CONDITIONAL;;;'
+  zincs_colordowtime 'CONDITIONAL;CONDITIONAL;normal;normal;'
+  zincs_retval 'CONDITIONAL;CONDITIONAL;normal;;'
+  zincs_userhost 'CONDITIONAL;CONDITIONAL;;;%n:%m'
+  zincs_vcs 'white;239;;;'
+  zincs_cwd 'CONDITIONAL;white;;;'
   idestykk_newline 'none;none;ENDLINE;none;'
 )
 
 idestykk_theme_weekdays_preview () {
   for i in {0..6}; do
-    ZSH_THEME=p10k faketime "+${i}day" zsh -ic "prompt_preview_theme p10k idestykk"
+    ZSH_THEME=zinc faketime "+${i}day" zsh -ic "prompt_preview_theme zinc idestykk"
   done
 }
 
@@ -197,8 +197,8 @@ function idestykk_day_settings_sunday () {
 
 }
 
-typeset -ga p10ks_dowmap
-p10ks_dowmap=(
+typeset -ga zincs_dowmap
+zincs_dowmap=(
   monday
   tuesday
   wednesday
@@ -223,22 +223,22 @@ idestykk_redraw_widget () {
 }
 zle -N idestykk_redraw_widget
 trap idestykk_redraw_timer ALRM
-# _P10K_DBG_OUT "currently in $WIDGET with buffer as $BUFFER"
+# _ZINC_DBG_OUT "currently in $WIDGET with buffer as $BUFFER"
 # WIDGET="idestykk_idle"
 
 _DOW_N="0"
 
-p10ks_time_fg () {
+zincs_time_fg () {
   strftime -s _DOW_N '%w' $EPOCHSECONDS
-  idestykk_day_settings_${p10ks_dowmap[${_DOW_N}]}
+  idestykk_day_settings_${zincs_dowmap[${_DOW_N}]}
   REPLY="${TIME_FG}"
 }
-p10ks_time_bg () {
+zincs_time_bg () {
   REPLY="${TIME_BG}"
 }
 
-typeset -gHA p10ks_colordowtime
-p10ks_colordowtime=(
+typeset -gHA zincs_colordowtime
+zincs_colordowtime=(
   Sun "日"
   Mon "月"
   Tue "火"
@@ -247,43 +247,43 @@ p10ks_colordowtime=(
   Fri "金"
   Sat "土"
 )
-function p10ks_colordowtime () {
+function zincs_colordowtime () {
   local _DOW
   strftime -s _DOW '%a' $EPOCHSECONDS
-  REPLY="${p10ks_colordowtime[$_DOW]}"
+  REPLY="${zincs_colordowtime[$_DOW]}"
 }
-p10ks_colordowtime_fg () {
+zincs_colordowtime_fg () {
   REPLY="${HOST_FG}"
 }
-p10ks_colordowtime_bg () {
+zincs_colordowtime_bg () {
   REPLY="${HOST_BG}"
 }
 
-p10ks_retval_fg () {
-  [[ ${_P10K_RETVAL_STORE} == 0 ]] && {
+zincs_retval_fg () {
+  [[ ${_ZINC_RETVAL_STORE} == 0 ]] && {
     REPLY="${PASS_FG}"
   } || {
     REPLY="${FAIL_FG}"
   }
 }
-p10ks_retval_bg () {
-  [[ ${_P10K_RETVAL_STORE} == 0 ]] && {
+zincs_retval_bg () {
+  [[ ${_ZINC_RETVAL_STORE} == 0 ]] && {
     REPLY="${PASS_BG}"
   } || {
     REPLY="${FAIL_BG}"
   }
 }
 
-p10ks_userhost_fg () {
+zincs_userhost_fg () {
   REPLY="${HOST_FG}"
 }
-p10ks_userhost_bg () {
+zincs_userhost_bg () {
   REPLY="${HOST_BG}"
 }
 
-p10ks_cwd_fg () {
+zincs_cwd_fg () {
   REPLY="${PATH_FG}"
 }
-p10ks_cwd_bg () {
+zincs_cwd_bg () {
   REPLY="${PATH_BG}"
 }

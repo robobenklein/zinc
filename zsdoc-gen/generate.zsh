@@ -16,19 +16,19 @@ function create_doc_scaffold () {
   local outputfile="$1"
   local segment="$2"
   echo > $outputfile
-  [[ -s "${pzsd_segment_sources}/p10ks_${segment}" ]] || {
-    echo "Could not load source ${pzsd_segment_sources}/p10ks_${segment}"
+  [[ -s "${pzsd_segment_sources}/zincs_${segment}" ]] || {
+    echo "Could not load source ${pzsd_segment_sources}/zincs_${segment}"
   }
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}" >> $outputfile
-  # printf '%b' "\n# P10K Autodoc added: \n" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_default_opts" >> ${outputfile}
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_display_hidden" >> ${outputfile}
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_bg" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_fg" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}" >> $outputfile
+  # printf '%b' "\n# ZINC Autodoc added: \n" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_default_opts" >> ${outputfile}
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_display_hidden" >> ${outputfile}
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_bg" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_fg" >> $outputfile
   # if async
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_async" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_async_return" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/p10ks_${segment}_async_started" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_return" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_started" >> $outputfile
 }
 
 mkdir -p "${pzsd_outputfolder}/segments"
@@ -50,5 +50,5 @@ segments=(
 )
 
 for segment in ${segments}; do
-  create_doc_scaffold ${pzsd_outputfolder}/p10ks_${segment} $segment
+  create_doc_scaffold ${pzsd_outputfolder}/zincs_${segment} $segment
 done

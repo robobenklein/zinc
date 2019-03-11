@@ -1,10 +1,10 @@
-p10ks_battery(1)
+zincs_battery(1)
 ================
 :compat-mode!:
 
 NAME
 ----
-p10ks_battery - a shell script
+zincs_battery - a shell script
 
 SYNOPSIS
 --------
@@ -17,30 +17,30 @@ and has other options.
 FUNCTIONS
 ---------
 
- p10ks_battery
- p10ks_battery_async
- _p10ks_battery_async_complete
- p10ks_battery_async_return
- p10ks_battery_async_started
- p10ks_battery_bg
- p10ks_battery_default_opts
- p10ks_battery_display_hidden
- p10ks_battery_fg
+ zincs_battery
+ zincs_battery_async
+ _zincs_battery_async_complete
+ zincs_battery_async_return
+ zincs_battery_async_started
+ zincs_battery_bg
+ zincs_battery_default_opts
+ zincs_battery_display_hidden
+ zincs_battery_fg
 
 ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|p10ks_battery[bgcolor_charged]|color when above threshold_charged
-|p10ks_battery[bgcolor_default]|bgcolor when not low or charged
-|p10ks_battery[bgcolor_low]|color when below threshold_low
-|p10ks_battery[fgcolor_charging]|color of text when charging
-|p10ks_battery[fgcolor_default]|default foreground color
-|p10ks_battery[fgcolor_low]|color of text when battery below threshold_low
-|p10ks_battery[threshold_charged]|percentage
-|p10ks_battery[threshold_hidden]|hide the segment when above this percentage
-|p10ks_battery[threshold_low]|percentage
-|p10ks_battery[verbose]|0/1: enables showing time until full/empty (requiress acpi)
+|zincs_battery[bgcolor_charged]|color when above threshold_charged
+|zincs_battery[bgcolor_default]|bgcolor when not low or charged
+|zincs_battery[bgcolor_low]|color when below threshold_low
+|zincs_battery[fgcolor_charging]|color of text when charging
+|zincs_battery[fgcolor_default]|default foreground color
+|zincs_battery[fgcolor_low]|color of text when battery below threshold_low
+|zincs_battery[threshold_charged]|percentage
+|zincs_battery[threshold_hidden]|hide the segment when above this percentage
+|zincs_battery[threshold_low]|percentage
+|zincs_battery[verbose]|0/1: enables showing time until full/empty (requiress acpi)
 |======
 
 DETAILS
@@ -52,19 +52,19 @@ Script Body
 Has 49 line(s). Calls functions:
 
  Script-Body
- |-- p10ks_battery
- |-- p10ks_battery_async
- |-- p10ks_battery_async_return
- |-- p10ks_battery_async_started
- |-- p10ks_battery_bg
- |-- p10ks_battery_display_hidden
- `-- p10ks_battery_fg
+ |-- zincs_battery
+ |-- zincs_battery_async
+ |-- zincs_battery_async_return
+ |-- zincs_battery_async_started
+ |-- zincs_battery_bg
+ |-- zincs_battery_display_hidden
+ `-- zincs_battery_fg
 
-p10ks_battery
+zincs_battery
 ~~~~~~~~~~~~~
 
 ____
- # P10K Battery segment
+ # ZINC Battery segment
 ____
 
 Has 9 line(s). Doesn't call other functions.
@@ -73,7 +73,7 @@ Called by:
 
  Script-Body
 
-p10ks_battery_async
+zincs_battery_async
 ~~~~~~~~~~~~~~~~~~~
 
 Has 41 line(s). Doesn't call other functions.
@@ -82,14 +82,14 @@ Called by:
 
  Script-Body
 
-_p10ks_battery_async_complete
+_zincs_battery_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_battery_async_return
+zincs_battery_async_return
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 7 line(s). Doesn't call other functions.
@@ -98,7 +98,7 @@ Called by:
 
  Script-Body
 
-p10ks_battery_async_started
+zincs_battery_async_started
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 2 line(s). Doesn't call other functions.
@@ -107,7 +107,7 @@ Called by:
 
  Script-Body
 
-p10ks_battery_bg
+zincs_battery_bg
 ~~~~~~~~~~~~~~~~
 
 Has 7 line(s). Doesn't call other functions.
@@ -116,14 +116,14 @@ Called by:
 
  Script-Body
 
-p10ks_battery_default_opts
+zincs_battery_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_battery_display_hidden
+zincs_battery_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 12 line(s). Doesn't call other functions.
@@ -132,7 +132,7 @@ Called by:
 
  Script-Body
 
-p10ks_battery_fg
+zincs_battery_fg
 ~~~~~~~~~~~~~~~~
 
 ____

@@ -1,7 +1,7 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 if [[ "$(uname -s )" == "Linux" ]]; then
-  function p10ks_battery_async () {
+  function zincs_battery_async () {
     # The battery can have four different states - default to 'unknown'.
     local current_state='unknown'
     local sysp="${ROOT_PREFIX}/sys/class/power_supply"
@@ -54,9 +54,9 @@ if [[ "$(uname -s )" == "Linux" ]]; then
     builtin print "${current_state};${bat_percent};${tstring}"
   }
 else
-  function p10ks_battery_async () {
+  function zincs_battery_async () {
     # no support for OS
   }
 fi
 
-p10ks_battery_async "$@"
+zincs_battery_async "$@"

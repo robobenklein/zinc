@@ -1,8 +1,8 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_retval_fg ()
+zincs_retval_fg ()
 {
-  if [[ $_P10K_RETVAL_STORE == '0' ]]; then
+  if [[ $_ZINC_RETVAL_STORE == '0' ]]; then
     REPLY='green'
   else
     REPLY='black'

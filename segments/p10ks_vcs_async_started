@@ -1,27 +1,27 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_vcs_async_started ()
+zincs_vcs_async_started ()
 {
-  _P10K_DBG_OUT "p10ks_vcs_async_started called..."
+  _ZINC_DBG_OUT "zincs_vcs_async_started called..."
   # _display_hidden is hooked on the empty scalar:
-  p10ks_vcs["_info_msg_0_"]="${p10ks_vcs[loading_msg]}"
-  p10ks_vcs[status]="loading"
+  zincs_vcs["_info_msg_0_"]="${zincs_vcs[loading_msg]}"
+  zincs_vcs[status]="loading"
 }
 
-[[ "${(t)p10ks_vcs}" != "association" ]] && {
-  typeset -gA p10ks_vcs
+[[ "${(t)zincs_vcs}" != "association" ]] && {
+  typeset -gA zincs_vcs
 }
 # env-vars {{{
-# p10ks_vcs[loading_msg] -> message while waiting for async process
+# zincs_vcs[loading_msg] -> message while waiting for async process
 # (set to blank string to hide the segment during async wait)
-p10ks_vcs[loading_msg]=${p10ks_vcs[loading_msg]:-"<loading...>"}
+zincs_vcs[loading_msg]=${zincs_vcs[loading_msg]:-"<loading...>"}
 # }}}
 
 # resets the async status when done with renders
-function _p10ks_vcs_async_complete () {
-  _p10k_segment_async_reset_status p10ks_vcs
+function _zincs_vcs_async_complete () {
+  _zinc_segment_async_reset_status zincs_vcs
 }
 
-_p10k_add_hook _p10k_async_complete _p10ks_vcs_async_complete
+_zinc_add_hook _zinc_async_complete _zincs_vcs_async_complete
 
-p10ks_vcs_async_started "$@"
+zincs_vcs_async_started "$@"

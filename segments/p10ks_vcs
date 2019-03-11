@@ -7,13 +7,13 @@
 # }}}
 
 # basic echo of _info_msg_0_
-function p10ks_vcs () {
-  _P10K_DBG_OUT "p10ks_vcs replying with: ${p10ks_vcs["_info_msg_0_"]}"
-  REPLY="${p10ks_vcs["_info_msg_0_"]}"
+function zincs_vcs () {
+  _ZINC_DBG_OUT "zincs_vcs replying with: ${zincs_vcs["_info_msg_0_"]}"
+  REPLY="${zincs_vcs["_info_msg_0_"]}"
 }
 
-typeset -gA p10ks_vcs
-p10ks_vcs["_info_msg_0_"]="<async:vcs>"
-p10ks_vcs[status]="loading"
+typeset -gA zincs_vcs
+zincs_vcs["_info_msg_0_"]="<async:vcs>"
+zincs_vcs[status]="loading"
 
-p10ks_vcs "$@"
+zincs_vcs "$@"

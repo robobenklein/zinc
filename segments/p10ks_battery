@@ -9,24 +9,24 @@
 # awaiting https://github.com/zdharma/zshelldoc/issues/8
 # update: works now
 # env-vars {{{
-typeset -gA p10ks_battery
-p10ks_battery[percent]=""
-# p10ks_battery[verbose] -> 0/1: enables showing time until full/empty (requiress acpi)
-p10ks_battery[verbose]="${p10ks_battery[verbose]:-1}"
+typeset -gA zincs_battery
+zincs_battery[percent]=""
+# zincs_battery[verbose] -> 0/1: enables showing time until full/empty (requiress acpi)
+zincs_battery[verbose]="${zincs_battery[verbose]:-1}"
 # }}}
 
-# P10K Battery segment
-function p10ks_battery () {
-  (( ${p10ks_battery[verbose]} )) && {
-    if [[ -n ${p10ks_battery[time_remaining]} ]]; then
-      REPLY="${p10ks_battery[percent]}%% (${p10ks_battery[time_remaining]})"
+# ZINC Battery segment
+function zincs_battery () {
+  (( ${zincs_battery[verbose]} )) && {
+    if [[ -n ${zincs_battery[time_remaining]} ]]; then
+      REPLY="${zincs_battery[percent]}%% (${zincs_battery[time_remaining]})"
     else
       # continue to else case below
       false
     fi
   } || {
-    REPLY="${p10ks_battery[percent]}%%"
+    REPLY="${zincs_battery[percent]}%%"
   }
 }
 
-p10ks_battery "$@"
+zincs_battery "$@"

@@ -2,17 +2,17 @@
 
 autoload -Uz vcs_info
 
-[[ "${(t)p10ks_vcs}" != "association" ]] && {
-  typeset -gA p10ks_vcs
+[[ "${(t)zincs_vcs}" != "association" ]] && {
+  typeset -gA zincs_vcs
 }
 
 # env-vars {{{
-# p10ks_vcs[backends] -> space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
-p10ks_vcs[backends]=${p10ks_vcs[backends]:-"git svn hg"}
+# zincs_vcs[backends] -> space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
+zincs_vcs[backends]=${zincs_vcs[backends]:-"git svn hg"}
 # }}}
 
-p10ks_vcs_async() {
-  local -a backends=(${(z)p10ks_vcs[backends]})
+zincs_vcs_async() {
+  local -a backends=(${(z)zincs_vcs[backends]})
   # if git backend and gitstatus exists:
   # (( ${backends[(I)git]} )) && (( ${+functions[gitstatus_check]} )) &&
   #   gitstatus_check -t 5
@@ -24,7 +24,7 @@ p10ks_vcs_async() {
   }
 }
 
-p10ks_vcs_async_gitstatus () {
+zincs_vcs_async_gitstatus () {
   # Fast path: use vcs info provided by gitstatus.
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
   echo -nE "$VCS_STATUS_LOCAL_BRANCH"
@@ -136,4 +136,4 @@ function +vi-hg-branchhead() {
 
 ### Definitions done
 
-p10ks_vcs_async "$@"
+zincs_vcs_async "$@"

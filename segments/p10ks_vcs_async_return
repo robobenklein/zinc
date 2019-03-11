@@ -1,18 +1,18 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_vcs_async_return ()
+zincs_vcs_async_return ()
 {
   # $1 return code
   # $2 resulting (stdout) output from job execution
   # $3 execution time, floating point e.g. 0.0076138973 seconds
   # $4 resulting (stderr) error output from job execution
 
-  _P10K_DBG_OUT "p10ks_vcs working out input: $2"
+  _ZINC_DBG_OUT "zincs_vcs working out input: $2"
   local -a tmp
   tmp=("${(s.;;;.)2}")
-  p10ks_vcs["_info_msg_0_"]="${tmp[2]}"
+  zincs_vcs["_info_msg_0_"]="${tmp[2]}"
   tmp=("${(s.,.)tmp}")
-  (( ${tmp[1]} )) && p10ks_vcs[status]="dirty" || p10ks_vcs[status]="returned"
+  (( ${tmp[1]} )) && zincs_vcs[status]="dirty" || zincs_vcs[status]="returned"
 }
 
-p10ks_vcs_async_return "$@"
+zincs_vcs_async_return "$@"

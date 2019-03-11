@@ -1,10 +1,10 @@
-p10ks_userhost(1)
+zincs_userhost(1)
 =================
 :compat-mode!:
 
 NAME
 ----
-p10ks_userhost - a shell script
+zincs_userhost - a shell script
 
 SYNOPSIS
 --------
@@ -14,14 +14,14 @@ By default replies with "user@host"
 Set segment argument 5 to change this to whatever you want.
 
 Ex: user:host
-p10k_opts[p10ks_userhost]=";;;;%n:%m"
+zinc_opts[zincs_userhost]=";;;;%n:%m"
 
 
 FUNCTIONS
 ---------
 
- p10ks_userhost
- p10ks_userhost_default_opts
+ zincs_userhost
+ zincs_userhost_default_opts
 
 DETAILS
 -------
@@ -31,7 +31,7 @@ Script Body
 
 Has 1 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
 
-p10ks_userhost
+zincs_userhost
 ~~~~~~~~~~~~~~
 
 ____
@@ -41,7 +41,7 @@ ____
  # Set segment argument 5 to change this to whatever you want.
  #
  # Ex: user:host
- # p10k_opts[p10ks_userhost]=";;;;%n:%m"
+ # zinc_opts[zincs_userhost]=";;;;%n:%m"
  # }}}
 ____
 
@@ -49,7 +49,7 @@ Has 5 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_userhost_default_opts
+zincs_userhost_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.

@@ -1,17 +1,17 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function p10ks_execution_time_display_hidden () {
-  if (( p10ks_execution_time[threshold] <= p10ks_execution_time[last_execution_time] )); then
+function zincs_execution_time_display_hidden () {
+  if (( zincs_execution_time[threshold] <= zincs_execution_time[last_execution_time] )); then
     false
   else
     true
   fi
 }
 
-typeset -gA p10ks_execution_time
+typeset -gA zincs_execution_time
 
-if [[ "${p10ks_execution_time[threshold]}" == "" ]]; then
-  p10ks_execution_time[threshold]="1"
+if [[ "${zincs_execution_time[threshold]}" == "" ]]; then
+  zincs_execution_time[threshold]="1"
 fi
 
-p10ks_execution_time_display_hidden "$@"
+zincs_execution_time_display_hidden "$@"

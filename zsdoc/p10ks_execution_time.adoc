@@ -1,10 +1,10 @@
-p10ks_execution_time(1)
+zincs_execution_time(1)
 =======================
 :compat-mode!:
 
 NAME
 ----
-p10ks_execution_time - a shell script
+zincs_execution_time - a shell script
 
 SYNOPSIS
 --------
@@ -22,38 +22,38 @@ Execution time of last command
 
 This segment supports the `CONDITIONAL` display mode. (This is the default display mode.)
 
-The condition here is whether or not the execution time of the last command was greater than `p10ks_execution_time[threshold]`, if `true` then the segment will be shown.
+The condition here is whether or not the execution time of the last command was greater than `zincs_execution_time[threshold]`, if `true` then the segment will be shown.
 
 You can also pass the threshold value as segment option 5, ex:
 
 ```shell
-p10k_opts=(
-p10ks_execution_time ';;;;10' # 10 seconds
+zinc_opts=(
+zincs_execution_time ';;;;10' # 10 seconds
 )
-# OR if you've already set p10k_opts:
-p10k_opts[p10ks_execution_time]=';;;;10'
+# OR if you've already set zinc_opts:
+zinc_opts[zincs_execution_time]=';;;;10'
 ```
 
 Note:
-> `$5` is used at load-time while `p10ks_execution_time[threshold]` is used during runtime.
+> `$5` is used at load-time while `zincs_execution_time[threshold]` is used during runtime.
 
 
 
 FUNCTIONS
 ---------
 
- p10ks_execution_time
- _p10ks_execution_time_async_complete
- p10ks_execution_time_default_opts
- p10ks_execution_time_display_hidden
- _p10ks_execution_time_precmd
- _p10ks_execution_time_preexec
+ zincs_execution_time
+ _zincs_execution_time_async_complete
+ zincs_execution_time_default_opts
+ zincs_execution_time_display_hidden
+ _zincs_execution_time_precmd
+ _zincs_execution_time_preexec
 
 ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|p10ks_execution_time[threshold]|minimum seconds of runtime to display segment
+|zincs_execution_time[threshold]|minimum seconds of runtime to display segment
 |======
 
 DETAILS
@@ -65,10 +65,10 @@ Script Body
 Has 23 line(s). Calls functions:
 
  Script-Body
- |-- p10ks_execution_time
- `-- p10ks_execution_time_display_hidden
+ |-- zincs_execution_time
+ `-- zincs_execution_time_display_hidden
 
-p10ks_execution_time
+zincs_execution_time
 ~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
@@ -77,21 +77,21 @@ Called by:
 
  Script-Body
 
-_p10ks_execution_time_async_complete
+_zincs_execution_time_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 2 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_execution_time_default_opts
+zincs_execution_time_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_execution_time_display_hidden
+zincs_execution_time_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 5 line(s). Doesn't call other functions.
@@ -100,7 +100,7 @@ Called by:
 
  Script-Body
 
-_p10ks_execution_time_precmd
+_zincs_execution_time_precmd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 24 line(s). Doesn't call other functions.
@@ -109,7 +109,7 @@ Uses feature(s): _read_
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-_p10ks_execution_time_preexec
+_zincs_execution_time_preexec
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ____

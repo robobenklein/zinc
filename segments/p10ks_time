@@ -4,7 +4,7 @@
 # Uses zsh's expansion of %*
 # }}}
 
-p10ks_time ()
+zincs_time ()
 {
   REPLY='%*'
 }

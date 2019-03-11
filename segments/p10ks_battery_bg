@@ -1,31 +1,31 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function p10ks_battery_bg () {
+function zincs_battery_bg () {
   # change color based on charge level
-  if (( p10ks_battery[percent] <= p10ks_battery[threshold_low] )); then
-    REPLY="${p10ks_battery[bgcolor_low]}"
-  elif (( p10ks_battery[percent] >= p10ks_battery[threshold_charged] )); then
-    REPLY="${p10ks_battery[bgcolor_charged]}"
+  if (( zincs_battery[percent] <= zincs_battery[threshold_low] )); then
+    REPLY="${zincs_battery[bgcolor_low]}"
+  elif (( zincs_battery[percent] >= zincs_battery[threshold_charged] )); then
+    REPLY="${zincs_battery[bgcolor_charged]}"
   else
-    REPLY="${p10ks_battery[bgcolor_default]}"
+    REPLY="${zincs_battery[bgcolor_default]}"
   fi
 }
 
-[[ "${(t)p10ks_battery}" != "association" ]] && {
-  typeset -gA p10ks_battery
+[[ "${(t)zincs_battery}" != "association" ]] && {
+  typeset -gA zincs_battery
 }
 
 # env-vars {{{
-# p10ks_battery[threshold_low] -> percentage
-p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
-# p10ks_battery[threshold_charged] -> percentage
-p10ks_battery[threshold_charged]=${p10ks_battery[threshold_charged]:-"95"}
-# p10ks_battery[bgcolor_default] -> bgcolor when not low or charged
-p10ks_battery[bgcolor_default]="${p10ks_battery[bgcolor_default]:-black}"
-# p10ks_battery[bgcolor_low] -> color when below threshold_low
-p10ks_battery[bgcolor_low]="${p10ks_battery[bgcolor_low]:-red}"
-# p10ks_battery[bgcolor_charged] -> color when above threshold_charged
-p10ks_battery[bgcolor_charged]="${p10ks_battery[bgcolor_charged]:-${p10ks_battery[bgcolor_default]}}"
+# zincs_battery[threshold_low] -> percentage
+zincs_battery[threshold_low]=${zincs_battery[threshold_low]:-"30"}
+# zincs_battery[threshold_charged] -> percentage
+zincs_battery[threshold_charged]=${zincs_battery[threshold_charged]:-"95"}
+# zincs_battery[bgcolor_default] -> bgcolor when not low or charged
+zincs_battery[bgcolor_default]="${zincs_battery[bgcolor_default]:-black}"
+# zincs_battery[bgcolor_low] -> color when below threshold_low
+zincs_battery[bgcolor_low]="${zincs_battery[bgcolor_low]:-red}"
+# zincs_battery[bgcolor_charged] -> color when above threshold_charged
+zincs_battery[bgcolor_charged]="${zincs_battery[bgcolor_charged]:-${zincs_battery[bgcolor_default]}}"
 # }}}
 
-p10ks_battery_bg "$@"
+zincs_battery_bg "$@"

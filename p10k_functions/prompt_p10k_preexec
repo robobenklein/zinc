@@ -1,24 +1,24 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function prompt_p10k_preexec () {
+function prompt_zinc_preexec () {
   # Before a ZLE line is about to be interpreted.
 
   # Stop running prompt async jobs:
-  async_flush_jobs p10k_segment_worker
+  async_flush_jobs zinc_segment_worker
 
   # Reset the async job states back to "" (not-yet-started)
-  for async_segment in ${(k)_P10K_ASYNC_STATII}; do
-    _P10K_ASYNC_STATII[$async_segment]=""
+  for async_segment in ${(k)_ZINC_ASYNC_STATII}; do
+    _ZINC_ASYNC_STATII[$async_segment]=""
   done
 
-  # _P10K_DBG_OUT "Reset async statii of ${(k)_P10K_ASYNC_STATII}"
+  # _ZINC_DBG_OUT "Reset async statii of ${(k)_ZINC_ASYNC_STATII}"
 
-  _p10k_run_hook _p10k_preexec
+  _zinc_run_hook _zinc_preexec
 
 }
 
-_P10K_AUTOLOADED_FUNCTIONS+=("prompt_p10k_preexec")
+_ZINC_AUTOLOADED_FUNCTIONS+=("prompt_zinc_preexec")
 
-_p10k_define_hook _p10k_preexec
+_zinc_define_hook _zinc_preexec
 
-prompt_p10k_preexec "$@"
+prompt_zinc_preexec "$@"

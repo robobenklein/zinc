@@ -1,12 +1,12 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-p10ks_retval_bg ()
+zincs_retval_bg ()
 {
-  if [[ "$_P10K_RETVAL_STORE" == '0' ]]; then
+  if [[ "$_ZINC_RETVAL_STORE" == '0' ]]; then
     REPLY='black'
   else
     REPLY='red'
   fi
 
-  # _P10K_DBG_OUT retval_bg says: "$_P10K_RETVAL_STORE"
+  # _ZINC_DBG_OUT retval_bg says: "$_ZINC_RETVAL_STORE"
 }

@@ -1,5 +1,5 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function p10ks_userhost_default_opts () {
+function zincs_userhost_default_opts () {
   reply=(white black normal normal)
 }

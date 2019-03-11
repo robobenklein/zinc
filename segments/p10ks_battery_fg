@@ -1,30 +1,30 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 # env-vars {{{
-[[ "${(t)p10ks_battery}" != "association" ]] && {
-  typeset -gA p10ks_battery
+[[ "${(t)zincs_battery}" != "association" ]] && {
+  typeset -gA zincs_battery
 }
-p10ks_battery[threshold_low]=${p10ks_battery[threshold_low]:-"30"}
-# p10ks_battery[fgcolor_low] -> color of text when battery below threshold_low
-p10ks_battery[fgcolor_low]="${p10ks_battery[fgcolor_low]:-black}"
-# p10ks_battery[fgcolor_charging] -> color of text when charging
-p10ks_battery[fgcolor_charging]="${p10ks_battery[fgcolor_charging]:-green}"
-# p10ks_battery[fgcolor_default] -> default foreground color
-p10ks_battery[fgcolor_default]="${p10ks_battery[fgcolor_default]:-white}"
+zincs_battery[threshold_low]=${zincs_battery[threshold_low]:-"30"}
+# zincs_battery[fgcolor_low] -> color of text when battery below threshold_low
+zincs_battery[fgcolor_low]="${zincs_battery[fgcolor_low]:-black}"
+# zincs_battery[fgcolor_charging] -> color of text when charging
+zincs_battery[fgcolor_charging]="${zincs_battery[fgcolor_charging]:-green}"
+# zincs_battery[fgcolor_default] -> default foreground color
+zincs_battery[fgcolor_default]="${zincs_battery[fgcolor_default]:-white}"
 # }}}
 
 # Change fg color based on low, charging, or default.
-function p10ks_battery_fg () {
+function zincs_battery_fg () {
   # change color based on charge level
-  if (( p10ks_battery[percent] <= p10ks_battery[threshold_low] )); then
-    REPLY="${p10ks_battery[fgcolor_low]}"
-  # elif (( p10ks_battery[percent] >= p10ks_battery[threshold_hidden] )); then
-  #   REPLY="${p10ks_battery[fgcolor_charged]}"
-  elif [[ ${p10ks_battery[state]} == "charging" ]]; then
-    REPLY="${p10ks_battery[fgcolor_charging]}"
+  if (( zincs_battery[percent] <= zincs_battery[threshold_low] )); then
+    REPLY="${zincs_battery[fgcolor_low]}"
+  # elif (( zincs_battery[percent] >= zincs_battery[threshold_hidden] )); then
+  #   REPLY="${zincs_battery[fgcolor_charged]}"
+  elif [[ ${zincs_battery[state]} == "charging" ]]; then
+    REPLY="${zincs_battery[fgcolor_charging]}"
   else
-    REPLY="${p10ks_battery[fgcolor_default]}"
+    REPLY="${zincs_battery[fgcolor_default]}"
   fi
 }
 
-p10ks_battery_fg "$@"
+zincs_battery_fg "$@"

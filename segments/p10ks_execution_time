@@ -14,91 +14,91 @@
 #
 # This segment supports the `CONDITIONAL` display mode. (This is the default display mode.)
 #
-# The condition here is whether or not the execution time of the last command was greater than `p10ks_execution_time[threshold]`, if `true` then the segment will be shown.
+# The condition here is whether or not the execution time of the last command was greater than `zincs_execution_time[threshold]`, if `true` then the segment will be shown.
 #
 # You can also pass the threshold value as segment option 5, ex:
 #
 # ```shell
-# p10k_opts=(
-#   p10ks_execution_time ';;;;10' # 10 seconds
+# zinc_opts=(
+#   zincs_execution_time ';;;;10' # 10 seconds
 # )
-# # OR if you've already set p10k_opts:
-# p10k_opts[p10ks_execution_time]=';;;;10'
+# # OR if you've already set zinc_opts:
+# zinc_opts[zincs_execution_time]=';;;;10'
 # ```
 #
 # Note:
-# > `$5` is used at load-time while `p10ks_execution_time[threshold]` is used during runtime.
+# > `$5` is used at load-time while `zincs_execution_time[threshold]` is used during runtime.
 
 # }}}
 
-function _p10ks_execution_time_preexec () {
+function _zincs_execution_time_preexec () {
   # set the start time point using epoch
-  _P10K_DBG_OUT "_p10ks_execution_time_preexec"
-  p10ks_execution_time[process_started]="1"
-  p10ks_execution_time[last_execution_time]="0"
-  _p10ks_execution_time_process_start=$EPOCHREALTIME
+  _ZINC_DBG_OUT "_zincs_execution_time_preexec"
+  zincs_execution_time[process_started]="1"
+  zincs_execution_time[last_execution_time]="0"
+  _zincs_execution_time_process_start=$EPOCHREALTIME
 }
 
-function _p10ks_execution_time_precmd () {
-  _P10K_DBG_OUT "_p10ks_execution_time_precmd"
-  (( p10ks_execution_time[process_started] )) && {
+function _zincs_execution_time_precmd () {
+  _ZINC_DBG_OUT "_zincs_execution_time_precmd"
+  (( zincs_execution_time[process_started] )) && {
     REPLY=""
-    p10ks_execution_time[last_execution_time]="$(( EPOCHREALTIME - _p10ks_execution_time_process_start ))"
-    if (( p10ks_execution_time[last_execution_time] < 60 )); then
+    zincs_execution_time[last_execution_time]="$(( EPOCHREALTIME - _zincs_execution_time_process_start ))"
+    if (( zincs_execution_time[last_execution_time] < 60 )); then
       # number of seconds:
-      print -zf '%.2f' "${p10ks_execution_time[last_execution_time]}"
+      print -zf '%.2f' "${zincs_execution_time[last_execution_time]}"
       read -rz
-    elif (( p10ks_execution_time[last_execution_time] < 3600 )); then
+    elif (( zincs_execution_time[last_execution_time] < 3600 )); then
       # minutes and seconds:
-      print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+      print -zf '%d' "${zincs_execution_time[last_execution_time]}"
       read -rz
       strftime -s REPLY -- "%-M:%S" "${REPLY}"
-    elif (( p10ks_execution_time[last_execution_time] < 86400 )); then
-      print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+    elif (( zincs_execution_time[last_execution_time] < 86400 )); then
+      print -zf '%d' "${zincs_execution_time[last_execution_time]}"
       read -rz
       TZ=GMT strftime -s REPLY -- "%K:%M:%S" "${REPLY}"
     else
       # literally days:
-      print -zf '%d' "${p10ks_execution_time[last_execution_time]}"
+      print -zf '%d' "${zincs_execution_time[last_execution_time]}"
       read -rz
       TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S' "${REPLY}"
     fi
-    p10ks_execution_time[formatted_output]="${REPLY} ⧖"
-    _P10K_DBG_OUT "p10ks_execution_time[formatted_output]=\"${p10ks_execution_time[formatted_output]}\""
-    p10ks_execution_time[process_started]="0"
+    zincs_execution_time[formatted_output]="${REPLY} ⧖"
+    _ZINC_DBG_OUT "zincs_execution_time[formatted_output]=\"${zincs_execution_time[formatted_output]}\""
+    zincs_execution_time[process_started]="0"
   }
 }
 
-function _p10ks_execution_time_async_complete () {
-  # _P10K_DBG_OUT "pexectime async done..."
-  p10ks_execution_time[last_execution_time]=0
-  p10ks_execution_time[formatted_output]=""
+function _zincs_execution_time_async_complete () {
+  # _ZINC_DBG_OUT "pexectime async done..."
+  zincs_execution_time[last_execution_time]=0
+  zincs_execution_time[formatted_output]=""
 }
 
-function p10ks_execution_time () {
+function zincs_execution_time () {
   # TODO formatting options
-  REPLY="${p10ks_execution_time[formatted_output]}"
+  REPLY="${zincs_execution_time[formatted_output]}"
 }
 
 # float (H)ideval:
-typeset -gHF 4 _p10ks_execution_time_process_start
-_p10ks_execution_time_process_start=$EPOCHREALTIME
-# typeset -gH _p10ks_execution_time_last_execution_time
-# integer -gH _p10ks_execution_time_process_started
+typeset -gHF 4 _zincs_execution_time_process_start
+_zincs_execution_time_process_start=$EPOCHREALTIME
+# typeset -gH _zincs_execution_time_last_execution_time
+# integer -gH _zincs_execution_time_process_started
 
-typeset -gA p10ks_execution_time
-p10ks_execution_time[process_started]=0
+typeset -gA zincs_execution_time
+zincs_execution_time[process_started]=0
 
 # env-vars {{{
-# p10ks_execution_time[threshold] -> minimum seconds of runtime to display segment
-if [[ "${p10ks_execution_time[threshold]}" == "" ]]; then
-  [[ "$5" != "" ]] && p10ks_execution_time[threshold]="$5" \
-  || p10ks_execution_time[threshold]="1"
+# zincs_execution_time[threshold] -> minimum seconds of runtime to display segment
+if [[ "${zincs_execution_time[threshold]}" == "" ]]; then
+  [[ "$5" != "" ]] && zincs_execution_time[threshold]="$5" \
+  || zincs_execution_time[threshold]="1"
 fi
 # }}}
 
-_p10k_add_hook _p10k_preexec _p10ks_execution_time_preexec
-_p10k_add_hook _p10k_precmd _p10ks_execution_time_precmd
-_p10k_add_hook _p10k_async_complete _p10ks_execution_time_async_complete
+_zinc_add_hook _zinc_preexec _zincs_execution_time_preexec
+_zinc_add_hook _zinc_precmd _zincs_execution_time_precmd
+_zinc_add_hook _zinc_async_complete _zincs_execution_time_async_complete
 
-p10ks_execution_time "$@"
+zincs_execution_time "$@"

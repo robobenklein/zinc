@@ -1,10 +1,10 @@
-p10ks_retval(1)
+zincs_retval(1)
 ===============
 :compat-mode!:
 
 NAME
 ----
-p10ks_retval - a shell script
+zincs_retval - a shell script
 
 SYNOPSIS
 --------
@@ -15,13 +15,13 @@ Return value of the last command.
 FUNCTIONS
 ---------
 
- p10ks_retval
- _p10ks_retval_async_complete
- p10ks_retval_bg
- p10ks_retval_default_opts
- p10ks_retval_display_hidden
- p10ks_retval_fg
- _p10ks_retval_preexec
+ zincs_retval
+ _zincs_retval_async_complete
+ zincs_retval_bg
+ zincs_retval_default_opts
+ zincs_retval_display_hidden
+ zincs_retval_fg
+ _zincs_retval_preexec
 
 DETAILS
 -------
@@ -32,10 +32,10 @@ Script Body
 Has 12 line(s). Calls functions:
 
  Script-Body
- |-- p10ks_retval
- `-- p10ks_retval_display_hidden
+ |-- zincs_retval
+ `-- zincs_retval_display_hidden
 
-p10ks_retval
+zincs_retval
 ~~~~~~~~~~~~
 
 ____
@@ -48,28 +48,28 @@ Called by:
 
  Script-Body
 
-_p10ks_retval_async_complete
+_zincs_retval_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_retval_bg
+zincs_retval_bg
 ~~~~~~~~~~~~~~~
 
 Has 5 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_retval_default_opts
+zincs_retval_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_retval_display_hidden
+zincs_retval_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
@@ -78,14 +78,14 @@ Called by:
 
  Script-Body
 
-p10ks_retval_fg
+zincs_retval_fg
 ~~~~~~~~~~~~~~~
 
 Has 5 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-_p10ks_retval_preexec
+_zincs_retval_preexec
 ~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.

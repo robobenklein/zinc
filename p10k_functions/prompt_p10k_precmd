@@ -1,16 +1,16 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function prompt_p10k_precmd () {
-  _P10K_RETVAL_STORE=$?
-  _P10K_RETVAL_STOREs=( "$pipestatus[@]" )
+function prompt_zinc_precmd () {
+  _ZINC_RETVAL_STORE=$?
+  _ZINC_RETVAL_STOREs=( "$pipestatus[@]" )
 
-  async_worker_eval p10k_segment_worker 'cd' "$PWD"
+  async_worker_eval zinc_segment_worker 'cd' "$PWD"
 
-  _p10k_run_hook _p10k_precmd
+  _zinc_run_hook _zinc_precmd
 
-  prompt_p10k_render_to_vars
+  prompt_zinc_render_to_vars
 }
 
-_p10k_define_hook _p10k_precmd
+_zinc_define_hook _zinc_precmd
 
-prompt_p10k_precmd "$@"
+prompt_zinc_precmd "$@"

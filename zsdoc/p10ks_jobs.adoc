@@ -1,10 +1,10 @@
-p10ks_jobs(1)
+zincs_jobs(1)
 =============
 :compat-mode!:
 
 NAME
 ----
-p10ks_jobs - a shell script
+zincs_jobs - a shell script
 
 SYNOPSIS
 --------
@@ -15,16 +15,16 @@ Shows counts of shell jobs.
 FUNCTIONS
 ---------
 
- p10ks_jobs
- p10ks_jobs_default_opts
- p10ks_jobs_display_hidden
+ zincs_jobs
+ zincs_jobs_default_opts
+ zincs_jobs_display_hidden
 
 ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|p10ks_jobs[symbol_running]|symbol for running jobs
-|p10ks_jobs[symbol_suspended]|symbol for suspended jobs
+|zincs_jobs[symbol_running]|symbol for running jobs
+|zincs_jobs[symbol_suspended]|symbol for suspended jobs
 |======
 
 DETAILS
@@ -36,9 +36,9 @@ Script Body
 Has 7 line(s). Calls functions:
 
  Script-Body
- `-- p10ks_jobs
+ `-- zincs_jobs
 
-p10ks_jobs
+zincs_jobs
 ~~~~~~~~~~
 
 ____
@@ -51,14 +51,14 @@ Called by:
 
  Script-Body
 
-p10ks_jobs_default_opts
+zincs_jobs_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_jobs_display_hidden
+zincs_jobs_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.

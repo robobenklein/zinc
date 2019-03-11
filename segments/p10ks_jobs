@@ -5,20 +5,20 @@
 # }}}
 
 # if no suspended jobs, only show running job count
-function p10ks_jobs () {
+function zincs_jobs () {
   (( ${(Mw)#jobstates#suspended} == 0 )) && {
-    REPLY="${#jobstates} ${p10ks_jobs[symbol_running]}"
+    REPLY="${#jobstates} ${zincs_jobs[symbol_running]}"
   } || {
-    REPLY="${(Mw)#jobstates#running}${p10ks_jobs[symbol_running]} ${(Mw)#jobstates#suspended}${p10ks_jobs[symbol_suspended]}"
+    REPLY="${(Mw)#jobstates#running}${zincs_jobs[symbol_running]} ${(Mw)#jobstates#suspended}${zincs_jobs[symbol_suspended]}"
   }
 }
 
-typeset -gA p10ks_jobs
+typeset -gA zincs_jobs
 # env-vars {{{
-# p10ks_jobs[symbol_running] -> symbol for running jobs
-p10ks_jobs[symbol_running]=${p10ks_jobs[symbol_running]:-'⚙ '}
-# p10ks_jobs[symbol_suspended] -> symbol for suspended jobs
-p10ks_jobs[symbol_suspended]=${p10ks_jobs[symbol_suspended]:-'❚❚'}
+# zincs_jobs[symbol_running] -> symbol for running jobs
+zincs_jobs[symbol_running]=${zincs_jobs[symbol_running]:-'⚙ '}
+# zincs_jobs[symbol_suspended] -> symbol for suspended jobs
+zincs_jobs[symbol_suspended]=${zincs_jobs[symbol_suspended]:-'❚❚'}
 # }}}
 
-p10ks_jobs "$@"
+zincs_jobs "$@"

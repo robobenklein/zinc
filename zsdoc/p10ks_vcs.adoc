@@ -1,10 +1,10 @@
-p10ks_vcs(1)
+zincs_vcs(1)
 ============
 :compat-mode!:
 
 NAME
 ----
-p10ks_vcs - a shell script
+zincs_vcs - a shell script
 
 SYNOPSIS
 --------
@@ -17,14 +17,14 @@ Is async and will run vcs_info in worker process.
 FUNCTIONS
 ---------
 
- p10ks_vcs
- p10ks_vcs_async
- _p10ks_vcs_async_complete
- p10ks_vcs_async_return
- p10ks_vcs_async_started
- p10ks_vcs_bg
- p10ks_vcs_default_opts
- p10ks_vcs_display_hidden
+ zincs_vcs
+ zincs_vcs_async
+ _zincs_vcs_async_complete
+ zincs_vcs_async_return
+ zincs_vcs_async_started
+ zincs_vcs_bg
+ zincs_vcs_default_opts
+ zincs_vcs_display_hidden
  +vi-git-aheadbehind
  +vi-git-untracked
  +vi-hg-branchhead
@@ -35,11 +35,11 @@ ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|p10ks_battery[color_loading]|bgcolor while async process is running
-|p10ks_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
-|p10ks_vcs[color_default]|color when repo is clean
-|p10ks_vcs[color_dirty]|bgcolor when repo is dirty
-|p10ks_vcs[loading_msg]|message while waiting for async process
+|zincs_battery[color_loading]|bgcolor while async process is running
+|zincs_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
+|zincs_vcs[color_default]|color when repo is clean
+|zincs_vcs[color_dirty]|bgcolor when repo is dirty
+|zincs_vcs[loading_msg]|message while waiting for async process
 (set to blank string to hide the segment during async wait)
 |======
 
@@ -52,16 +52,16 @@ Script Body
 Has 46 line(s). Calls functions:
 
  Script-Body
- |-- p10ks_vcs
- |-- p10ks_vcs_async
+ |-- zincs_vcs
+ |-- zincs_vcs_async
  |   `-- vcs_info
- |-- p10ks_vcs_async_return
- |-- p10ks_vcs_async_started
- `-- p10ks_vcs_bg
+ |-- zincs_vcs_async_return
+ |-- zincs_vcs_async_started
+ `-- zincs_vcs_bg
 
 Uses feature(s): _autoload_, _zstyle_
 
-p10ks_vcs
+zincs_vcs
 ~~~~~~~~~
 
 ____
@@ -74,7 +74,7 @@ Called by:
 
  Script-Body
 
-p10ks_vcs_async
+zincs_vcs_async
 ~~~~~~~~~~~~~~~
 
 ____
@@ -83,7 +83,7 @@ ____
 
 Has 27 line(s). Calls functions:
 
- p10ks_vcs_async
+ zincs_vcs_async
  `-- vcs_info
 
 Uses feature(s): _zstyle_
@@ -92,7 +92,7 @@ Called by:
 
  Script-Body
 
-_p10ks_vcs_async_complete
+_zincs_vcs_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ____
@@ -103,7 +103,7 @@ Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_vcs_async_return
+zincs_vcs_async_return
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Has 6 line(s). Doesn't call other functions.
@@ -112,7 +112,7 @@ Called by:
 
  Script-Body
 
-p10ks_vcs_async_started
+zincs_vcs_async_started
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 3 line(s). Doesn't call other functions.
@@ -121,7 +121,7 @@ Called by:
 
  Script-Body
 
-p10ks_vcs_bg
+zincs_vcs_bg
 ~~~~~~~~~~~~
 
 Has 5 line(s). Doesn't call other functions.
@@ -130,14 +130,14 @@ Called by:
 
  Script-Body
 
-p10ks_vcs_default_opts
+zincs_vcs_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
-p10ks_vcs_display_hidden
+zincs_vcs_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
@@ -197,5 +197,5 @@ Uses feature(s): _autoload_
 
 Called by:
 
- p10ks_vcs_async
+ zincs_vcs_async
 

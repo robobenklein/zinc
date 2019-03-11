@@ -5,18 +5,18 @@
 # }}}
 
 # check if signal is >127, then replace with the signal name
-p10ks_retval ()
+zincs_retval ()
 {
-  if (( _P10K_RETVAL_STORE == 0 )); then
+  if (( _ZINC_RETVAL_STORE == 0 )); then
     REPLY='✔'
-  elif (( _P10K_RETVAL_STORE <= 128 )); then
-    REPLY="${_P10K_RETVAL_STORE}"
+  elif (( _ZINC_RETVAL_STORE <= 128 )); then
+    REPLY="${_ZINC_RETVAL_STORE}"
   else
-    REPLY="SIG${signals[$(( _P10K_RETVAL_STORE - 127 ))]}($(( _P10K_RETVAL_STORE - 128 )))"
+    REPLY="SIG${signals[$(( _ZINC_RETVAL_STORE - 127 ))]}($(( _ZINC_RETVAL_STORE - 128 )))"
   fi
   # printf '%b' ",args:(${(j.,.)@})"
 }
 
-typeset -gA p10ks_retval
+typeset -gA zincs_retval
 
-p10ks_retval "$@"
+zincs_retval "$@"

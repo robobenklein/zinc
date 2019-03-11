@@ -1,10 +1,10 @@
-p10ks_cwd(1)
+zincs_cwd(1)
 ============
 :compat-mode!:
 
 NAME
 ----
-p10ks_cwd - a shell script
+zincs_cwd - a shell script
 
 SYNOPSIS
 --------
@@ -39,8 +39,8 @@ Example dir: `/home/robo/code/configs/zsh`
 
 |===
 | Strategy | Description | Example
-| default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/p10k`
-| `rtab` | Reverse tabbing function, has additional options | `~/c/p10k`, `~/c/p`, `/h/r/c/p`, etc
+| default | No shortening, just `%~` as evaluated by shell prompt expansion. | `~/code/zinc`
+| `rtab` | Reverse tabbing function, has additional options | `~/c/zinc`, `~/c/p`, `/h/r/c/p`, etc
 |===
 
 ### Strategy options:
@@ -73,16 +73,16 @@ ____
 FUNCTIONS
 ---------
 
- _p10ks_cwd_strat_rtab
+ _zincs_cwd_strat_rtab
 
 ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|p10ks_cwd|Array for segment runtime use
-|p10ks_cwd[add_hyperlink]|If '1', create a hyperlink ANSI escape around the path that is
+|zincs_cwd|Array for segment runtime use
+|zincs_cwd[add_hyperlink]|If '1', create a hyperlink ANSI escape around the path that is
 clickable in most VTE terminals!
-|p10ks_cwd[strategy]|The current render strategy for displaying the CWD path
+|zincs_cwd[strategy]|The current render strategy for displaying the CWD path
 |======
 
 DETAILS
@@ -93,7 +93,7 @@ Script Body
 
 Has 5 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
 
-_p10ks_cwd_strat_rtab
+_zincs_cwd_strat_rtab
 ~~~~~~~~~~~~~~~~~~~~~
 
 ____
