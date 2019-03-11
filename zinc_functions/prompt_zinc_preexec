@@ -13,12 +13,12 @@ function prompt_zinc_preexec () {
 
   # _ZINC_DBG_OUT "Reset async statii of ${(k)_ZINC_ASYNC_STATII}"
 
-  _zinc_run_hook _zinc_preexec
+  -zinc-run-hook _zinc_preexec
 
 }
 
 _ZINC_AUTOLOADED_FUNCTIONS+=("prompt_zinc_preexec")
 
-_zinc_define_hook _zinc_preexec
+-zinc-define-hook _zinc_preexec
 
 prompt_zinc_preexec "$@"

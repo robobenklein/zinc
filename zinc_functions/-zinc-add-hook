@@ -15,7 +15,7 @@
 # autoload if that is given, as are -z and -k.  (This is harmless if the
 # function is actually defined inline.)
 
-function _zinc_add_hook () {
+function -zinc-add-hook () {
 
   emulate -L zsh
 
@@ -98,11 +98,11 @@ function _zinc_add_hook () {
     local hname
     hname="${1//-/_}"  # substitute all `-` with `_`
     eval "
-        _zinc_tracked_autoload _zinc_define_hook _zinc_run_hook
-        _zinc_define_hook ${hname}_hook
+        -zinc-tracked-autoload -zinc-define-hook -zinc-run-hook
+        -zinc-define-hook ${hname}_hook
         ${1}(){
             ZSH_CUR_KEYMAP=\$KEYMAP
-            _zinc_run_hook ${hname}_hook
+            -zinc-run-hook ${hname}_hook
         }
         zle -N ${1}
         "
@@ -122,4 +122,4 @@ function _zinc_add_hook () {
 # load the official hooks as well
 autoload -Uz add-zsh-hook
 
-_zinc_add_hook "$@"
+-zinc-add-hook "$@"

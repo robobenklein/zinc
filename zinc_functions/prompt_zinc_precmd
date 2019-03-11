@@ -6,11 +6,11 @@ function prompt_zinc_precmd () {
 
   async_worker_eval zinc_segment_worker 'cd' "$PWD"
 
-  _zinc_run_hook _zinc_precmd
+  -zinc-run-hook _zinc_precmd
 
   prompt_zinc_render_to_vars
 }
 
-_zinc_define_hook _zinc_precmd
+-zinc-define-hook _zinc_precmd
 
 prompt_zinc_precmd "$@"

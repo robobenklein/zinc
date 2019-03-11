@@ -213,6 +213,6 @@ zincs_cwd ()
   fi
 }
 
-_zinc_add_hook _zinc_chpwd _zincs_cwd_chpwd
+-zinc-add-hook _zinc_chpwd _zincs_cwd_chpwd
 
 zincs_cwd "$@"

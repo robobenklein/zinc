@@ -30,14 +30,14 @@ function _zinc_segment_async_callback () {
     return
   fi
 
-  # if [[ "${1}" == "_zinc_tracked_autoload" ]] || \
+  # if [[ "${1}" == "-zinc-tracked-autoload" ]] || \
   #    [[ "${1}" == "autoload" ]];
   # then
   #   shift 2
   # fi
 
   (( ${+functions[${1}_return]} )) || {
-    _zinc_tracked_autoload "${1}_return"
+    -zinc-tracked-autoload "${1}_return"
     _ZINC_AUTOLOADED_FUNCTIONS+=("${1}_return")
   }
   "${1}_return" "$2" "$3" "$4" "$5"
@@ -63,7 +63,7 @@ function _zinc_segment_async_callback () {
   # useful for when segments only offered info on the previous command status
   (( async_complete )) && {
     _ZINC_DBG_OUT "running async_complete hook"
-    _zinc_run_hook _zinc_async_complete
+    -zinc-run-hook _zinc_async_complete
   }
 }
 
@@ -82,7 +82,7 @@ function zinc_reload () {
   for autoloaded_function in $_ZINC_AUTOLOADED_FUNCTIONS; do
     unfunction $autoloaded_function
     echo "Reloading ${autoloaded_function}"
-    _zinc_tracked_autoload "${autoloaded_function}"
+    -zinc-tracked-autoload "${autoloaded_function}"
   done
   # Self re-init:
   builtin unfunction prompt_zinc_setup
@@ -95,7 +95,7 @@ function zinc_restart () {
   async_stop_worker zinc_segment_worker
   async_start_worker zinc_segment_worker
   async_register_callback zinc_segment_worker _zinc_segment_async_callback
-  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "_zinc_tracked_autoload"
+  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "-zinc-tracked-autoload"
   async_worker_eval zinc_segment_worker "zinc_reload"
   prompt_zinc_chpwd
   prompt_zinc_precmd
@@ -105,9 +105,9 @@ prompt_zinc_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
-  builtin autoload -Uz _zinc_tracked_autoload add-zsh-hook
-  _zinc_tracked_autoload zinc_render_prompt_from_spec prompt_zinc_render_to_vars
-  _zinc_tracked_autoload _zinc_define_hook _zinc_add_hook _zinc_run_hook
+  builtin autoload -Uz -- -zinc-tracked-autoload add-zsh-hook
+  -zinc-tracked-autoload zinc_render_prompt_from_spec prompt_zinc_render_to_vars
+  -zinc-tracked-autoload -zinc-define-hook -zinc-add-hook -zinc-run-hook
 
   # association
   typeset -gA zinc_opts _ZINC_SEGMENT_DEFAULTS _ZINC_ASYNC_STATII
@@ -143,14 +143,14 @@ prompt_zinc_setup () {
 
   # Setup precmd / preexec / chpwd
   # _ZINC_ASYNC_STATII["test"]="confirm"
-  _zinc_tracked_autoload prompt_zinc_precmd
+  -zinc-tracked-autoload prompt_zinc_precmd
   add-zsh-hook precmd prompt_zinc_precmd
-  _zinc_tracked_autoload prompt_zinc_preexec
+  -zinc-tracked-autoload prompt_zinc_preexec
   add-zsh-hook preexec prompt_zinc_preexec
-  _zinc_tracked_autoload prompt_zinc_chpwd
+  -zinc-tracked-autoload prompt_zinc_chpwd
   add-zsh-hook chpwd prompt_zinc_chpwd
 
-  _zinc_define_hook _zinc_async_complete
+  -zinc-define-hook _zinc_async_complete
 
   PROMPT="%f%b%k\${_ZINC_RENDERED_OUTPUT_PROMPT}"
   RPROMPT="%f%b%k\${_ZINC_RENDERED_OUTPUT_RPROMPT}%f%b%k"
@@ -158,13 +158,13 @@ prompt_zinc_setup () {
   async_start_worker zinc_segment_worker #-n
   async_register_callback zinc_segment_worker _zinc_segment_async_callback
 
-  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "_zinc_tracked_autoload"
+  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "-zinc-tracked-autoload"
 
   # gives segments a setup run before the first precmd
   prompt_zinc_preexec
 
   for segment in ${zinc_left} ${zinc_right}; do
-    _zinc_tracked_autoload ${segment}
+    -zinc-tracked-autoload ${segment}
   done
 }
 

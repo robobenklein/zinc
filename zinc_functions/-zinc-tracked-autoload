@@ -1,10 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 # Load an fpath function only if not yet present.
-function _zinc_tracked_autoload () {
+function -zinc-tracked-autoload () {
   for afunc in ${@}; do
     (( ${+functions[${afunc}]} )) || {
-      builtin autoload -Uz +X $afunc || {
+      builtin autoload -Uz +X -- $afunc || {
         printf '%b\n' "\033[0;31mZINC: Could not find/load ${afunc}!\033[0;0m" >&2
       }
       _ZINC_AUTOLOADED_FUNCTIONS+=("$afunc")
@@ -14,4 +14,4 @@ function _zinc_tracked_autoload () {
 
 typeset -gaU _ZINC_AUTOLOADED_FUNCTIONS
 
-_zinc_tracked_autoload "$@"
+-zinc-tracked-autoload "$@"

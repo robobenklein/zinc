@@ -2,9 +2,9 @@
 
 function prompt_zinc_chpwd () {
   async_worker_eval zinc_segment_worker 'cd' "$PWD"
-  _zinc_run_hook _zinc_chpwd
+  -zinc-run-hook _zinc_chpwd
 }
 
-_zinc_define_hook _zinc_chpwd
+-zinc-define-hook _zinc_chpwd
 
 prompt_zinc_chpwd "$@"

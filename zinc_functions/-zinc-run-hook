@@ -1,6 +1,6 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function _zinc_run_hook () {
+function -zinc-run-hook () {
   for f in ${(P)1}; do
     $f ${@:2} # send given args to the func
   done

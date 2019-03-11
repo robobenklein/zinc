@@ -256,7 +256,7 @@ function _zincs_vcs_async_complete () {
   _zinc_segment_async_reset_status zincs_vcs
 }
 
-_zinc_add_hook _zinc_async_complete _zincs_vcs_async_complete
+-zinc-add-hook _zinc_async_complete _zincs_vcs_async_complete
 
 zincs_vcs_async_started "$@"
 

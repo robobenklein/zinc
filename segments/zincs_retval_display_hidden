@@ -14,7 +14,7 @@ function zincs_retval_display_hidden () {
 
 zincs_retval[ac]=1
 
-_zinc_add_hook _zinc_preexec _zincs_retval_preexec
-_zinc_add_hook _zinc_async_complete _zincs_retval_async_complete
+-zinc-add-hook _zinc_preexec _zincs_retval_preexec
+-zinc-add-hook _zinc_async_complete _zincs_retval_async_complete
 
 zincs_retval_display_hidden "$@"

@@ -238,7 +238,7 @@ function _zincs_battery_async_complete () {
   _zinc_segment_async_reset_status zincs_battery
 }
 
-_zinc_add_hook _zinc_async_complete _zincs_battery_async_complete
+-zinc-add-hook _zinc_async_complete _zincs_battery_async_complete
 
 zincs_battery_async_started "$@"
 

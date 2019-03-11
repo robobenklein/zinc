@@ -99,9 +99,9 @@ if [[ "${zincs_execution_time[threshold]}" == "" ]]; then
 fi
 # }}}
 
-_zinc_add_hook _zinc_preexec _zincs_execution_time_preexec
-_zinc_add_hook _zinc_precmd _zincs_execution_time_precmd
-_zinc_add_hook _zinc_async_complete _zincs_execution_time_async_complete
+-zinc-add-hook _zinc_preexec _zincs_execution_time_preexec
+-zinc-add-hook _zinc_precmd _zincs_execution_time_precmd
+-zinc-add-hook _zinc_async_complete _zincs_execution_time_async_complete
 
 zincs_execution_time "$@"
 
