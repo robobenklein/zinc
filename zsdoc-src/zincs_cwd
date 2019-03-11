@@ -71,7 +71,7 @@ typeset -gA zincs_cwd
 typeset -ga _ZINCS_CWD_STRAT_ARGS
 # zincs_cwd[add_hyperlink] -> If '1', create a hyperlink ANSI escape around the path that is
 # clickable in most VTE terminals!
-zincs_cwd[add_hyperlink]="0"
+zincs_cwd[add_hyperlink]=${zincs_cwd[add_hyperlink]:-"0"}
 # zincs_cwd[strategy] -> The current render strategy for displaying the CWD path
 zincs_cwd[strategy]=${zincs_cwd[strategy]:-"default"}
 # }}}
@@ -216,7 +216,7 @@ zincs_cwd ()
   fi
 }
 
-add-zsh-hook chpwd _zincs_cwd_chpwd
+_zinc_add_hook _zinc_chpwd _zincs_cwd_chpwd
 
 zincs_cwd "$@"
 

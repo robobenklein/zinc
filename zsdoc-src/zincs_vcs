@@ -81,45 +81,47 @@ autoload -Uz vcs_info
 
 # env-vars {{{
 # zincs_vcs[backends] -> space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
-: ${zincs_vcs[backends]=git svn hg}
+zincs_vcs[backends]=${zincs_vcs[backends]:-"git svn hg"}
 # }}}
 
 zincs_vcs_async() {
   local -a backends=(${(z)zincs_vcs[backends]})
-  (( ${backends[(I)git]} )) && [[ -v GITSTATUS_DAEMON_PID ]] && gitstatus_query_dir && {
-    # Fast path: use vcs info provided by gitstatus.
-    echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
-    echo -nE "$VCS_STATUS_LOCAL_BRANCH"
-    [[ -n "$VCS_STATUS_ACTION" ]] && {
-      echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
-    } || {
-      # If local and remote branch names differ, show "local→remote" instead of just "local".
-      [[ -z "$VCS_STATUS_REMOTE_BRANCH" ]] ||
-        [[ "$VCS_STATUS_LOCAL_BRANCH" == "$VCS_STATUS_REMOTE_BRANCH" ]] ||
-        echo -nE $'→'"$VCS_STATUS_REMOTE_BRANCH"
-      local icons=''
-      (( VCS_STATUS_HAS_STAGED != 1 )) || icons+=$'✚'    # ✚
-      (( VCS_STATUS_HAS_UNSTAGED != 1 )) || icons+=$'●'  # ●
-      (( VCS_STATUS_HAS_UNTRACKED != 1 )) || icons+=$'◌' # ◌
-      echo -nE "${icons:+ $icons}"
-      (( VCS_STATUS_COMMITS_AHEAD <= 0 )) || echo -nE " +$VCS_STATUS_COMMITS_AHEAD"
-      (( VCS_STATUS_COMMITS_BEHIND <= 0 )) || echo -nE " -$VCS_STATUS_COMMITS_BEHIND"
-      (( VCS_STATUS_STASHES <= 0 )) || echo -nE $' ⋄'"$VCS_STATUS_STASHES"
-      # Prompt example with all optional parts present:
-      #
-      #   feature→master ✚●◌ +1 -2 ⋄3
-      #
-      # We are on branch "feature" that tracks "origin/master". We have staged, unstaged and
-      # untracked files. We are 1 commit ahead and 2 commits behind. We have 3 stashes.
-    }
+  # if git backend and gitstatus exists:
+  # (( ${backends[(I)git]} )) && (( ${+functions[gitstatus_check]} )) &&
+  #   gitstatus_check -t 5
+  (( ! #backends )) || {
+    zstyle ':vcs_info:*' enable ${backends}
+    vcs_info
+    printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
+    return 0
+  }
+}
+
+zincs_vcs_async_gitstatus () {
+  # Fast path: use vcs info provided by gitstatus.
+  echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
+  echo -nE "$VCS_STATUS_LOCAL_BRANCH"
+  [[ -n "$VCS_STATUS_ACTION" ]] && {
+    echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
   } || {
-    # Remove git from the list of backends if we know we aren't in a git repo.
-    [[ ! -v GITSTATUS_DAEMON_PID ]] || backends=(${backends:#git})
-    (( ! backends )) || {
-      zstyle ':vcs_info:*' enable ${backends}
-      vcs_info
-      printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
-    }
+    # If local and remote branch names differ, show "local→remote" instead of just "local".
+    [[ -z "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+      [[ "$VCS_STATUS_LOCAL_BRANCH" == "$VCS_STATUS_REMOTE_BRANCH" ]] ||
+      echo -nE $'→'"$VCS_STATUS_REMOTE_BRANCH"
+    local icons=''
+    (( VCS_STATUS_HAS_STAGED != 1 )) || icons+=$'✚'    # ✚
+    (( VCS_STATUS_HAS_UNSTAGED != 1 )) || icons+=$'●'  # ●
+    (( VCS_STATUS_HAS_UNTRACKED != 1 )) || icons+=$'◌' # ◌
+    echo -nE "${icons:+ $icons}"
+    (( VCS_STATUS_COMMITS_AHEAD <= 0 )) || echo -nE " +$VCS_STATUS_COMMITS_AHEAD"
+    (( VCS_STATUS_COMMITS_BEHIND <= 0 )) || echo -nE " -$VCS_STATUS_COMMITS_BEHIND"
+    (( VCS_STATUS_STASHES <= 0 )) || echo -nE $' ⋄'"$VCS_STATUS_STASHES"
+    # Prompt example with all optional parts present:
+    #
+    #   feature→master ✚●◌ +1 -2 ⋄3
+    #
+    # We are on branch "feature" that tracks "origin/master". We have staged, unstaged and
+    # untracked files. We are 1 commit ahead and 2 commits behind. We have 3 stashes.
   }
 }
 

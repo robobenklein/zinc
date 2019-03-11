@@ -50,5 +50,6 @@ segments=(
 )
 
 for segment in ${segments}; do
+  echo making $segment
   create_doc_scaffold ${pzsd_outputfolder}/zincs_${segment} $segment
 done

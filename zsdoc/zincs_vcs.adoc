@@ -17,18 +17,19 @@ Is async and will run vcs_info in worker process.
 FUNCTIONS
 ---------
 
+ +vi-git-aheadbehind
+ +vi-git-untracked
+ +vi-hg-branchhead
+ +vi-vcs-detect-changes
  zincs_vcs
  zincs_vcs_async
  _zincs_vcs_async_complete
+ zincs_vcs_async_gitstatus
  zincs_vcs_async_return
  zincs_vcs_async_started
  zincs_vcs_bg
  zincs_vcs_default_opts
  zincs_vcs_display_hidden
- +vi-git-aheadbehind
- +vi-git-untracked
- +vi-hg-branchhead
- +vi-vcs-detect-changes
 AUTOLOAD vcs_info
 
 ENVIRONMENT VARIABLES
@@ -61,6 +62,48 @@ Has 46 line(s). Calls functions:
 
 Uses feature(s): _autoload_, _zstyle_
 
++vi-git-aheadbehind
+~~~~~~~~~~~~~~~~~~~
+
+Has 8 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-git-untracked
+~~~~~~~~~~~~~~~~~
+
+____
+ ### GIT hook functions
+____
+
+Has 3 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-hg-branchhead
+~~~~~~~~~~~~~~~~~
+
+____
+ ### HG hook functions
+____
+
+Has 15 line(s). Doesn't call other functions.
+
+Uses feature(s): _read_
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-vcs-detect-changes
+~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ ### Generic hook functions
+____
+
+Has 5 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
 zincs_vcs
 ~~~~~~~~~
 
@@ -81,7 +124,7 @@ ____
  # }}}
 ____
 
-Has 27 line(s). Calls functions:
+Has 7 line(s). Calls functions:
 
  zincs_vcs_async
  `-- vcs_info
@@ -100,6 +143,13 @@ ____
 ____
 
 Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
+zincs_vcs_async_gitstatus
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Has 17 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
@@ -141,48 +191,6 @@ zincs_vcs_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 1 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-+vi-git-aheadbehind
-~~~~~~~~~~~~~~~~~~~
-
-Has 8 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-+vi-git-untracked
-~~~~~~~~~~~~~~~~~
-
-____
- ### GIT hook functions
-____
-
-Has 3 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-+vi-hg-branchhead
-~~~~~~~~~~~~~~~~~
-
-____
- ### HG hook functions
-____
-
-Has 15 line(s). Doesn't call other functions.
-
-Uses feature(s): _read_
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
-
-+vi-vcs-detect-changes
-~~~~~~~~~~~~~~~~~~~~~~
-
-____
- ### Generic hook functions
-____
-
-Has 5 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
