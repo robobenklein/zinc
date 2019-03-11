@@ -15,7 +15,6 @@ ZINC is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zs
 - [Why ZINC?](#why-zinc)
 - [Note about Icons and Symbols](#note-about-icons-and-symbols)
 - [Performance](#performance)
-  - [See it for yourself](#see-it-for-yourself)
 - [GitLab vs GitHub](#gitlab-vs-github)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -28,17 +27,15 @@ If you're looking for the individual segment options, look in the `zsdoc` folder
 
 ## Why ZINC?
 
-ZINC compared to P9K is ...
-
- - Configured and structured very differently
-   - ZINC uses ZSH associations for almost all options
+ - ZINC is configured and structured very differently from other themes
+   - ZSH associations (/dictionaries) are used for almost all options
    - There's no central icon or segment registration
    - Segments are free to do as they please
- - A much leaner, smaller (faster) codebase.
- - Easily extensible (works via shell functions and zsh's `fpath`)
- - More customizable (make your own segments with a standard API!)
+ - ZINC is a very small and lean code base that's quick to load.
+ - ZINC is easily extensible (works via shell functions and zsh's `fpath`)
+ - ZINC is completely customizable (make your own segments with a standard API!)
 
-ZINC was built to support mixed async and non-async segments from the ground up. No more blocking calls for Git/HG/SVN information or any other command.
+ZINC was built to support mixed async and non-async segments from the ground up. Git/HG/SVN information is loaded asynchronously, so your prompt is usable near instantly even on slow systems!
 
 Also, async segments are smart:
 
@@ -61,28 +58,45 @@ Since it's supposed to be super easy to modify and make your own segments, we've
  - Prompt segments can be compiled to ZSH word code for better startup time. (Just execute `prompt_zinc_compile`)
  - ZSH builtins and binary modules are used instead of GNU utils / external binaries.
 
-Timing example compared to other shell prompts: (Nov. 2018)
+Performance comparison: (Mar. 2019) using [zsh-prompt-benchmark](https://github.com/romkatv/zsh-prompt-benchmark)
+
+ZINC:
 ```
-# ZINC: Renders both left and right variables:
-( repeat 1000; do; prompt_zinc_render_to_vars > /dev/null; done; )  1.28s user 0.26s system 99% cpu 1.542 total
-
-# P9K 0.6: Functions for left/right
-( repeat 1000; do; build_left_prompt > /dev/null && build_right_prompt > ; ; )  88.42s user 50.85s system 114% cpu 2:01.69 total
-
-# Pure: render in precmd
-( repeat 1000; do; prompt_pure_precmd > /dev/null; done; )  0.43s user 0.12s system 99% cpu 0.555 total
-
+************************************************************
+                Prompt Benchmark Results
+************************************************************
+Warmup prompts (skipped)  5
+Benchmarked prompts       1841
+Total time                5.002s
+Time per prompt           2.7ms
+************************************************************
 ```
-> All tests done with Git information enabled and with the same git repo state.
 
-### See it for yourself
+Powerlevel9K: https://github.com/bhilburn/powerlevel9k
+```
+************************************************************
+                Prompt Benchmark Results
+************************************************************
+Warmup prompts (skipped)  5
+Benchmarked prompts       28
+Total time                5.037s
+Time per prompt           179.9ms
+************************************************************
+```
 
-One of my standard performance requirements for a prompt is that it should be able to render faster than I can input into the shell.
+Pure: https://github.com/sindresorhus/pure
+```
+************************************************************
+                Prompt Benchmark Results
+************************************************************
+Warmup prompts (skipped)  5
+Benchmarked prompts       3130
+Total time                5.001s
+Time per prompt           1.6ms
+************************************************************
+```
 
-This is best demonstrated by holding down 'Enter' and seeing for yourself how your prompt responds. I've made a demo of this for ZINC vs Powerlevel9K:
-
-Powerlevel9K: https://asciinema.org/a/hKf2aUfU8JKI72vY4FS56EHYz  
-ZINC: https://asciinema.org/a/7ZRRsKQEvUPbTo3HAt8Agri6U
+> All tests done with Git information enabled and with the same git repo state on a machine using an nvme SSD.
 
 ## GitLab vs GitHub
 
