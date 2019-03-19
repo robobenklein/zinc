@@ -3,15 +3,14 @@
 # ZINC
 
 # Set zrllink utility.
-if (( ${+commands[readlink]} )); then
+if (( ${+commands[readlink]} )) && [[ "$(uname)" != "Darwin" ]]; then
   function _zinc_zrllink() {
     readlink -f $1
   }
-  if [[ "$(uname)" == "Darwin" ]]; then
-    function _zinc_zrllink() {
-      readlink $1
-    }
-  fi
+elif (( ${+commands[python]} )); then
+  function _zinc_zrllink() {
+    python -c "import os; print(os.path.realpath('$1'))"
+  }
 elif (( ${+commands[perl]} )); then
   function _zinc_zrllink() {
     perl -MCwd -le 'print Cwd::abs_path(shift)' $1
