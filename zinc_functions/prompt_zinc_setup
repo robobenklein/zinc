@@ -106,8 +106,6 @@ function zinc_worker_restart () {
   async_stop_worker zinc_segment_worker
   async_start_worker zinc_segment_worker
   async_register_callback zinc_segment_worker _zinc_segment_async_callback
-  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "--" "-zinc-tracked-autoload"
-  async_worker_eval zinc_segment_worker "zinc_reload"
 }
 
 function zinc_restart () {
