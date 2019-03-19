@@ -82,7 +82,7 @@ typeset -gaU _ZINC_AUTOLOADED_FUNCTIONS
 function zinc_reload () {
   async_flush_jobs zinc_segment_worker
   for autoloaded_function in $_ZINC_AUTOLOADED_FUNCTIONS; do
-    unfunction $autoloaded_function
+    unfunction -- $autoloaded_function
     echo "Reloading ${autoloaded_function}"
     -zinc-tracked-autoload "${autoloaded_function}"
   done

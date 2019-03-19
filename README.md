@@ -3,7 +3,7 @@
 
 Inspired by Powerlevel9K, Agnoster, and friends this is a powerline theme written from scratch in pure ZSH. It supports mixed async segments using zsh-async as a backend.
 
-![ZINC Prompt Screenshot](presets/zinc-zsh-f-git-demo.png)
+![ZINC Prompt Screenshot](presets/p10k-zsh-f-git-demo.png)
 
 ZINC is ZSH software, not just shell scripts. (See https://github.com/zdharma/Zsh-100-Commits-Club )
 

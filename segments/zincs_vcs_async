@@ -15,16 +15,28 @@ zincs_vcs_async() {
   local -a backends=(${(z)zincs_vcs[backends]})
   # if git backend and gitstatus exists:
   # (( ${backends[(I)git]} )) && (( ${+functions[gitstatus_check]} )) &&
-  #   gitstatus_check -t 5
-  (( ! #backends )) || {
+  if (( ${+functions[gitstatus_check]} )) && (( ${backends[(I)git]} )) && gitstatus_check ZINC &&
+    gitstatus_query -t 30 ZINC && [[ $VCS_STATUS_RESULT=ok-sync ]]; then
+    zincs_vcs_async_gitstatus
+  elif (( #backends )); then
     zstyle ':vcs_info:*' enable ${backends}
     vcs_info
     printf '%b' "${VCS_WORKDIR_DIRTY},;;;${vcs_info_msg_0_}"
     return 0
-  }
+  fi
 }
 
+zincs_vcs_async_gitstatus_start_worker () {
+  if (( ${+functions[gitstatus_start]} )); then
+    _ZINC_DBG_OUT starting zinc gitstatus worker
+    # try to start a worker?
+    gitstatus_start ZINC
+  fi
+}
+zincs_vcs_async_gitstatus_start_worker
+
 zincs_vcs_async_gitstatus () {
+  _ZINC_DBG_OUT "vcs using gitstatus"
   # Fast path: use vcs info provided by gitstatus.
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),;;;"
   echo -nE "$VCS_STATUS_LOCAL_BRANCH"
