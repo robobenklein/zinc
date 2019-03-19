@@ -36,14 +36,14 @@
 
 function _zincs_execution_time_preexec () {
   # set the start time point using epoch
-  _ZINC_DBG_OUT "_zincs_execution_time_preexec"
+  # _ZINC_DBG_OUT "_zincs_execution_time_preexec"
   zincs_execution_time[process_started]="1"
   zincs_execution_time[last_execution_time]="0"
   _zincs_execution_time_process_start=$EPOCHREALTIME
 }
 
 function _zincs_execution_time_precmd () {
-  _ZINC_DBG_OUT "_zincs_execution_time_precmd"
+  # _ZINC_DBG_OUT "_zincs_execution_time_precmd"
   (( zincs_execution_time[process_started] )) && {
     REPLY=""
     zincs_execution_time[last_execution_time]="$(( EPOCHREALTIME - _zincs_execution_time_process_start ))"
@@ -67,7 +67,7 @@ function _zincs_execution_time_precmd () {
       TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S' "${REPLY}"
     fi
     zincs_execution_time[formatted_output]="${REPLY} ⧖"
-    _ZINC_DBG_OUT "zincs_execution_time[formatted_output]="${zincs_execution_time[formatted_output]}""
+    # _ZINC_DBG_OUT "zincs_execution_time[formatted_output]="${zincs_execution_time[formatted_output]}""
     zincs_execution_time[process_started]="0"
   }
 }

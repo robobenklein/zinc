@@ -103,7 +103,7 @@ Called by:
 _zincs_execution_time_precmd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Has 24 line(s). Doesn't call other functions.
+Has 22 line(s). Doesn't call other functions.
 
 Uses feature(s): _read_
 
@@ -116,7 +116,7 @@ ____
  # }}}
 ____
 
-Has 4 line(s). Doesn't call other functions.
+Has 3 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
