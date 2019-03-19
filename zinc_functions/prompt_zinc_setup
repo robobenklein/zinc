@@ -83,7 +83,7 @@ function zinc_reload () {
   async_flush_jobs zinc_segment_worker
   for autoloaded_function in $_ZINC_AUTOLOADED_FUNCTIONS; do
     unfunction -- $autoloaded_function
-    echo "Reloading ${autoloaded_function}"
+    [[ "$1" != "-q" ]] && echo "Reloading ${autoloaded_function}"
     -zinc-tracked-autoload "${autoloaded_function}"
   done
   # Self re-init:
@@ -92,15 +92,27 @@ function zinc_reload () {
   builtin autoload -Uz +X prompt_zinc_setup
 }
 
-function zinc_restart () {
-  zinc_reload
+# restarts just the worker - in order to update worker with current shell values
+function zinc_worker_restart () {
+  _ZINC_DBG_OUT restarting worker...
+  async_worker_eval zinc_segment_worker "zinc_reload"
   async_stop_worker zinc_segment_worker
   async_start_worker zinc_segment_worker
   async_register_callback zinc_segment_worker _zinc_segment_async_callback
-  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "-zinc-tracked-autoload"
+  async_worker_eval zinc_segment_worker "autoload" "-Uz" "+X" "--" "-zinc-tracked-autoload"
   async_worker_eval zinc_segment_worker "zinc_reload"
-  prompt_zinc_chpwd
+}
+
+function zinc_restart () {
+  zinc_worker_restart
+  zinc_reload
+  # prompt_zinc_chpwd
   prompt_zinc_precmd
+}
+
+function zinc_restart_silent_background () {
+  zinc_worker_restart
+  zinc_reload -q
 }
 
 prompt_zinc_setup () {

@@ -48,7 +48,7 @@ zincs_vcs_async_gitstatus () {
       [[ "$VCS_STATUS_LOCAL_BRANCH" == "$VCS_STATUS_REMOTE_BRANCH" ]] ||
       echo -nE $'\u2192'"$VCS_STATUS_REMOTE_BRANCH"
     local icons=''
-    (( VCS_STATUS_HAS_STAGED != 1 )) || icons+=$'\u271a'    # ✚
+    (( VCS_STATUS_HAS_STAGED != 1 )) || icons+=$'\u271a '    # ✚ is wide
     (( VCS_STATUS_HAS_UNSTAGED != 1 )) || icons+=$'\u25cf'  # ●
     (( VCS_STATUS_HAS_UNTRACKED != 1 )) || icons+=$'\u25cc' # ◌
     echo -nE "${icons:+ $icons}"
