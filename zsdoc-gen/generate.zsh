@@ -22,13 +22,13 @@ function create_doc_scaffold () {
   zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}" >> $outputfile
   # printf '%b' "\n# ZINC Autodoc added: \n" >> $outputfile
   zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_default_opts" >> ${outputfile}
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_display_hidden" >> ${outputfile}
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_bg" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_fg" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_display_hidden" >> ${outputfile} || true
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_bg" >> $outputfile || true
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_fg" >> $outputfile || true
   # if async
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_return" >> $outputfile
-  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_started" >> $outputfile
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async" >> $outputfile || true
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_return" >> $outputfile || true
+  zsh_cat_file "${pzsd_segment_sources}/zincs_${segment}_async_started" >> $outputfile || true
 }
 
 mkdir -p "${pzsd_outputfolder}/segments"
@@ -39,7 +39,6 @@ segments=(
   cwd
   cwd_writable
   execution_time
-  gitstatus
   host
   jobs
   retval
