@@ -12,8 +12,10 @@ function zincs_vcs () {
   REPLY="${zincs_vcs[_info_msg_0_]}"
 }
 
-typeset -gA zincs_vcs
-zincs_vcs[_info_msg_0_]="<async:vcs>"
-zincs_vcs[status]="loading"
+[[ "${(t)zincs_vcs}" != "association" ]] && {
+  typeset -gA zincs_vcs
+}
+zincs_vcs[_info_msg_0_]=${zincs_vcs[_info_msg_0_]:-"<async:vcs>"}
+zincs_vcs[status]=${zincs_vcs[status]:-"loading"}
 
 zincs_vcs "$@"

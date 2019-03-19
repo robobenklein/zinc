@@ -4,7 +4,7 @@
 function -zinc-tracked-autoload () {
   for afunc in ${@}; do
     (( ${+functions[${afunc}]} )) || {
-      builtin autoload -Uz +X -- $afunc || {
+      builtin autoload -Uz -- $afunc || {
         printf '%b\n' "\033[0;31mZINC: Could not find/load ${afunc}!\033[0;0m" >&2
       }
       _ZINC_AUTOLOADED_FUNCTIONS+=("$afunc")

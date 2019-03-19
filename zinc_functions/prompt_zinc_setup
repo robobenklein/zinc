@@ -9,6 +9,8 @@ autoload -Uz async && async
 _ZINC_DBG_OUT () {;}
 
 typeset -gHA _ZINC_ASYNC_STATII
+typeset -gHi _ZINC_SHOULD_RESTART
+_ZINC_SHOULD_RESTART=0
 
 function _zinc_segment_async_callback () {
   # Async args:
@@ -19,12 +21,13 @@ function _zinc_segment_async_callback () {
   # $5 resulting (stderr) error output from job execution
   # $6 has next result in buffer (0 = buffer empty, 1 = yes)
 
-  # _ZINC_DBG_OUT "_zinc_segment_async_callback \"$1\" RET:$2"
+  _ZINC_DBG_OUT "_zinc_segment_async_callback \"$1\" RET:$2"
 
   # ignore the async evals used to alter worker environment
-  if [[ "${1}" == "[async/eval]" ]] || \
-     [[ "${1}" == ";" ]] || \
-     [[ "${1}" == "[async]" ]];
+  # if [[ "${1}" == "[async/eval]" ]] || \
+  #    [[ "${1}" == ";" ]] || \
+  #    [[ "${1}" == "[async]" ]];
+  if [[ "${1[1]}" != [A-Za-z0-9_] ]];
   then
     # _ZINC_DBG_OUT "async eval: ${(j. !! .)@}"
     return
@@ -44,7 +47,7 @@ function _zinc_segment_async_callback () {
   # _ZINC_DBG_OUT "_zinc_segment_async_callback!!! ${(j.\n.)@}"
   _ZINC_ASYNC_STATII[${1}]="returned"
   "${1}_return" "$2" "$3" "$4" "$5"
-  # _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
+  _ZINC_DBG_OUT "_ZINC_ASYNC_STATII now: ${(kv)_ZINC_ASYNC_STATII}"
 
   # TODO investigate reliability of $6
   # [[ "$6" == "0" ]] && prompt_zinc_render_to_vars && zle .reset-prompt
@@ -66,6 +69,10 @@ function _zinc_segment_async_callback () {
   (( async_complete )) && {
     _ZINC_DBG_OUT "running async_complete hook"
     -zinc-run-hook _zinc_async_complete
+    if [[ "${_ZINC_SHOULD_RESTART}" == "1" ]]; then
+      _ZINC_SHOULD_RESTART=0
+      zinc_restart_silent_background
+    fi
   }
 }
 
@@ -94,8 +101,8 @@ function zinc_reload () {
 
 # restarts just the worker - in order to update worker with current shell values
 function zinc_worker_restart () {
-  _ZINC_DBG_OUT restarting worker...
-  async_worker_eval zinc_segment_worker "zinc_reload"
+  # _ZINC_DBG_OUT "restarting worker..."
+  # async_worker_eval zinc_segment_worker "zinc_reload"
   async_stop_worker zinc_segment_worker
   async_start_worker zinc_segment_worker
   async_register_callback zinc_segment_worker _zinc_segment_async_callback
@@ -107,12 +114,20 @@ function zinc_restart () {
   zinc_worker_restart
   zinc_reload
   # prompt_zinc_chpwd
-  prompt_zinc_precmd
+  # prompt_zinc_precmd
 }
 
 function zinc_restart_silent_background () {
   zinc_worker_restart
   zinc_reload -q
+  prompt_zinc_precmd
+}
+
+# wait until it's convenient for us to restart the worker
+function zinc_optional_depenency_loaded () {
+  # _ZINC_DBG_OUT "queued restart..."
+  _ZINC_SHOULD_RESTART=1
+  # prompt_zinc_precmd
 }
 
 prompt_zinc_setup () {

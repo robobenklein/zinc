@@ -11,6 +11,7 @@ zincs_vcs_async_return ()
   local -a tmp
   tmp=("${(s.;;;.)2}")
   zincs_vcs[_info_msg_0_]="${tmp[2]}"
+  zincs_vcs[_debug_backend_response]="${tmp[1]}"
   tmp=("${(s.,.)tmp}")
   (( ${tmp[1]} )) && zincs_vcs[status]="dirty" || zincs_vcs[status]="returned"
 }

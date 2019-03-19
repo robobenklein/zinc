@@ -36,6 +36,7 @@ function zinc_selfdestruct_setup () {
 
   # remove self from precmd
   precmd_functions=("${(@)precmd_functions:#zinc_selfdestruct_setup}")
+  builtin unfunction zinc_selfdestruct_setup
 
   autoload -Uz +X prompt_zinc_setup async
   autoload -Uz +X promptinit 2>&1 >/dev/null && {
