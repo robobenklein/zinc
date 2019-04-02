@@ -115,7 +115,13 @@ zincs_vcs_async_gitstatus () {
   # _ZINC_DBG_OUT "vcs using gitstatus vars: $VCS_STATUS_ALL"
   # Fast path: use vcs info provided by gitstatus.
   echo -nE "$((VCS_STATUS_HAS_STAGED || VCS_STATUS_HAS_UNSTAGED)),gitstatus;;;"
-  echo -nE "$VCS_STATUS_LOCAL_BRANCH"
+  [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]] && {
+    echo -nE "$VCS_STATUS_LOCAL_BRANCH"
+  } || [[ -n "$VCS_STATUS_TAG" ]] && {
+    echo -nE ""
+  } || {
+    echo -nE "$(git rev-parse --short HEAD)"
+  }
   [[ -n "$VCS_STATUS_ACTION" ]] && {
     echo -nE "%F{${red}}| $VCS_STATUS_ACTION%f"
   } || {

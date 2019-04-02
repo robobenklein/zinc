@@ -73,9 +73,6 @@ ____
 FUNCTIONS
 ---------
 
- zincs_cwd
- _zincs_cwd_chpwd
- zincs_cwd_default_opts
  _zincs_cwd_strat_rtab
 
 ENVIRONMENT VARIABLES
@@ -94,48 +91,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 9 line(s). Calls functions:
-
- Script-Body
- `-- zincs_cwd
-     `-- _zincs_cwd_chpwd
-         `-- _zincs_cwd_strat_rtab
-
-zincs_cwd
-~~~~~~~~~
-
-Has 10 line(s). Calls functions:
-
- zincs_cwd
- `-- _zincs_cwd_chpwd
-     `-- _zincs_cwd_strat_rtab
-
-Called by:
-
- Script-Body
-
-_zincs_cwd_chpwd
-~~~~~~~~~~~~~~~~
-
-____
- # Re-renders the segment output on the chpwd hook.
-____
-
-Has 10 line(s). Calls functions:
-
- _zincs_cwd_chpwd
- `-- _zincs_cwd_strat_rtab
-
-Called by:
-
- zincs_cwd
-
-zincs_cwd_default_opts
-~~~~~~~~~~~~~~~~~~~~~~
-
-Has 1 line(s). Doesn't call other functions.
-
-Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+Has 5 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
 
 _zincs_cwd_strat_rtab
 ~~~~~~~~~~~~~~~~~~~~~
@@ -154,11 +110,9 @@ ____
  ## Also the script is now a ZSH function instead of an executable shebang file.
 ____
 
-Has 93 line(s). Doesn't call other functions.
+Has 171 line(s). Doesn't call other functions.
 
 Uses feature(s): _zstyle_
 
-Called by:
-
- _zincs_cwd_chpwd
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 

@@ -153,7 +153,7 @@ Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 zincs_vcs_async_gitstatus
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Has 17 line(s). Doesn't call other functions.
+Has 23 line(s). Doesn't call other functions.
 
 Called by:
 

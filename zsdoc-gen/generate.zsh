@@ -46,6 +46,7 @@ segments=(
   user
   userhost
   vcs
+  virtualenv
 )
 
 for segment in ${segments}; do
