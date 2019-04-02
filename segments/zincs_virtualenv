@@ -1,0 +1,13 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+# synopsis {{{
+# Show the VIRTUAL_ENV environment variable trimmed to the last path item.
+# }}}
+
+# don't let venv change ps1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+zincs_virtualenv ()
+{
+  REPLY="${VIRTUAL_ENV:t}"
+}
