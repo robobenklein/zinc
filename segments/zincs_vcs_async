@@ -76,7 +76,7 @@ zstyle ':vcs_info:svn*:*' actionformats '%c%u %F{red}| %a%f'
 zstyle ':vcs_info:*' actionformats '%b %F{red}| %a%f'
 zstyle ':vcs_info:hg*:*' branchformat '%b'
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:svn*:*' formats %c%u
+# zstyle ':vcs_info:svn*:*' formats %c%u # causing blank status
 zstyle ':vcs_info:*' formats %b%c%u%m
 zstyle ':vcs_info:hg*:*' get-bookmarks true
 zstyle ':vcs_info:hg*:*' get-revision true
@@ -150,6 +150,25 @@ function +vi-hg-branchhead() {
     if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
       hook_com[revision]="^ ${hook_com[revision]}"
     fi
+  fi
+}
+
+# SVN hook functions
+
+function +vi-svn-detect-changes() {
+  declare -a svn_status
+  svn_status=( "${(@f)$(svn status)}" )
+  if [[ "${(M)#svn_status:#\?*}" -gt 0 ]]; then
+    hook_com[unstaged]+=$' \u25cc' # '◌'
+    VCS_WORKDIR_HALF_DIRTY=1
+  fi
+  if [[ "${(M)#svn_status:#M*}" -gt 0 ]]; then
+    hook_com[unstaged]+=$' \u25cf'
+    VCS_WORKDIR_DIRTY=1
+  fi
+  if [[ "${(M)#svn_status:#A*}" -gt 0 ]]; then
+    hook_com[staged]+=$' \u271a'
+    VCS_WORKDIR_DIRTY=1
   fi
 }
 
