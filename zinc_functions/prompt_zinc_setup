@@ -132,7 +132,7 @@ prompt_zinc_setup () {
   prompt_opts=( cr percent sp subst )
   setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
-  builtin autoload -Uz -- -zinc-tracked-autoload add-zsh-hook
+  builtin autoload -Uz +X -- -zinc-tracked-autoload add-zsh-hook
   -zinc-tracked-autoload zinc_render_prompt_from_spec prompt_zinc_render_to_vars
   -zinc-tracked-autoload -zinc-define-hook -zinc-add-hook -zinc-run-hook
 
@@ -149,6 +149,15 @@ prompt_zinc_setup () {
     _ZINC_DBG_OUT () {
       # ' >/tmp/_ZINC_DBG_OUT.log 2>&1'
       echo -e "$@" >> ~/._ZINC_DBG_OUT.log
+    }
+  fi
+
+  if [[ "$1" == "testing" ]]; then
+    echo "ZINC TESTING in $ZINC_INSTALL_DIR"
+    echo > $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
+    # enable logging
+    _ZINC_DBG_OUT () {
+      echo -e "$@" >> $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
     }
   fi
 
@@ -193,6 +202,11 @@ prompt_zinc_setup () {
   for segment in ${zinc_left} ${zinc_right}; do
     -zinc-tracked-autoload ${segment}
   done
+
+  if [[ "$1" == "testing" ]]; then
+    prompt_zinc_chpwd
+    prompt_zinc_precmd
+  fi
 }
 
 prompt_zinc_preview () {
