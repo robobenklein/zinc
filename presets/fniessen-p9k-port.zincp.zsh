@@ -23,6 +23,7 @@ zinc_opts=(
   zincs_user "white;black;CONDITIONAL;normal"
   zincs_host "white;black;CONNECT_PREV+CONDITIONAL;normal"
   zincs_userhost "white;black;CONDITIONAL;normal"
+  my_custom_time "black;white;normal;normal"
 )
 
 # autohide the user when it's default
