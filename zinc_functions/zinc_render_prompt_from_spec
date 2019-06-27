@@ -26,7 +26,7 @@ function zinc_render_prompt_from_spec () {
   # $4: Chars to use as segment separator.
 
   [[ "${(P)#1}" == "0" ]] && _ZINC_DBG_OUT 'ERR: no segments' && return
-  # _ZINC_DBG_OUT "${(P)#1} segments to render"
+  _ZINC_DBG_OUT "${(P)#1} segments to render"
 
   local _ZINC_SBUF=""
 
@@ -49,7 +49,7 @@ function zinc_render_prompt_from_spec () {
 
     # Get segment options, fill needed defaults
     segment_optstr="${_zinc_opts[$cur_segment]}"
-    # _ZINC_DBG_OUT "$cur_segment segment_optstr: ${segment_optstr}"
+    _ZINC_DBG_OUT "$cur_segment segment_optstr: ${segment_optstr}"
     segment_opts=("${(@s.;.)segment_optstr}")
     # _ZINC_DBG_OUT "$cur_segment opts before default application: type(${(t)segment_opts}) ${segment_opts}"
     local segment_opts_default_filled=0

@@ -1,9 +1,12 @@
 #!/usr/bin/env zunit
 
-@test 'ZINC VCS' {
+@setup {
   zinc_left=( zincs_vcs )
 
-  load ../zinc.zsh
+  prompt_zinc_setup testing
+}
 
-  run prompt_zinc_setup testing
+@test 'VCS segment is present' {
+  run echo "$zinc_left"
+  assert "zincs_vcs" in "${(@)zinc_left}"
 }

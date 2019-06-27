@@ -203,10 +203,6 @@ prompt_zinc_setup () {
     -zinc-tracked-autoload ${segment}
   done
 
-  if [[ "$1" == "testing" ]]; then
-    prompt_zinc_chpwd
-    prompt_zinc_precmd
-  fi
 }
 
 prompt_zinc_preview () {
