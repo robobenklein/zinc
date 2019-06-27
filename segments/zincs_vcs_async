@@ -8,7 +8,7 @@ autoload -Uz vcs_info
 
 # env-vars {{{
 # zincs_vcs[backends] -> space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
-zincs_vcs[backends]=${zincs_vcs[backends]:-"git svn hg"}
+zincs_vcs[backends]=${zincs_vcs[backends]:-"bzr cdv cvs darcs fossil git hg mtn p4 svk svn tla"}
 # }}}
 
 zincs_vcs_async() {
@@ -110,7 +110,7 @@ function +vi-git-untracked(){
     # If instead you want to show the marker only if there are untracked
     # files in $PWD, use:
     #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-    hook_com[unstaged]+=$'\u25cc' # '◌'
+    hook_com[unstaged]+=$' \u25cc' # '◌'
   fi
 }
 
