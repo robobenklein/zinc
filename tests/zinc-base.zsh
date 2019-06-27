@@ -4,6 +4,9 @@
   zinc_left=( zincs_userhost )
 
   prompt_zinc_setup
+  echo $zinc_left
+  this is something that gets ignored by zunit but shouldnt!
+  literally anything past that prompt_zinc_setup gets ignored
 }
 
 @test 'Detect install location' {
