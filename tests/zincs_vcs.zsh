@@ -3,7 +3,7 @@
 @setup {
   zinc_left=( zincs_vcs )
 
-  prompt_zinc_setup testing
+  prompt_zinc_setup
 }
 
 @test 'VCS segment is present' {

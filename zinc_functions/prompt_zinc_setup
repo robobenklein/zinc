@@ -152,15 +152,6 @@ prompt_zinc_setup () {
     }
   fi
 
-  if [[ "$1" == "testing" ]]; then
-    echo "ZINC TESTING in $ZINC_INSTALL_DIR"
-    echo > $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
-    # enable logging
-    _ZINC_DBG_OUT () {
-      echo -e "$@" >> $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
-    }
-  fi
-
   # load a preset by name
   if [[ "$1" != "" ]]; then
     if [[ -r "${_ZINC_0[repo]}/presets/${1}.zincp.zsh" ]]; then

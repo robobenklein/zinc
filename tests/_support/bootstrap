@@ -1,3 +1,10 @@
 #!/usr/bin/env zsh
 
 source zinc.zsh
+
+echo > $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
+
+# enable logging
+_ZINC_DBG_OUT () {
+  echo -e "$@" >> $ZINC_INSTALL_DIR/_ZINC_TEST_OUTPUT.log
+}
