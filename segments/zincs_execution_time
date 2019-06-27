@@ -24,6 +24,7 @@
 # )
 # # OR if you've already set zinc_opts:
 # zinc_opts[zincs_execution_time]=';;;;10'
+# # then do zinc setup
 # ```
 #
 # Note:

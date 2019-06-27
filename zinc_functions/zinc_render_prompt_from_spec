@@ -16,6 +16,21 @@ if (( ! ${+_ZINC_SEP_CHARS[rprompt_terminating_space]} )); then
   fi
 fi
 
+function _zinc_str_has_substr () {
+  # $1: a string to look for the flag in
+  # $2: the flag to look for
+  # return: true/false return value
+
+  # _ZINC_DBG_OUT "is $2 in \"$1\" ?"
+  if [[ "$1" =~ .*${2}.* ]]; then
+    # _ZINC_DBG_OUT yes
+    true
+  else
+    # _ZINC_DBG_OUT no
+    false
+  fi
+}
+
 function zinc_render_prompt_from_spec () {
   _ZINC_DBG_OUT "\n>>> build_prompt: $1 $2"
   # Builds the prompt with the given name.
@@ -100,12 +115,18 @@ function zinc_render_prompt_from_spec () {
     local segment_output="$REPLY"
 
     # Detect segments with conditional display
-    if [[ "${segment_opts[3]}" == "CONDITIONAL" ]]; then
+    if _zinc_str_has_substr "${segment_opts[3]}" "CONDITIONAL"; then
       -zinc-tracked-autoload "${cur_segment}_display_hidden"
       ${cur_segment}_display_hidden && {
-        # _ZINC_DBG_OUT "not displaying ${cur_segment}"
+        _ZINC_DBG_OUT "not displaying ${cur_segment}"
         continue
       }
+    fi
+
+    # if ZINC should not render the content
+    if _zinc_str_has_substr "${segment_opts[3]}" "ZINC_SEGMENT_NONRENDERABLE"; then
+      _ZINC_SBUF+="${segment_output}"
+      continue
     fi
 
     # Detect segments with conditional colors
@@ -125,12 +146,8 @@ function zinc_render_prompt_from_spec () {
     _ZINC_DBG_OUT "prev_segment_opts: ${prev_segment_opts}, current: ${segment_opts}"
 
     # Detect segment connection
-    if [[ ${segment_opts[3]} == "ZINC_SEGMENT_NONRENDERABLE" ]]; then
-      _ZINC_SBUF+="${segment_output}"
-      continue
-    fi
 
-    if [[ ${prev_segment_opts[3]} == "NOCONNECT" ]] || [[ ${segment_opts[3]} == "CONNECT_PREV" ]]; then
+    if _zinc_str_has_substr "${prev_segment_opts[3]}" "NOCONNECT" || _zinc_str_has_substr "${segment_opts[3]}" "CONNECT_PREV"; then
       # skip drawing the arrow
       _ZINC_SBUF+="%{%K{${segment_opts[2]}}%} "
     elif [[ "${prev_segment_opts[2]}" == "${segment_opts[2]}" ]]; then
@@ -159,14 +176,15 @@ function zinc_render_prompt_from_spec () {
   # finish the prompt line:
   # the `%{ %}` is an invis wrapper
   if [[ "$3" == "left" ]]; then
-    [[ "${segment_opts[3]}" != "ENDLINE" ]] && {
+    if ! _zinc_str_has_substr "${segment_opts[3]}" "ENDLINE"; then
+      # if does not have flag ENDLINE
       _ZINC_SBUF+=' %{%k%F{'${prev_segment_opts[2]}'}%}'${_ZINC_SEP_CHARS[${3}]}'%f '
-    }
+    fi
   else # right prompt
-    if [[ "${segment_opts[3]}" != "ZINC_SEGMENT_NONRENDERABLE" ]]; then
-      _ZINC_SBUF+="${_ZINC_SEP_CHARS[rprompt_terminating_space]}"
+    if _zinc_str_has_substr "${segment_opts[3]}" "ZINC_SEGMENT_NONRENDERABLE"; then
+      _ZINC_DBG_OUT "Not applying rprompt_terminating_space because last segment $cur_segment is NONRENDERABLE"
     else
-      _ZINC_DBG_OUT "Not applying rprompt_terminating_space because last segment is NONRENDERABLE"
+      _ZINC_SBUF+="${_ZINC_SEP_CHARS[rprompt_terminating_space]}"
     fi
   fi
 
