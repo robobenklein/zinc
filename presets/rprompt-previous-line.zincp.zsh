@@ -1,4 +1,5 @@
 
+# Segment functions:
 function zc_begin () {
   REPLY="%{" # invis chars
   # REPLY+=$'\033[s' # save curpos
@@ -6,17 +7,14 @@ function zc_begin () {
   # REPLY+=$'\033[1C' # fwd over segment join space
   REPLY+="%}"
 }
-
 function zc_end () {
   REPLY=""
   REPLY+="${_ZINC_SEP_CHARS[rprompt_terminating_space]}"
   REPLY+="%{" # invis chars
-  # REPLY+=$'\033[1D' # backspace over segment join space
   REPLY+=$'\033[1B' # down 1L
   # REPLY+=$'\033[u' # restore curpos
   REPLY+="%}"
 }
-
 function a_newline () {
   REPLY=$'\n'
 }
@@ -32,10 +30,10 @@ zinc_right=(
   zc_end
 )
 
+# make a blank line that we can safely draw the RPROMPT into
 function _zc_newline () {
   echo ""
 }
-
 -zinc-add-hook _zinc_precmd _zc_newline
 
 zinc_opts=(
