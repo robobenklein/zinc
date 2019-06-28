@@ -1,6 +1,6 @@
 
-zinc_default_user="robo"
-zinc_default_host="robo-unseptium"
+zinc_default_user="${zinc_default_user:-robo}"
+zinc_default_host="${zinc_default_host:-robo-unseptium}"
 
 # either user and host separate with CONNECT_PREV
 # or zincs_userhost
@@ -42,8 +42,9 @@ function zincs_userhost_display_hidden () {
 # set the time format option:
 # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
 function my_custom_time () {
-  REPLY="%T"
+  REPLY="%D{%H:%M}"
 }
 
 # set the zincs_execution_time min time:
+typeset -gA zincs_execution_time
 zincs_execution_time[threshold]=10
