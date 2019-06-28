@@ -154,11 +154,11 @@ function _zincs_cwd_strat_rtab () {
     unfunction chpwd 2> /dev/null
     unset chpwd_functions 2>/dev/null
     if [[ $tree[1] == \~* ]] {
-      cd ${~tree[1]}
+      builtin cd ${~tree[1]}
       result=$tree[1]
       shift tree
     } else {
-      cd /
+      builtin cd /
     }
     for dir in $tree; {
       if (( lastfull && $#tree == 1 )) {
@@ -175,7 +175,7 @@ function _zincs_cwd_strat_rtab () {
         (( short )) && break
       done
       result+="/$part"
-      cd $dir
+      builtin cd $dir
       shift tree
     }
     echo ${result:-/}
