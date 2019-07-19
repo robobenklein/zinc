@@ -94,7 +94,7 @@ function -zinc-add-hook () {
 
 }
 
--hooks-define-zle-hook(){
+-zinc-hooks-define-zle-hook(){
     local hname
     hname="${1//-/_}"  # substitute all `-` with `_`
     eval "
@@ -108,16 +108,19 @@ function -zinc-add-hook () {
         "
 }
 
--hooks-define-zle-hook zle-isearch-exit
--hooks-define-zle-hook zle-isearch-update
--hooks-define-zle-hook zle-line-init
--hooks-define-zle-hook zle-line-finish
+# https://gitlab.com/robobenklein/zinc/issues/10
+# only should defined in segments that require the hook
+# -zinc-hooks-define-zle-hook zle-keymap-select
+# -zinc-hooks-define-zle-hook zle-line-init
+# -zinc-hooks-define-zle-hook zle-line-finish
+# -zinc-hooks-define-zle-hook zle-isearch-exit
+# -zinc-hooks-define-zle-hook zle-isearch-update
+
 # this one causes a double-free error for zaw using the ag source
 # because it does some funny stuff with the history.  Anyway,
 # since as far as I know nobody uses or wants to use this hook,
 # I'll comment it out until such a time as this issue is fixed...
-#-hooks-define-zle-hook zle-history-line-set
--hooks-define-zle-hook zle-keymap-select
+# -zinc-hooks-define-zle-hook zle-history-line-set
 
 # load the official hooks as well
 autoload -Uz add-zsh-hook
