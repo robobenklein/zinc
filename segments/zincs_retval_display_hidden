@@ -22,7 +22,7 @@ function _zincs_retval_preexec () {
 
 # env-vars {{{
 # zincs_retval[clear_on_redraw] -> 1 | 0 (true/false, default false) don't show the segment on prompt draws not after a command
-if [[ "${zincs_retval[clear_on_redraw]}" == "" ]]; then
+if (( ${+zincs_retval[clear_on_redraw]} )); then
   zincs_retval[clear_on_redraw]="0"
 fi
 # }}}
