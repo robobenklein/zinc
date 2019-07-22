@@ -13,3 +13,9 @@ zincs_cwd[add_hyperlink]=1
 zinc_opts=(
   zincs_cwd ';;;;rtab;-t;-l'
 )
+
+typeset -gA zincs_execution_time
+zincs_execution_time[clear_on_redraw]=1
+
+typeset -gA zincs_retval
+zincs_retval[clear_on_redraw]=1
