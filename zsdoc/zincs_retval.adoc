@@ -27,7 +27,7 @@ ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|zincs_retval[clear_on_redraw]|1 | 0 (true/false, default false) don't show the segment on prompt draws not after a command
+|zincs_retval[clear_on_redraw]|1 or 0 (true/false, default false) don't show the segment on prompt draws not after a command
 |======
 
 DETAILS

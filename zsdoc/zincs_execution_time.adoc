@@ -58,7 +58,7 @@ ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
-|zincs_execution_time[clear_on_redraw]|1 | 0 (true/false, default is false) clear the result after the async tasks are done
+|zincs_execution_time[clear_on_redraw]|1 or 0 (true/false, default is false) clear the result after the async tasks are done
 |zincs_execution_time[threshold]|minimum seconds of runtime to display segment
 |======
 
