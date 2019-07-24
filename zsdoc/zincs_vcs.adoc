@@ -20,6 +20,7 @@ FUNCTIONS
  +vi-git-aheadbehind
  +vi-git-untracked
  +vi-hg-branchhead
+ +vi-svn-detect-changes
  +vi-vcs-detect-changes
  zincs_vcs
  zincs_vcs_async
@@ -51,7 +52,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 49 line(s). Calls functions:
+Has 48 line(s). Calls functions:
 
  Script-Body
  |-- zincs_vcs
@@ -93,6 +94,17 @@ ____
 Has 15 line(s). Doesn't call other functions.
 
 Uses feature(s): _read_
+
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
+
++vi-svn-detect-changes
+~~~~~~~~~~~~~~~~~~~~~~
+
+____
+ # SVN hook functions
+____
+
+Has 14 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
