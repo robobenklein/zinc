@@ -23,13 +23,20 @@ FUNCTIONS
  zincs_retval_fg
  _zincs_retval_preexec
 
+ENVIRONMENT VARIABLES
+---------------------
+[width="80%",cols="4,10"]
+|======
+|zincs_retval[clear_on_redraw]|1 or 0 (true/false, default false) don't show the segment on prompt draws not after a command
+|======
+
 DETAILS
 -------
 
 Script Body
 ~~~~~~~~~~~
 
-Has 12 line(s). Calls functions:
+Has 15 line(s). Calls functions:
 
  Script-Body
  |-- zincs_retval
@@ -51,7 +58,7 @@ Called by:
 _zincs_retval_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Has 1 line(s). Doesn't call other functions.
+Has 4 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
@@ -72,7 +79,7 @@ Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 zincs_retval_display_hidden
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Has 1 line(s). Doesn't call other functions.
+Has 2 line(s). Doesn't call other functions.
 
 Called by:
 
@@ -88,7 +95,7 @@ Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 _zincs_retval_preexec
 ~~~~~~~~~~~~~~~~~~~~~
 
-Has 1 line(s). Doesn't call other functions.
+Has 3 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 

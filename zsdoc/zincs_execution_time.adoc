@@ -38,6 +38,10 @@ zinc_opts[zincs_execution_time]=';;;;10'
 Note:
 > `$5` is used at load-time while `zincs_execution_time[threshold]` is used during runtime.
 
+If you don't want the execution time to stick around after creating a newline
+(ex. pressing enter without a command)
+then you can use the clear_on_redraw segment config variable as shown below.
+
 
 
 FUNCTIONS
@@ -54,6 +58,7 @@ ENVIRONMENT VARIABLES
 ---------------------
 [width="80%",cols="4,10"]
 |======
+|zincs_execution_time[clear_on_redraw]|1 or 0 (true/false, default is false) clear the result after the async tasks are done
 |zincs_execution_time[threshold]|minimum seconds of runtime to display segment
 |======
 
@@ -63,7 +68,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 23 line(s). Calls functions:
+Has 26 line(s). Calls functions:
 
  Script-Body
  |-- zincs_execution_time
@@ -81,7 +86,7 @@ Called by:
 _zincs_execution_time_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Has 2 line(s). Doesn't call other functions.
+Has 4 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
@@ -114,10 +119,44 @@ _zincs_execution_time_preexec
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ____
+ # synopsis {{{
+ # Execution time of last command
+ #
+ # ## Options:
+ # - `$1`: FG
+ # - `$2`: BG
+ # - `$3`: Display Mode: see latter section.
+ # - `$4`: Only async mode `notify_complete` is supported.
+ # - `$5`: Optional minimum time for `CONDITIONAL` display mode.
+ #
+ # ### Display Mode
+ #
+ # This segment supports the `CONDITIONAL` display mode. (This is the default display mode.)
+ #
+ # The condition here is whether or not the execution time of the last command was greater than `zincs_execution_time[threshold]`, if `true` then the segment will be shown.
+ #
+ # You can also pass the threshold value as segment option 5, ex:
+ #
+ # ```shell
+ # zinc_opts=(
+ #   zincs_execution_time ';;;;10' # 10 seconds
+ # )
+ # # OR if you've already set zinc_opts:
+ # zinc_opts[zincs_execution_time]=';;;;10'
+ # # then do zinc setup
+ # ```
+ #
+ # Note:
+ # > `$5` is used at load-time while `zincs_execution_time[threshold]` is used during runtime.
+ #
+ # If you don't want the execution time to stick around after creating a newline
+ # (ex. pressing enter without a command)
+ # then you can use the clear_on_redraw segment config variable as shown below.
+ #
  # }}}
 ____
 
-Has 3 line(s). Doesn't call other functions.
+Has 4 line(s). Doesn't call other functions.
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 

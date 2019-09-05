@@ -1,7 +1,10 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
+typeset -g _ZINC_RETVAL_STORE
+
 function prompt_zinc_precmd () {
   _ZINC_RETVAL_STORE=$?
+  _ZINC_DBG_OUT "!!!!!! $?"
   _ZINC_RETVAL_STOREs=( "$pipestatus[@]" )
 
   async_worker_eval zinc_segment_worker 'cd' "$PWD"
@@ -10,6 +13,8 @@ function prompt_zinc_precmd () {
 
   prompt_zinc_render_to_vars
 }
+
+_ZINC_RETVAL_STORE=0
 
 -zinc-define-hook _zinc_precmd
 

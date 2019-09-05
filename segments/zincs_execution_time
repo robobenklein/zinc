@@ -29,7 +29,11 @@
 #
 # Note:
 # > `$5` is used at load-time while `zincs_execution_time[threshold]` is used during runtime.
-
+#
+# If you don't want the execution time to stick around after creating a newline
+# (ex. pressing enter without a command)
+# then you can use the clear_on_redraw segment config variable as shown below.
+#
 # }}}
 
 function _zincs_execution_time_preexec () {
@@ -37,6 +41,7 @@ function _zincs_execution_time_preexec () {
   # _ZINC_DBG_OUT "_zincs_execution_time_preexec"
   zincs_execution_time[process_started]="1"
   zincs_execution_time[last_execution_time]="0"
+  zincs_execution_time[formatted_output]=""
   _zincs_execution_time_process_start=$EPOCHREALTIME
 }
 
@@ -72,8 +77,10 @@ function _zincs_execution_time_precmd () {
 
 function _zincs_execution_time_async_complete () {
   # _ZINC_DBG_OUT "pexectime async done..."
-  zincs_execution_time[last_execution_time]=0
-  zincs_execution_time[formatted_output]=""
+  if (( ${zincs_execution_time[clear_on_redraw]} )); then
+    zincs_execution_time[last_execution_time]=0
+    zincs_execution_time[formatted_output]=""
+  fi
 }
 
 function zincs_execution_time () {
@@ -92,9 +99,13 @@ zincs_execution_time[process_started]=0
 
 # env-vars {{{
 # zincs_execution_time[threshold] -> minimum seconds of runtime to display segment
-if [[ "${zincs_execution_time[threshold]}" == "" ]]; then
+if ! (( ${+zincs_execution_time[threshold]} )); then
   [[ "$5" != "" ]] && zincs_execution_time[threshold]="$5" \
   || zincs_execution_time[threshold]="1"
+fi
+# zincs_execution_time[clear_on_redraw] -> 1 or 0 (true/false, default is false) clear the result after the async tasks are done
+if ! (( ${+zincs_execution_time[clear_on_redraw]} )); then
+  zincs_execution_time[clear_on_redraw]="0"
 fi
 # }}}
 

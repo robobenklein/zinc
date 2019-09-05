@@ -4,9 +4,10 @@
 # Return value of the last command.
 # }}}
 
+typeset -gA zincs_retval
+
 # check if signal is >127, then replace with the signal name
-zincs_retval ()
-{
+zincs_retval () {
   if (( _ZINC_RETVAL_STORE == 0 )); then
     REPLY='✔'
   elif (( _ZINC_RETVAL_STORE <= 128 )); then
@@ -16,7 +17,5 @@ zincs_retval ()
   fi
   # printf '%b' ",args:(${(j.,.)@})"
 }
-
-typeset -gA zincs_retval
 
 zincs_retval "$@"

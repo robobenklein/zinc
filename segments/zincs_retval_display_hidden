@@ -1,18 +1,31 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-function _zincs_retval_preexec () {
-  zincs_retval[ac]=0
+typeset -gA zincs_retval
+
+function zincs_retval_display_hidden () {
+  _ZINC_DBG_OUT "retval hidden is ${zincs_retval[hidden]}"
+  (( ${zincs_retval[hidden]} ))
 }
 
 function _zincs_retval_async_complete () {
   zincs_retval[ac]=1
+  if (( ${zincs_retval[clear_on_redraw]} )); then
+    zincs_retval[hidden]=1
+  fi
 }
 
-function zincs_retval_display_hidden () {
-  (( zincs_retval[ac] )) && true || false
+function _zincs_retval_preexec () {
+  _ZINC_DBG_OUT "retval set hidden to zero"
+  zincs_retval[ac]=0
+  zincs_retval[hidden]=0
 }
 
-zincs_retval[ac]=1
+# env-vars {{{
+# zincs_retval[clear_on_redraw] -> 1 or 0 (true/false, default false) don't show the segment on prompt draws not after a command
+if ! (( ${+zincs_retval[clear_on_redraw]} )); then
+  zincs_retval[clear_on_redraw]=0
+fi
+# }}}
 
 -zinc-add-hook _zinc_preexec _zincs_retval_preexec
 -zinc-add-hook _zinc_async_complete _zincs_retval_async_complete
