@@ -156,7 +156,7 @@ ____
 
 Has 93 line(s). Doesn't call other functions.
 
-Uses feature(s): _zstyle_
+Uses feature(s): _setopt_, _zstyle_
 
 Called by:
 

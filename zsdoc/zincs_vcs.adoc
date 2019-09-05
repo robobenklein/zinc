@@ -224,11 +224,22 @@ Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 vcs_info
 ~~~~~~~~
 
+____
+ ##
+ ## vcs_info - provide version control information
+ ##
+ ## Written by Frank Terbeck <ft@bewatermyfriend.org>
+ ##
+ ## This file and all corresponding files in Functions/VCS_Info/ are
+ ## distributed under the same BSD-ish license as zsh itself.
+ ##
+____
+
 Has 148 line(s). Calls functions:
 
  vcs_info
 
-Uses feature(s): _autoload_
+Uses feature(s): _autoload_, _setopt_
 
 Called by:
 
