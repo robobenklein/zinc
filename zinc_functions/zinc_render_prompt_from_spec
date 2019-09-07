@@ -2,10 +2,10 @@
 
 typeset -gA _ZINC_SEP_CHARS
 
-_ZINC_SEP_CHARS[left]=${_ZINC_SEP_CHARS[left]:-''}
-_ZINC_SEP_CHARS[right]=${_ZINC_SEP_CHARS[right]:-''}
-_ZINC_SEP_CHARS[left_bgmatch]=${_ZINC_SEP_CHARS[left_bgmatch]:-''}
-_ZINC_SEP_CHARS[right_bgmatch]=${_ZINC_SEP_CHARS[right_bgmatch]:-''}
+_ZINC_SEP_CHARS[left]=${_ZINC_SEP_CHARS[left]-''}
+_ZINC_SEP_CHARS[right]=${_ZINC_SEP_CHARS[right]-''}
+_ZINC_SEP_CHARS[left_bgmatch]=${_ZINC_SEP_CHARS[left_bgmatch]-''}
+_ZINC_SEP_CHARS[right_bgmatch]=${_ZINC_SEP_CHARS[right_bgmatch]-''}
 if (( ! ${+_ZINC_SEP_CHARS[rprompt_terminating_space]} )); then
   # if in tmux/etc don't use the hidden end space trick
   # causes alignment issues with the left prompt -> command
