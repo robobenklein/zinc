@@ -39,11 +39,16 @@ ENVIRONMENT VARIABLES
 [width="80%",cols="4,10"]
 |======
 |zincs_battery[color_loading]|bgcolor while async process is running
-|zincs_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg'
+|zincs_vcs[backends]|space-separated list of vcs backends; supports 'git', 'svn' and 'hg', otherwise passed to vcs_info
+
 |zincs_vcs[color_default]|color when repo is clean
 |zincs_vcs[color_dirty]|bgcolor when repo is dirty
 |zincs_vcs[loading_msg]|message while waiting for async process
 (set to blank string to hide the segment during async wait)
+|zincs_vcs[vcs_icon_status_staged]|icon for vcs staged # ✚ is wide
+|zincs_vcs[vcs_icon_status_stashed]|icon for vcs stashed # ⋄
+|zincs_vcs[vcs_icon_status_unstaged]|icon for vcs unstaged  # ●
+|zincs_vcs[vcs_icon_status_untracked]|icon for vcs untracked # ◌
 |======
 
 DETAILS
@@ -52,19 +57,7 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 48 line(s). Calls functions:
-
- Script-Body
- |-- zincs_vcs
- |-- zincs_vcs_async
- |   |-- vcs_info
- |   `-- zincs_vcs_async_gitstatus
- |-- zincs_vcs_async_gitstatus_start_worker
- |-- zincs_vcs_async_return
- |-- zincs_vcs_async_started
- `-- zincs_vcs_bg
-
-Uses feature(s): _autoload_, _zstyle_
+Has 52 line(s). No functions are called (may set up e.g. a hook, a Zle widget bound to a key, etc.).
 
 +vi-git-aheadbehind
 ~~~~~~~~~~~~~~~~~~~
@@ -92,8 +85,6 @@ ____
 ____
 
 Has 15 line(s). Doesn't call other functions.
-
-Uses feature(s): _read_
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
@@ -128,9 +119,7 @@ ____
 
 Has 1 line(s). Doesn't call other functions.
 
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_async
 ~~~~~~~~~~~~~~~
@@ -139,17 +128,9 @@ ____
  # }}}
 ____
 
-Has 10 line(s). Calls functions:
+Has 10 line(s). Doesn't call other functions.
 
- zincs_vcs_async
- |-- vcs_info
- `-- zincs_vcs_async_gitstatus
-
-Uses feature(s): _zstyle_
-
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 _zincs_vcs_async_complete
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,45 +148,35 @@ zincs_vcs_async_gitstatus
 
 Has 23 line(s). Doesn't call other functions.
 
-Called by:
-
- zincs_vcs_async
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_async_gitstatus_start_worker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 3 line(s). Doesn't call other functions.
 
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_async_return
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Has 7 line(s). Doesn't call other functions.
 
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_async_started
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 2 line(s). Doesn't call other functions.
 
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_bg
 ~~~~~~~~~~~~
 
 Has 5 line(s). Doesn't call other functions.
 
-Called by:
-
- Script-Body
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
 zincs_vcs_default_opts
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -237,11 +208,7 @@ ____
 
 Has 148 line(s). Calls functions:
 
- vcs_info
+ 
 
-Uses feature(s): _autoload_, _setopt_
-
-Called by:
-
- zincs_vcs_async
+Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 

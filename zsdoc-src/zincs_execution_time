@@ -72,7 +72,7 @@ function _zincs_execution_time_precmd () {
       read -rz
       TZ=GMT strftime -s REPLY -- '%-jd%K:%M:%S' "${REPLY}"
     fi
-    zincs_execution_time[formatted_output]="${REPLY} ⧖"
+    zincs_execution_time[formatted_output]="${REPLY}${zincs_execution_time[time_icon]}"
     # _ZINC_DBG_OUT "zincs_execution_time[formatted_output]="${zincs_execution_time[formatted_output]}""
     zincs_execution_time[process_started]="0"
   }
@@ -108,6 +108,10 @@ fi
 # zincs_execution_time[clear_on_redraw] -> 1 or 0 (true/false, default is false) clear the result after the async tasks are done
 if ! (( ${+zincs_execution_time[clear_on_redraw]} )); then
   zincs_execution_time[clear_on_redraw]="0"
+fi
+# zincs_execution_time[time_icon] -> gets appended after the number
+if ! (( ${+zincs_execution_time[time_icon]} )); then
+  zincs_execution_time[time_icon]=" ⧖"
 fi
 # }}}
 

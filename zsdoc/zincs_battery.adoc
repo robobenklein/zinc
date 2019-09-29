@@ -51,14 +51,7 @@ Script Body
 
 Has 49 line(s). Calls functions:
 
- Script-Body
- |-- zincs_battery
- |-- zincs_battery_async
- |-- zincs_battery_async_return
- |-- zincs_battery_async_started
- |-- zincs_battery_bg
- |-- zincs_battery_display_hidden
- `-- zincs_battery_fg
+ 
 
 zincs_battery
 ~~~~~~~~~~~~~

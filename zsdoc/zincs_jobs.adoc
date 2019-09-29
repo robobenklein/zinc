@@ -35,8 +35,7 @@ Script Body
 
 Has 7 line(s). Calls functions:
 
- Script-Body
- `-- zincs_jobs
+ 
 
 zincs_jobs
 ~~~~~~~~~~

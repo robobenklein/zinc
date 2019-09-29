@@ -25,8 +25,7 @@ Script Body
 
 Has 7 line(s). Calls functions:
 
- Script-Body
- `-- zincs_cwd_writable
+ 
 
 zincs_cwd_writable
 ~~~~~~~~~~~~~~~~~~

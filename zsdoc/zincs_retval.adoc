@@ -38,9 +38,7 @@ Script Body
 
 Has 15 line(s). Calls functions:
 
- Script-Body
- |-- zincs_retval
- `-- zincs_retval_display_hidden
+ 
 
 zincs_retval
 ~~~~~~~~~~~~

@@ -60,6 +60,7 @@ ENVIRONMENT VARIABLES
 |======
 |zincs_execution_time[clear_on_redraw]|1 or 0 (true/false, default is false) clear the result after the async tasks are done
 |zincs_execution_time[threshold]|minimum seconds of runtime to display segment
+|zincs_execution_time[time_icon]|gets appended after the number
 |======
 
 DETAILS
@@ -68,11 +69,9 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 26 line(s). Calls functions:
+Has 29 line(s). Calls functions:
 
- Script-Body
- |-- zincs_execution_time
- `-- zincs_execution_time_display_hidden
+ 
 
 zincs_execution_time
 ~~~~~~~~~~~~~~~~~~~~
@@ -110,8 +109,6 @@ _zincs_execution_time_precmd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Has 22 line(s). Doesn't call other functions.
-
-Uses feature(s): _read_
 
 Not called by script or any function (may be e.g. a hook, a Zle widget, etc.).
 
