@@ -1,0 +1,15 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+typeset -ga reply
+@zinc-get-segment-text () {
+  # $1 : name of array containing segment ids
+  # $2 : name of assoc-array containing arguments
+  reply=()
+  for seg_id in ${(P)1}; do
+    # _ZINC_DBG_OUT "fetching segment $seg_id text"
+    @zinc-tracked-autoload "$seg_id"
+    # _ZINC_DBG_OUT "segment text ${seg_id} ${${(P)2}[${seg_id}]}"
+    "${seg_id}" ${(s. .)${(P)2}[${seg_id}]}
+    reply+=("${REPLY}")
+  done
+}

@@ -2,6 +2,12 @@
 #
 # ZINC
 
+_ZINC_DBG_OUT () {;}
+
+typeset -gHA _ZINC_0
+_ZINC_0[srcfile]="${_ZINC_SCRIPTPATH:-${ZERO:-${(%):-%N}}}"
+_ZINC_0[repo]="${_ZINC_0[srcfile]:h}"
+
 # Set zrllink utility.
 if (( ${+commands[readlink]} )) && [[ "$(uname)" != "Darwin" ]]; then
   function _zinc_zrllink() {
@@ -19,41 +25,53 @@ else
   printf '%b\n' "\033[0;31mZINC: Couldn't find a valid symlink resolver! Please modify your fpath manually!\033[0m"
 fi
 
-### install location detection
-_ZINC_SCRIPTPATH="${(%):-%N}"
-# echo $_ZINC_SCRIPTPATH
-_ZINC_INSTALL_LOC="$(_zinc_zrllink $_ZINC_SCRIPTPATH)"
-# echo $_ZINC_INSTALL_LOC
-ZINC_INSTALL_DIR="${_ZINC_INSTALL_LOC%/*}"
+prompt_zinc_setup () {
+  prompt_opts=( cr percent sp subst )
+  setopt noprompt{cr,percent,sp,subst} "prompt${^prompt_opts[@]}"
 
-function zinc_selfdestruct_setup () {
-  # TODO check if exist then add, instead of type unique
-  (( ${fpath[(I)"$ZINC_INSTALL_DIR/zinc_functions"]} )) || {
-    fpath+=("$ZINC_INSTALL_DIR/zinc_functions")
-    fpath+=("$ZINC_INSTALL_DIR/segments")
+  if [[ "$1" == "dev" ]]; then
+    shift
+    fpath[1,0]="${_ZINC_0[repo]}/51"
+    fpath[1,0]="${_ZINC_0[repo]}/segments"
+    # enable debugging logging
+    _ZINC_DBG_OUT () {
+      # ' >/tmp/_ZINC_DBG_OUT.log 2>&1'
+      echo -e "[38;5;8m$@[0m" # >> ~/._ZINC_DBG_OUT.log
+    }
+  fi
+
+  (( ${fpath[(I)"${_ZINC_0[repo]}/segments"]} )) || {
+    fpath+=("${_ZINC_0[repo]}/segments")
   }
 
-  # remove self from precmd
-  precmd_functions=("${(@)precmd_functions:#zinc_selfdestruct_setup}")
-  builtin unfunction zinc_selfdestruct_setup
+  for depfile in ${_ZINC_0[repo]}/zinc_core/@*; do
+    _ZINC_DBG_OUT "loading $depfile"
+    source "${depfile}"
+  done
 
-  autoload -Uz +X prompt_zinc_setup async
-  autoload -Uz +X promptinit 2>&1 >/dev/null && {
-    promptinit
-    prompt zinc
-  } || {
-    prompt_zinc_setup
-  }
-  prompt_zinc_preexec
-  prompt_zinc_precmd
-  zle && zle .reset-prompt
+  # user configuration variables:
+  typeset -ga zinc_left zinc_right
+  typeset -gA zinc_fg zinc_bg zinc_opts
+
+  # internal globals
+  typeset -gA _ZINC_ASYNC_STATII
+
+  # load a preset by name
+  if [[ "$1" != "" ]]; then
+    if [[ -r "${_ZINC_0[repo]}/presets/${1}.zincp.zsh" ]]; then
+      _ZINC_DBG_OUT "loading preset $1"
+      source "${_ZINC_0[repo]}/presets/${1}.zincp.zsh"
+    else
+      echo "ZINC: No such preset found in ${_ZINC_0[repo]}/presets/."
+    fi
+  fi
+
+  async_init
+  @zinc-hooks-init
+
+  PROMPT="%f%b%k\${_ZINC_RENDERED_PROMPT}"
+  RPROMPT="%f%b%k\${_ZINC_RENDERED_RPROMPT}%f%b%k"
+
+  @zinc-run-hook _zinc_hook_precmd
+  @zinc-run-hook _zinc_hook_chpwd
 }
-
-autoload -Uz add-zsh-hook
-
-add-zsh-hook precmd zinc_selfdestruct_setup
-
-fpath+=("$ZINC_INSTALL_DIR/zinc_functions")
-fpath+=("$ZINC_INSTALL_DIR/segments")
-
-autoload -Uz +X prompt_zinc_setup async

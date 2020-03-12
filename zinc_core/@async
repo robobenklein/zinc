@@ -539,9 +539,3 @@ async_init() {
 		zpty -d _async_test
 	}
 }
-
-async() {
-	async_init
-}
-
-async "$@"

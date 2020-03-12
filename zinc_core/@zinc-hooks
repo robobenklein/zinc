@@ -1,0 +1,125 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function @zinc-define-hook ()
+{
+  typeset -ag "$1"
+}
+function @zinc-run-hook ()
+{
+  for f in ${(P)1}; do
+    $f ${@:2} # send given args to the func
+  done
+}
+function @zinc-add-hook ()
+{
+  emulate -L zsh
+
+  local opt
+  local -a autoopts
+  integer del list help
+
+  while getopts "dDhLUzk" opt; do
+    case $opt in
+      (d)
+      del=1
+      ;;
+
+      (D)
+      del=2
+      ;;
+
+      (h)
+      help=1
+      ;;
+
+      (L)
+      list=1
+      ;;
+
+      ([Uzk])
+      autoopts+=(-$opt)
+      ;;
+
+      (*)
+      return 1
+      ;;
+    esac
+  done
+  shift $(( OPTIND - 1 ))
+
+  if (( list )); then
+    if [[ -z "$1" ]]; then
+      echo 'what hook do you want listed?' 2>&1
+      return 1
+    fi
+    typeset -mp $@
+    return $?
+  elif (( help || $# != 2 )); then
+    print -u$(( 2 - help )) $usage
+    return $(( 1 - help ))
+  fi
+
+  local hook="${1}"
+  local fn="$2"
+
+  if (( del )); then
+    # delete, if hook is set
+    if (( ${(P)+hook} )); then
+      if (( del == 2 )); then
+        set -A $hook ${(P)hook:#${~fn}}
+      else
+        set -A $hook ${(P)hook:#$fn}
+      fi
+      # unset if no remaining entries --- this can give better
+      # performance in some cases
+      if (( ! ${(P)#hook} )); then
+        unset $hook
+      fi
+    fi
+  else
+    if (( ${(P)+hook} )); then
+      if (( ${${(P)hook}[(I)$fn]} == 0 )); then
+        set -A $hook ${(P)hook} $fn
+      fi
+    else
+      set -A $hook $fn
+    fi
+    autoload $autoopts -- $fn
+  fi
+
+}
+
+@zinc-define-hook _zinc_hook_precmd
+_zinc_hook_precmd ()
+{
+  @zinc-run-hook _zinc_hook_precmd "$@"
+}
+@zinc-define-hook _zinc_hook_preexec
+_zinc_hook_preexec()
+{
+  @zinc-run-hook _zinc_hook_preexec "$@"
+}
+@zinc-define-hook _zinc_hook_postexec
+_zinc_hook_postexec ()
+{
+  @zinc-run-hook _zinc_hook_postexec "$@"
+}
+@zinc-define-hook _zinc_hook_chpwd
+_zinc_hook_chpwd ()
+{
+  @zinc-run-hook _zinc_hook_chpwd "$@"
+}
+@zinc-define-hook _zinc_hook_all_async_complete
+_zinc_hook_all_async_complete ()
+{
+  @zinc-run-hook _zinc_hook_all_async_complete "$@"
+}
+
+# zsh builtin hooks
+@zinc-hooks-init ()
+{
+  autoload -Uz +X add-zsh-hook
+  add-zsh-hook chpwd _zinc_hook_chpwd
+  add-zsh-hook precmd _zinc_hook_precmd
+  add-zsh-hook preexec _zinc_hook_preexec
+}

@@ -1,0 +1,37 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+@zinc-render-prompt ()
+{
+  # $1 : list of segment ids
+  # $2 : foreground assoc-array
+  # $3 : background assoc-array
+  # $4 : options assoc-array
+  local -a texts colors_fg colors_bg blocks
+  @zinc-get-segment-text ${1} ${4}
+  texts=($reply)
+  for seg_id in ${(P)1}; do
+    # getting colors
+    if [[ "${${(P)2}[$seg_id]}" == "" ]]; then
+      _ZINC_DBG_OUT "$seg_id has no fg_color! setting white"
+      colors_fg+=($_zFG[white])
+    else
+      colors_fg+=($_zFG[${${(P)2}[$seg_id]}])
+    fi
+  done
+  for ((i=1; i<=${#texts};i++)); do
+    blocks+=("${colors_fg[$i]}${texts[$i]}")
+  done
+  REPLY="${(j.^.)blocks}"
+}
+
+typeset -g _ZINC_RENDERED_PROMPT
+typeset -g _ZINC_RENDERED_RPROMPT
+@zinc-output-prompt-vars ()
+{
+  @zinc-render-prompt zinc_left zinc_fg zinc_bg zinc_opts
+  _ZINC_RENDERED_PROMPT="$REPLY"
+  @zinc-render-prompt zinc_right zinc_fg zinc_bg zinc_opts
+  _ZINC_RENDERED_RPROMPT="$REPLY"
+}
+
+@zinc-add-hook _zinc_hook_precmd @zinc-output-prompt-vars

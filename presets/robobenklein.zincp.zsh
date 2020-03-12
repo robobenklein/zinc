@@ -1,21 +1,24 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 zinc_left=(
-  zincs_userhost zincs_cwd_writable zincs_cwd zincs_vcs
+  zincs_userhost zincs_cwd zincs_vcs
 )
 
 zinc_right=(
-  zincs_retval zincs_execution_time zincs_jobs zincs_battery zincs_time zincs_virtualenv
+  zincs_two zincs_retval zincs_execution_time zincs_jobs zincs_battery zincs_time zincs_virtualenv
 )
 
-typeset -gA zincs_cwd
-zincs_cwd[add_hyperlink]=1
-
-zinc_opts=(
-  zincs_cwd ';;;;rtab;-t;-l'
+zinc_fg+=(
+  zincs_userhost white
+  zincs_cwd purple
+  zincs_vcs conditional
 )
-
-typeset -gA zincs_execution_time
-zincs_execution_time[clear_on_redraw]=1
-
-typeset -gA zincs_retval
-zincs_retval[clear_on_redraw]=1
+zinc_bg+=(
+  zincs_userhost grey
+  zincs_cwd conditional
+)
+zinc_opts+=(
+  zincs_cwd "hyperlinks rtab on_chpwd full_git_roots"
+  zincs_execution_time "sticky"
+  zincs_retval "sticky"
+)
