@@ -62,7 +62,7 @@ _zCN=(
   "orange" 214
 )
 
-typeset -gHA _zFG _zBG
+typeset -gHA _zFG _zBG _zFX
 for color in {000..255}; do
   _zFG[$color]="%{[38;5;${color}m%}"
   _zBG[$color]="%{[48;5;${color}m%}"
@@ -71,6 +71,17 @@ for cn in ${(k)_zCN}; do
   _zFG[$cn]="%{[38;5;${_zCN[${cn}]}m%}"
   _zBG[$cn]="%{[48;5;${_zCN[${cn}]}m%}"
 done
+_zFG[default]="%{[39m%}"
+_zBG[default]="%{[49m%}"
+_zBG[clear]="%{[49m%}"
+_zFX=(
+  reset     "%{[00m%}"
+  bold      "%{[01m%}" no-bold      "%{[22m%}"
+  italic    "%{[03m%}" no-italic    "%{[23m%}"
+  underline "%{[04m%}" no-underline "%{[24m%}"
+  blink     "%{[05m%}" no-blink     "%{[25m%}"
+  reverse   "%{[07m%}" no-reverse   "%{[27m%}"
+)
 
 @zinc-color ()
 {

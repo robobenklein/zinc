@@ -10,15 +10,17 @@ zinc_right=(
 
 zinc_fg+=(
   zincs_userhost white
-  zincs_cwd purple
-  zincs_vcs conditional
+  zincs_cwd black
+  zincs_vcs orange
 )
 zinc_bg+=(
-  zincs_userhost grey
-  zincs_cwd conditional
+  zincs_userhost black
+  zincs_cwd navy
 )
 zinc_opts+=(
   zincs_cwd "hyperlinks rtab on_chpwd full_git_roots"
   zincs_execution_time "sticky"
   zincs_retval "sticky"
+  left ""
+  right ""
 )

@@ -1,7 +1,8 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
 typeset -ga reply
-@zinc-get-segment-text () {
+@zinc-get-segment-text ()
+{
   # $1 : name of array containing segment ids
   # $2 : name of assoc-array containing arguments
   reply=()
@@ -11,5 +12,33 @@ typeset -ga reply
     # _ZINC_DBG_OUT "segment text ${seg_id} ${${(P)2}[${seg_id}]}"
     "${seg_id}" ${(s. .)${(P)2}[${seg_id}]}
     reply+=("${REPLY}")
+  done
+}
+
+# will fetch colors from segment functions
+# returns 256 color number array
+@zinc-get-colors ()
+{
+  local aav
+  # $1 : name of array containing segment ids
+  # $2 : name of assoc-array containing color values or function names
+  # $3 : default in case there's no function or segment
+  reply=()
+  for seg_id in ${(P)1}; do
+    aav="${+${(P)2}[$seg_id]}"
+    # most likely case first
+    if (( ${+_zCN[$aav]} )); then
+      reply+=("$_zCN[$aav]")
+      continue
+    elif (( $aav >= 0 && $aav <= 256 )); then
+      reply+=($aav)
+      continue
+    elif (( ${+functions[$aav]} )); then
+      # use a conditional function
+      "${aav}"
+      reply+=("$REPLY")
+    else
+      reply+=("$3")
+    fi
   done
 }

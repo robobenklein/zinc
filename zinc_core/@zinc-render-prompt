@@ -1,6 +1,6 @@
 # vim: ft=zsh ts=2 sw=2 et fenc=utf-8
 
-@zinc-render-prompt ()
+@zinc-render-powerline-left ()
 {
   # $1 : list of segment ids
   # $2 : foreground assoc-array
@@ -11,27 +11,34 @@
   texts=($reply)
   for seg_id in ${(P)1}; do
     # getting colors
-    if [[ "${${(P)2}[$seg_id]}" == "" ]]; then
-      _ZINC_DBG_OUT "$seg_id has no fg_color! setting white"
-      colors_fg+=($_zFG[white])
-    else
-      colors_fg+=($_zFG[${${(P)2}[$seg_id]}])
-    fi
+    colors_fg+=("${${(P)2}[$seg_id]:-white}")
+    colors_bg+=("${${(P)3}[$seg_id]:-grey}")
   done
+  # reset
+  colors_bg+=("clear")
+  _ZINC_DBG_OUT "$colors_bg"
+  REPLY=""
   for ((i=1; i<=${#texts};i++)); do
-    blocks+=("${colors_fg[$i]}${texts[$i]}")
+    REPLY+="$_zBG[${colors_bg[$i]}]"
+    REPLY+="$_zFG[${colors_fg[$i]}]"
+    REPLY+=" "
+    REPLY+="${texts[$i]}"
+    REPLY+=" "
+    REPLY+="$_zFG[${colors_bg[$i]}]"
+    REPLY+="$_zBG[${colors_bg[$((i+1))]}]"
+    REPLY+="${${(P)4}[left]}"
   done
-  REPLY="${(j.^.)blocks}"
+  REPLY+=" "
 }
 
 typeset -g _ZINC_RENDERED_PROMPT
 typeset -g _ZINC_RENDERED_RPROMPT
 @zinc-output-prompt-vars ()
 {
-  @zinc-render-prompt zinc_left zinc_fg zinc_bg zinc_opts
+  @zinc-render-powerline-left zinc_left zinc_fg zinc_bg zinc_opts
   _ZINC_RENDERED_PROMPT="$REPLY"
-  @zinc-render-prompt zinc_right zinc_fg zinc_bg zinc_opts
-  _ZINC_RENDERED_RPROMPT="$REPLY"
+  # @zinc-render-prompt zinc_right zinc_fg zinc_bg zinc_opts
+  # _ZINC_RENDERED_RPROMPT="$REPLY"
 }
 
 @zinc-add-hook _zinc_hook_precmd @zinc-output-prompt-vars
