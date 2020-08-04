@@ -207,7 +207,7 @@ zincs_cwd ()
   [[ "${zincs_cwd[output]}" == "" ]] && _zincs_cwd_chpwd
 
   if (( zincs_cwd[add_hyperlink] )); then
-    REPLY=$'%{\e]8;;file://'${HOSTNAME}${PWD}$'\e\\%}'${zincs_cwd[output]}$'%{\e]8;;\e\\%}'
+    REPLY=$'%{\e]8;;file://'${HOSTNAME}${PWD}$'\e\\%}'${zincs_cwd[output]:gs/%/%%/}$'%{\e]8;;\e\\%}'
   else
     REPLY="${zincs_cwd[output]}"
   fi
