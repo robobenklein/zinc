@@ -7,12 +7,20 @@ _ZINC_SEP_CHARS[right]=${_ZINC_SEP_CHARS[right]-''}
 _ZINC_SEP_CHARS[left_bgmatch]=${_ZINC_SEP_CHARS[left_bgmatch]-''}
 _ZINC_SEP_CHARS[right_bgmatch]=${_ZINC_SEP_CHARS[right_bgmatch]-''}
 if (( ! ${+_ZINC_SEP_CHARS[rprompt_terminating_space]} )); then
-  # if in tmux/etc don't use the hidden end space trick
-  # causes alignment issues with the left prompt -> command
-  if [[ "${TMUX}${SCREEN_NO}" != "" ]]; then
+  autoload -Uz is-at-least
+  if is-at-least 5.0.5 && [[ ! -v ZLE_RPROMPT_INDENT ]]; then
+    ZLE_RPROMPT_INDENT=0
     _ZINC_SEP_CHARS[rprompt_terminating_space]=" %{%k%f%}"
   else
-    _ZINC_SEP_CHARS[rprompt_terminating_space]="%{ %k%f%}"
+    # if in tmux/etc don't use the hidden end space trick
+    # causes alignment issues with the left prompt -> command
+    if [[ ! -z "${TMUX}${SCREEN_NO}" ]] || \
+      [[ ! -z "${ITERM_SESSION_ID}" ]] || \
+      (( ZLE_RPROMPT_INDENT <= 0 )); then
+      _ZINC_SEP_CHARS[rprompt_terminating_space]=" %{%k%f%}"
+    else
+      _ZINC_SEP_CHARS[rprompt_terminating_space]="%{ %k%f%}"
+    fi
   fi
 fi
 
