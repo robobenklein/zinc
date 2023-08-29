@@ -23,10 +23,22 @@ function _zinc_segment_async_callback () {
 
   _ZINC_DBG_OUT "_zinc_segment_async_callback \"$1\" RET:$2"
 
+  #if [[ "${1}" == "[async/eval]" ]] || \
+  #   [[ "${1}" == ";" ]] || \
+  #   [[ "${1}" == "[async]" ]];
+
+  # if the worker died / errored
+  if [[ "${1}" == "[async]" ]]; then
+    if (( $2 == 2 || $2 == 3 || $2 == 130 )); then
+      _ZINC_DBG_OUT "restarting dead worker: \"$1\" RET:$2 stderr:$5"
+      zinc_restart_silent_background
+      return
+    else
+      _ZINC_DBG_OUT "unhandled [async] callback: \"$1\" RET:$2 stderr:$5"
+    fi
+  fi
+
   # ignore the async evals used to alter worker environment
-  # if [[ "${1}" == "[async/eval]" ]] || \
-  #    [[ "${1}" == ";" ]] || \
-  #    [[ "${1}" == "[async]" ]];
   if [[ "${1[1]}" != [A-Za-z0-9_] ]];
   then
     # _ZINC_DBG_OUT "async eval: ${(j. !! .)@}"
