@@ -1,0 +1,9 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+function zincs_distrobox_display_hidden () {
+  if [[ -r /run/.containerenv ]]; then
+    false
+  else
+    true
+  fi
+}

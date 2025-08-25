@@ -4,7 +4,7 @@ zinc_left=(
 )
 
 zinc_right=(
-  zincs_retval zincs_execution_time zincs_jobs zincs_battery zincs_time zincs_virtualenv
+  zincs_retval zincs_execution_time zincs_jobs zincs_battery zincs_time zincs_virtualenv zincs_distrobox
 )
 
 typeset -gA zincs_cwd

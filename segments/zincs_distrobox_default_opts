@@ -1,0 +1,6 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+zincs_distrobox_default_opts ()
+{
+  reply=(black 8 CONDITIONAL normal)
+}

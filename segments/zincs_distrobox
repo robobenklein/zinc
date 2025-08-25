@@ -1,0 +1,23 @@
+# vim: ft=zsh ts=2 sw=2 et fenc=utf-8
+
+# synopsis {{{
+# Shows the name of the distrobox container you're using
+# }}}
+
+zincs_distrobox ()
+{
+  setopt localoptions
+  setopt extendedglob
+  REPLY="<unknown>"
+  if [[ -r /run/.containerenv ]]; then
+    local -a lines grepped match
+    lines=( "${(@f)"$(</run/.containerenv)"}" )
+    grepped=( ${(M)lines:#name=*} )
+    if [[ "${grepped[1]}" = (#b)name=\"(?##)\" ]]; then
+      REPLY="${match[1]}"
+    else
+      REPLY="${grepped[1]}"
+    fi
+  fi
+  # TODO do all distrobox guest containers populate the same .containerenv file?
+}
